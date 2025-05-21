@@ -4,6 +4,8 @@
 
 Google Drive: https://drive.google.com/drive/folders/1ivtS-f3BuQGGg50bVAPPad5Y34KkpL3n?usp=drive_link
 
+link de Jira https://brareising.atlassian.net/jira/software/projects/SCRUM/boards/1/backlog?epics=visible&atlOrigin=eyJpIjoiNjNjMTdkNzJlNDRiNDVhZTk0Y2FlYTE3ZTNkNGEyMWEiLCJwIjoiaiJ9
+
 ## Descripcion
 ### <sub>El objetivo es crear una página web la cual sirva para que el dueño del gimnasio pueda gestionar su negocio, tanto las finanzas, clientes, los productos y servicios que brinda pudiendo compartir información sobre entrenamiento.</sub>
 
