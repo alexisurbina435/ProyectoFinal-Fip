@@ -1,0 +1,109 @@
+.main-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10rem 5rem;
+}
+
+.login-container {
+    background-color: var(--negro);
+    border-radius: 50px;
+    padding: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-inline: 10%;
+}
+
+.login-logo {
+    width: 442px;
+    height: 347px;
+    margin-bottom: 64px;
+    aspect-ratio: 442.27/347;
+}
+
+.input-group {
+    width: 384px;
+    margin-bottom: 44px;
+}
+
+.input-group label {
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    display: block;
+}
+
+.input-wrapper {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 10px 16px;
+    background: #404040;
+    border: 1px solid #737373;
+    border-radius: 4px;
+    height: 40px;
+}
+
+.input-wrapper input {
+    flex: 1;
+    background: none;
+    border: none;
+    color: #71717A;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.input-wrapper input::placeholder {
+    color: #71717A;
+}
+
+.remember-me {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    margin-bottom: 44px;
+    height: 24px;
+    width: 137px;
+    align-self: self-start;
+    margin-left: 1.5rem;
+}
+
+.remember-me span {
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.forgot-password {
+    color: #6366F1;
+    font-size: 24px;
+    line-height: 20px;
+    text-decoration: none;
+    margin-bottom: 48px;
+    cursor: pointer;
+}
+
+.btn {
+    width: 269px;
+    height: 40px;
+    border-radius: 4px;
+    font-size: 16px;
+    line-height: 16px;
+    color: #F5F5F5;
+    cursor: pointer;
+    border: 1px solid;
+}
+
+.btn-login {
+    background: #404040;
+    border-color: #737373;
+    margin-bottom: 32px;
+}
+
+.btn-register {
+    background: #EA580C;
+    border-color: #EA580C;
+}
