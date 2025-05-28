@@ -1,0 +1,30 @@
+.checkbox-group {
+  margin-top: 1rem;
+  font-size: 14px;
+  color: var(--blanco);
+  align-self: self-start;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkbox-group input[type="checkbox"] {
+  accent-color: var(--naranja);
+}
+
+.btn-register {
+  margin-top: 3rem;
+}
+
+.go-login {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.login-container a {
+  color: rgb(1, 1, 197) !important;
+}

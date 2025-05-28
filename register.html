@@ -6,6 +6,7 @@
       <title>Superarse - Acondicionamiento físico y salud</title>
       <link rel="stylesheet" href="./styles/styles.css">
       <link rel="stylesheet" href="./styles/login.css">
+      <link rel="stylesheet" href="./styles/register.css">
   </head>
   <body>
     <main class="main">  
@@ -42,44 +43,84 @@
       <div class="bottom-line"></div>
       <!-- Fin Header -->
 
-      <!-- Login-->
+      <!-- Register-->
       <main class="main-content">
-          <div class="login-container">
-              <img src="./images/SinFondo3.png" alt="logo" class="login-logo">
-              <div class="input-group">
-                  <label for="email">Correo electrónico</label>
-                  <div class="input-wrapper">
-                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M18.3334 5.00004C18.3334 4.08337 17.5834 3.33337 16.6667 3.33337H3.33335C2.41669 3.33337 1.66669 4.08337 1.66669 5.00004M18.3334 5.00004V15C18.3334 15.9167 17.5834 16.6667 16.6667 16.6667H3.33335C2.41669 16.6667 1.66669 15.9167 1.66669 15V5.00004M18.3334 5.00004L10 10.8334L1.66669 5.00004" stroke="#F3F3F3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
-                      <input type="email" id="email" placeholder="ejemplo123@gmail.com">
-                  </div>
-              </div>
+        <div class="login-container">
+          <img src="./images/SinFondo3.png" alt="logo" class="login-logo">
 
-              <div class="input-group">
-                  <label for="password">Contraseña</label>
-                  <div class="input-wrapper">
-                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M5.83333 9.16663V5.83329C5.83333 4.72822 6.27232 3.66842 7.05372 2.88701C7.83512 2.10561 8.89493 1.66663 10 1.66663C11.1051 1.66663 12.1649 2.10561 12.9463 2.88701C13.7277 3.66842 14.1667 4.72822 14.1667 5.83329V9.16663M4.16667 9.16663H15.8333C16.7538 9.16663 17.5 9.91282 17.5 10.8333V16.6666C17.5 17.5871 16.7538 18.3333 15.8333 18.3333H4.16667C3.24619 18.3333 2.5 17.5871 2.5 16.6666V10.8333C2.5 9.91282 3.24619 9.16663 4.16667 9.16663Z" stroke="#F3F3F3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
-                      <input type="password" id="password" placeholder="contraseña">
-                  </div>
-              </div>
-
-              <div class="remember-me">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M5 21C4.45 21 3.97917 20.8042 3.5875 20.4125C3.19583 20.0208 3 19.55 3 19V5C3 4.45 3.19583 3.97917 3.5875 3.5875C3.97917 3.19583 4.45 3 5 3H19C19.55 3 20.0208 3.19583 20.4125 3.5875C20.8042 3.97917 21 4.45 21 5V19C21 19.55 20.8042 20.0208 20.4125 20.4125C20.0208 20.8042 19.55 21 19 21H5ZM5 19H19V5H5V19Z" fill="#E7E0EC"/>
-                  </svg>
-                  <span>Recuerdame</span>
-              </div>
-
-              <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
-
-              <button class="btn btn-login">Iniciar sesión</button>
-              <a href="register.html"><button class="btn btn-register">Registrarse</button></a>
+          <div class="input-group">
+            <label for="name">Nombre completo</label>
+            <div class="input-wrapper">
+              <input type="text" id="name" placeholder="Juan Pérez">
+            </div>
           </div>
+
+          <div class="input-group">
+            <label for="email">Correo electrónico</label>
+            <div class="input-wrapper">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M18.3334 5.00004C18.3334 4.08337 17.5834 3.33337 16.6667 3.33337H3.33335C2.41669 3.33337 1.66669 4.08337 1.66669 5.00004M18.3334 5.00004V15C18.3334 15.9167 17.5834 16.6667 16.6667 16.6667H3.33335C2.41669 16.6667 1.66669 15.9167 1.66669 15V5.00004M18.3334 5.00004L10 10.8334L1.66669 5.00004" stroke="#F3F3F3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <input type="email" id="email" placeholder="ejemplo123@gmail.com">
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="phone">Teléfono</label>
+            <div class="input-wrapper">
+              <input type="tel" id="phone" placeholder="1123456789">
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="password">Contraseña</label>
+            <div class="input-wrapper">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5.83333 9.16663V5.83329C5.83333 4.72822 6.27232 3.66842 7.05372 2.88701C7.83512 2.10561 8.89493 1.66663 10 1.66663C11.1051 1.66663 12.1649 2.10561 12.9463 2.88701C13.7277 3.66842 14.1667 4.72822 14.1667 5.83329V9.16663M4.16667 9.16663H15.8333C16.7538 9.16663 17.5 9.91282 17.5 10.8333V16.6666C17.5 17.5871 16.7538 18.3333 15.8333 18.3333H4.16667C3.24619 18.3333 2.5 17.5871 2.5 16.6666V10.8333C2.5 9.91282 3.24619 9.16663 4.16667 9.16663Z" stroke="#F3F3F3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <input type="password" id="password" placeholder="********">
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="repeat-password">Repetir contraseña</label>
+            <div class="input-wrapper">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5.83333 9.16663V5.83329C5.83333 4.72822 6.27232 3.66842 7.05372 2.88701C7.83512 2.10561 8.89493 1.66663 10 1.66663C11.1051 1.66663 12.1649 2.10561 12.9463 2.88701C13.7277 3.66842 14.1667 4.72822 14.1667 5.83329V9.16663M4.16667 9.16663H15.8333C16.7538 9.16663 17.5 9.91282 17.5 10.8333V16.6666C17.5 17.5871 16.7538 18.3333 15.8333 18.3333H4.16667C3.24619 18.3333 2.5 17.5871 2.5 16.6666V10.8333C2.5 9.91282 3.24619 9.16663 4.16667 9.16663Z" stroke="#F3F3F3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <input type="password" id="repeat-password" placeholder="********">
+            </div>
+          </div>
+
+          <div class="checkbox-group">
+            <label>
+              <input type="checkbox" id="accept-emails">
+              Acepto recibir comunicaciones de Superarse Gym por email
+            </label>
+          </div>
+
+          <div class="checkbox-group">
+            <label>
+              <input type="checkbox" id="accept-whatsapp">
+              Acepto recibir comunicaciones de Superarse Gym por WhatsApp
+            </label>
+          </div>
+
+          <div class="checkbox-group">
+            <label>
+              <input type="checkbox" id="accept-terms">
+              Acepto los <a href="#" target="_blank">Términos de Uso</a>, <a href="#" target="_blank">Términos de Venta</a> y la <a href="#" target="_blank">Política de Privacidad</a> de Superarse Gym
+            </label>
+          </div>
+
+          <button class="btn btn-register">Registrarme</button>
+
+          <div class="go-login">
+            <a href="login.html">¿Ya tienes una cuenta?</a>
+          </div>
+        </div>
       </main>
-      <!-- Fin Login -->
+      <!-- Fin Register -->
 
       <!-- Footer -->
       <footer class="footer">
