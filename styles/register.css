@@ -28,3 +28,6 @@
 .login-container a {
   color: rgb(1, 1, 197) !important;
 }
+.go-login{
+  font-size: 1rem;
+}

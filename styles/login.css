@@ -3,13 +3,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10rem 5rem;
+    padding: 3rem 5rem;
+    background-color: var(--negro);
 }
 
 .login-container {
-    background-color: var(--negro);
+    /* background-color: var(--negro); */
     border-radius: 50px;
-    padding: 5%;
+    padding: 2%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -19,20 +20,20 @@
 .login-logo {
     width: 442px;
     height: 347px;
-    margin-bottom: 64px;
+    /* margin-bottom: 64px; */
     aspect-ratio: 442.27/347;
 }
 
 .input-group {
     width: 384px;
-    margin-bottom: 44px;
+    margin-bottom: 10px;
 }
 
 .input-group label {
     color: white;
     font-size: 18px;
     font-weight: 600;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
     display: block;
 }
 
@@ -64,11 +65,11 @@
     display: flex;
     gap: 4px;
     align-items: center;
-    margin-bottom: 44px;
+    margin-bottom: 2rem;
     height: 24px;
     width: 137px;
     align-self: self-start;
-    margin-left: 1.5rem;
+    margin-left: 2rem;
 }
 
 .remember-me span {
@@ -79,10 +80,10 @@
 
 .forgot-password {
     color: #6366F1;
-    font-size: 24px;
+    font-size: 1rem;
     line-height: 20px;
     text-decoration: none;
-    margin-bottom: 48px;
+    margin-bottom: 2rem;
     cursor: pointer;
 }
 
@@ -100,7 +101,7 @@
 .btn-login {
     background: #404040;
     border-color: #737373;
-    margin-bottom: 32px;
+    margin-bottom: 1rem;
 }
 
 .btn-register {

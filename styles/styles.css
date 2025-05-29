@@ -37,7 +37,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 0 2.75rem;
-    width: 90%;
+    width: 70%;
     height: 4rem;
     margin: auto;
 }
@@ -59,7 +59,7 @@ body {
     border: none;
     padding: 0;
     margin: 0;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     line-height: 1.5rem;
     color: var(--blanco);
     cursor: pointer;
@@ -155,7 +155,7 @@ body {
 }
 
 .footer-content {
-    max-width: 75%;
+    max-width: 100%;
     margin: 0 auto;
     padding: 0 var(--spacing);
 }
@@ -163,11 +163,12 @@ body {
 .footer-grid {
     display: flex;
     gap: 1.25rem;
-    text-align: -webkit-center;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
 .contact {
-    margin: auto;
+    
     font-style: normal;
 }
 
@@ -190,7 +191,7 @@ body {
 }
 
 .brand {
-    margin: auto;
+    /* margin: auto; */
 }
 
 .brand-logo {
@@ -200,7 +201,7 @@ body {
 }
 
 .footer-nav {
-    margin: auto;
+    margin: 0 2.5rem;
 }
 
 .footer-nav-list {
@@ -236,7 +237,6 @@ body {
 }
 
 .copyright {
-    margin-top: 4rem;
     padding: 0 1px 1rem;
     background-color: var(--negro);
 }
@@ -256,4 +256,16 @@ body {
     color: var(--blanco);
     font-size: 1rem;
     font-weight: 300;
+}
+
+.social-media{
+    display: flex;
+    justify-content: center;
+    gap: 4.5rem;
+    margin: 1rem;
+}
+
+.social-icon{
+    font-size: 3rem;
+    color: var(--naranja);
 }

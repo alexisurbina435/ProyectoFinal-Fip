@@ -4,15 +4,18 @@
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Superarse - Acondicionamiento físico y salud</title>
-      <link rel="stylesheet" href="./styles/styles.css">
+      <link rel="stylesheet" href="../styles/styles.css">
+      <link rel="stylesheet" href="../styles/login.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   </head>
   <body>
     <main class="main">  
 
       <!-- Header -->
       <div class="top-line"></div>
+
       <header class="header">
-        <img src="/images/sinFondo1.png" class="logo" alt="logo">
+        <img src="../images/logo-sinfondo.png" class="logo" alt="logo">
 
         <nav class="navigation">
           <button class="nav-item">Inicio</button>
@@ -36,22 +39,46 @@
             </div>
         </div>
       </header>
+
       <div class="bottom-line"></div>
       <!-- Fin Header -->
 
-      <!-- Seccion banner -->
-        <section class="banner">
-          <img src="./images/WhatsApp Image 2025-05-06 at 17.09.31 (3)-Photoroom.png" alt="Banner Principal" class="banner-img">
-        </section>
-      <!-- Fin seccion banner -->
+      <!-- Login-->
+      <main class="main-content">
+          <div class="login-container">
+              <img src="../images/logo2.png" alt="logo" class="login-logo">
+              <div class="input-group">
+                  <label for="email">Correo electrónico</label>
+                  <div class="input-wrapper">
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M18.3334 5.00004C18.3334 4.08337 17.5834 3.33337 16.6667 3.33337H3.33335C2.41669 3.33337 1.66669 4.08337 1.66669 5.00004M18.3334 5.00004V15C18.3334 15.9167 17.5834 16.6667 16.6667 16.6667H3.33335C2.41669 16.6667 1.66669 15.9167 1.66669 15V5.00004M18.3334 5.00004L10 10.8334L1.66669 5.00004" stroke="#F3F3F3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                      <input type="email" id="email" placeholder="ejemplo123@gmail.com">
+                  </div>
+              </div>
 
+              <div class="input-group">
+                  <label for="password">Contraseña</label>
+                  <div class="input-wrapper">
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M5.83333 9.16663V5.83329C5.83333 4.72822 6.27232 3.66842 7.05372 2.88701C7.83512 2.10561 8.89493 1.66663 10 1.66663C11.1051 1.66663 12.1649 2.10561 12.9463 2.88701C13.7277 3.66842 14.1667 4.72822 14.1667 5.83329V9.16663M4.16667 9.16663H15.8333C16.7538 9.16663 17.5 9.91282 17.5 10.8333V16.6666C17.5 17.5871 16.7538 18.3333 15.8333 18.3333H4.16667C3.24619 18.3333 2.5 17.5871 2.5 16.6666V10.8333C2.5 9.91282 3.24619 9.16663 4.16667 9.16663Z" stroke="#F3F3F3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                      <input type="password" id="password" placeholder="contraseña">
+                  </div>
+              </div>
 
+              <div class="remember-me">
+                  <input type="checkbox" id="remember-me">
+                  <span>Recuerdame</span>
+              </div>
 
-      <!-- Seccion remeras -->
-      <section class="seccion-remeras"> 
-        <img src="./images/remeras.jpg" alt="banner remeras" class="banner-remeras">
-      </section>
-      <!-- Fin seccion-remeras -->
+              <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+
+              <button class="btn btn-login">Iniciar sesión</button>
+              <a href="register.html"><button class="btn btn-register">Registrarse</button></a>
+          </div>
+      </main>
+      <!-- Fin Login -->
 
       <!-- Footer -->
       <footer class="footer">
@@ -71,9 +98,9 @@
                           <p class="contact-text">(2284) 456-7890</p>
                       </div>
                       <div class="contact-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="rgb(234, 88, 12)" class="bi bi-envelope-fill contact-icon">
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="rgb(234, 88, 12)" class="bi bi-envelope-fill contact-icon">
                           <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586zm3.436-.586L16 11.801V4.697z"/>
-                        </svg>
+                          </svg>
                           <p class="contact-text">contacto@gmail.com</p>
                       </div>
                       <div class="contact-item">
@@ -85,7 +112,7 @@
                   </address>
 
                   <div class="brand">
-                      <img src="images/sinFondo2.png" alt="logo superarse" class="brand-logo">
+                      <img src="../images/logo-lomascercano.png" alt="logo superarse" class="brand-logo">
                   </div>
 
                   <nav class="footer-nav">
@@ -99,7 +126,11 @@
                   </nav>
               </div>
               <div class="footer-line"></div>
-
+               <div class="social-media">
+                <div><a href="https://www.facebook.com/superarsegym/" target="_blank"><i class="fa-brands fa-facebook-f social-icon" ></i></a></div>
+                <div><a href="https://www.instagram.com/superarsegym/" target="_blank"><i class="fa-brands fa-instagram social-icon"></i></a></div>
+                <div><a href="https://WhatsApp.com/superarsegym" target="_blank"><i class="fa-brands fa-whatsapp social-icon"></i></a></div>
+              </div>
             <!-- imagenes de redes sociales -->
 
               <div class="copyright">
@@ -111,7 +142,7 @@
           </div>
       </footer>
 
-    <!-- Fin Footer -->
+      <!-- Fin Footer -->
 
     </main>
   </body>
