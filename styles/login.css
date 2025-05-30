@@ -18,14 +18,20 @@
 }
 
 .login-logo {
-    width: 442px;
-    height: 347px;
+    /* cambie el tamaño del logo */
+    width: 300px;
+    object-fit: contain;
+    margin: 0;
+    /* width: 442px; */
+    /* height: 347px; */
     /* margin-bottom: 64px; */
-    aspect-ratio: 442.27/347;
+    /* aspect-ratio: 442.27/347; */
 }
 
 .input-group {
-    width: 384px;
+    /* cambie el ancho de los input */
+    /* width: 384px; */
+    width: 16rem;
     margin-bottom: 10px;
 }
 
@@ -48,11 +54,13 @@
     height: 40px;
 }
 
+/* quite el bordeado a los input por dentro y cambie el color de la letra */
 .input-wrapper input {
     flex: 1;
     background: none;
     border: none;
-    color: #71717A;
+    color: var(--blanco);
+    outline: none;
     font-size: 14px;
     line-height: 20px;
 }

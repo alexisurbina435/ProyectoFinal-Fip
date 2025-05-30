@@ -7,6 +7,7 @@
       <link rel="stylesheet" href="../styles/styles.css">
       <link rel="stylesheet" href="../styles/login.css">
       <link rel="stylesheet" href="../styles/register.css">
+      <link rel="stylesheet" href="../styles/dropdown.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   </head>
@@ -17,13 +18,13 @@
       <div class="top-line"></div>
 
       <header class="header">
-        <img src="../images/logo-sinfondo.png" class="logo" alt="logo">
+        <a href="index.html"><img src="../images/logo-sinfondo.png" class="logo" alt="logo"></a>
 
         <nav class="navigation">
-          <button class="nav-item">Inicio</button>
-          <button class="nav-item">Productos</button>
-          <button class="nav-item">Contacto</button>
-          <button class="nav-item">Inscribite</button>
+          <a href="index.html"><button class="nav-item">Inicio</button></a>
+          <a href="productos.html"><button class="nav-item">Productos</button></a>
+          <a href="contacto.html"><button class="nav-item">Contacto</button></a>
+          <a href="inscribite.html"><button class="nav-item">Inscribite</button></a>
         </nav>
 
         <div class="icons-container">
@@ -33,11 +34,16 @@
               </svg>
             </button>
             <div class="user-container">
-              <a href="login.html" class="user-button" aria-label="User Profile">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#EE5F0D" class="bi bi-person user-icon" viewBox="0 0 16 16">
-                  <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
-                </svg>
-              </a>
+              <div class="dropdown">
+                    <div class="select">
+                        <i class="fa-regular fa-user selected icon"></i>
+                        <div class="caret"></div>
+                    </div>
+                    <ul class="menu">
+                        <li><a href="register.html" class="login-links">Crear cuenta</a></li>
+                        <li><a href="login.html" class="login-links">Acceder</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
       </header>
@@ -161,11 +167,11 @@
 
                   <nav class="footer-nav">
                       <ul class="footer-nav-list">
-                          <li><a href="#inicio" class="footer-nav-link">Inicio</a></li>
+                          <li><a href="index.html" class="footer-nav-link">Inicio</a></li>
                           <li><a href="#productos" class="footer-nav-link">Productos</a></li>
                           <li><a href="#planes" class="footer-nav-link">Planes</a></li>
                           <li><a href="#inscribite" class="footer-nav-link">Inscribite</a></li>
-                          <li><a href="#contacto" class="footer-nav-link">Contacto</a></li>
+                          <li><a href="contacto.html" class="footer-nav-link">Contacto</a></li>
                       </ul>
                   </nav>
               </div>
@@ -189,5 +195,6 @@
       <!-- Fin Footer -->
 
     </main>
+    <script src="../javascript/dropdown.js"></script>
   </body>
 </html>
