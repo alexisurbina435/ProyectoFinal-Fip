@@ -1,0 +1,146 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+.contacto{
+    background-color: var(--negro);
+}
+
+.contact-logo{
+    width: 300px;
+    object-fit: contain;
+    margin: 0;
+}
+.form-title{
+    font-size: 2.5rem;
+}
+
+.form-text{
+    width: 34%;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.formulario{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1rem;
+    color: var(--blanco);
+    gap: 0.5rem;
+}
+
+.form-label{
+    font-size: 0.9rem;
+    width: 16rem;
+    display: flex;
+}
+
+.input-container {
+    position: relative;
+    display: inline-block;
+}
+.input-container i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--blanco);
+}
+
+
+.input-container input, textarea{
+    width: 16rem;
+    border-radius: 4px;
+    padding: 0.5rem 0;
+    padding-left: 2rem;
+    border: none;
+    outline: none;
+    background: #3B3F40;
+    color: var(--blanco);
+}
+
+textarea{
+    padding: 0.5rem 0.5rem 6rem 0.5rem;
+    resize: none;
+}
+
+.form-button{
+    width: 13rem;
+    height: 2rem;
+    background: var(--naranja);
+    margin: 1.5rem 0;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    padding: 0.3rem 0;
+    color: var(--blanco);
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.form-button:hover{
+    background: #C14A09;
+    transition: transform 0.3s ease;
+}
+/* overlay para desenfoque del fondo cuando se abre el modal */
+.overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(2px); 
+        z-index: 10;
+        display: none; 
+}
+.overlay-block{
+    display: block;
+}
+
+/* estilos para el modal  */
+.modal-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: fixed;
+  top: 50%;
+  left: 38%;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  width: 25%;
+  height: 25%;
+  background-color: var(--naranja);
+  color: var(--blanco);
+  backdrop-filter: blur(5px);
+}
+
+.modal-container p {
+  margin: 1rem;
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+.modal-container button{
+  width: 8rem;
+  height: 2rem;
+  background: var(--naranja);
+  border: 1px var(--blanco) solid;
+  border-radius: 4px;
+  font-size: 1rem;
+  padding: 0.3rem 0;
+  color: var(--blanco);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.modal-container button:hover{
+  background: #C14A09;
+  transition: transform 0.3s ease;
+}
+/* fin del estilo del modal  */
