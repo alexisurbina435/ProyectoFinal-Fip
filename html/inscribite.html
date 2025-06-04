@@ -7,8 +7,8 @@
   <title>Superarse - Acondicionamiento físico y salud</title>
   <link rel="stylesheet" href="../styles/styles.css">
   <link rel="stylesheet" href="../styles/dropdown.css">
-  <link rel="stylesheet" href="../styles/contacto.css">
   <link rel="stylesheet" href="../styles/modal.css">
+  <link rel="stylesheet" href="../styles/inscribite.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -56,52 +56,70 @@
     <!-- Fin Header -->
 
     <!-- Seccion formulario-->
-    <section class="contacto">
-      <form action="" class="formulario" id="formulario">
-        <img src="../images/logo2.png" alt="contact-logo" class="contact-logo">
-        <h1 class="form-title">¡Hola!</h1>
-        <p class="form-text">Escribí tus datos y contanos tu inquietud.
-          Te daremos una respuesta en menos de
-          24 horas hábiles.</p>
 
-        <label for="name" class="form-label">Nombre completo</label>
-
-        <div class="input-container">
-          <i class="fa-regular fa-user form-icon"></i>
-          <input type="text" id="nombre" name="nombre" class="form-input" placeholder="nombre completo" required>
+    <section>
+        <div class="titulo">
+          <h1>Elegí el plan de tu preferencia.</h1>
+          <h3 class="subtitulo">¡Eleva tu nivel! Encuentra el plan perfecto para alcanzar tus objetivos.</h3>
         </div>
+        <div class="inscripcion">
+             
+            <a href="inscripcion.html?plan=premium" class="link-inscripcion"><div class="contenedor-inscripcion premium">
+                <div class="plan">
+                    <h1>Plan Premium</h1>
+                    <h3>$40.000</h3>
+                </div>
+                <div class="beneficios">
+                    <ul class="lista-beneficios">
+                        <li>Entrenamiento online libre</li>
+                        <li>Entrenamiento progresivo</li>
+                        <li>Clase consulta ilimitadas</li>
+                        <li>Subscripcion mensual</li>
+                        <li>Descuento en tienda 15%</li>
+                        <li>Entrenos one-one</li>
+                    </ul>
+                    <a href="inscripcion.html?plan=premium"><button type="submit" class="btn-inscripcion">¡Inscribite!</button></a>
+                </div>
+            </div></a>
 
-        <label for="email" class="form-label">Correo electrónico</label>
-        <div class="input-container">
-          <i class="fa-regular fa-envelope form-icon"></i>
-          <input type="email" id="email" name="email" class="form-input" placeholder="ejemplo123@gmail.com" required>
-        </div>
-        <label for="message" class="form-label">Consulta</label>
-        <textarea name="consulta" id="consulta" placeholder="Escribi tu consulta"></textarea>
-        <button type="submit" class="form-button" id="showPopup">Enviar</button>
+            <a href="inscripcion.html?plan=standar" class="link-inscripcion"><div class="contenedor-inscripcion standar">
+                <div class="plan">
+                    <h1>Plan Standar</h1>
+                    <h3>$35.000</h3>
+                </div>
+                <div class="beneficios">
+                    <ul class="lista-beneficios">
+                        <li>Entrenamiento online libre</li>
+                        <li>Entrenamiento progresivo</li>
+                        <li>Clase consulta limitadas</li>
+                        <li>Subscripcion mensual</li>
+                        <li>Descuento en tienda 10%</li>
+                        <li>3 entrenos diferentes</li>
+                    </ul>
+                    <a href="inscripcion.html?plan=standar"><button type="submit" class="btn-inscripcion">¡Inscribite!</button></a>
+                </div>
+              </div></a>
 
-      </form>
-      <!-- inicio del modal  -->
-      <div class="overlay" id="overlay">
-        <div class="overlay-block"></div>
-      </div>
-      <dialog id="favDialog">
-        <div class="modal-container">
-          <p>Formulario enviado.<br>Gracias por contactarnos</p>
-          <button id="closeModal">Cerrar</button>
+            <a href="inscripcion.html?plan=basic" class="link-inscripcion"><div class="contenedor-inscripcion basico">
+                <div class="plan">
+                    <h1>Plan Basic</h1>
+                    <h3>$29.000</h3>
+                </div>
+                <div class="beneficios">
+                    <ul class="lista-beneficios">
+                        <li>Entrenamiento online</li>
+                        <li>Entrenamiento progresivo</li>
+                        <li>Clase consulta limitadas</li>
+                        <li>Subscripcion mensual</li>
+                        <li>Descuento en tienda 5%</li>
+                        <li>Entrenos 2 veces</li>
+                    </ul>
+                    <a href="inscripcion.html?plan=basic"><button type="submit" class="btn-inscripcion" value="basico">¡Inscribite!</button></a>
+                </div>
+            </div></a>
         </div>
-      </dialog>
-      <!-- fin del modal  -->
     </section>
     <!-- Fin seccion formulario -->
-
-
-
-    <!-- Seccion remeras -->
-    <!-- <section class="seccion-remeras"> 
-        <img src="../images/remeras.jpg" alt="banner remeras" class="banner-remeras">
-      </section> -->
-    <!-- Fin seccion-remeras -->
 
     <!-- Footer -->
     <footer class="footer">
@@ -175,7 +193,6 @@
 
   </main>
   <script src="../javascript/dropdown.js"></script>
-  <script src="../javascript/contacto.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 </body>
 

@@ -2,6 +2,7 @@ let nombreCompleto = document.getElementById("nombre");
 let correo = document.getElementById("email");
 let consulta = document.getElementById("consulta");
 let Formulario = document.getElementById("formulario");
+
 let favDialog = document.getElementById("favDialog");
 let closeBtn = document.getElementById("closeModal");
 let overlay = document.getElementById("overlay");

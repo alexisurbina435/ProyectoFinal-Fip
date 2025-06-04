@@ -1,0 +1,57 @@
+.overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(2px); 
+        z-index: 10;
+        display: none; 
+}
+.overlay-block{
+    display: block;
+}
+
+/* estilos para el modal  */
+.modal-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: fixed;
+  top: 50%;
+  left: 38%;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  width: 25%;
+  height: 25%;
+  background-color: var(--naranja);
+  color: var(--blanco);
+  backdrop-filter: blur(5px);
+}
+
+.modal-container p {
+  margin: 1rem;
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+.modal-container button{
+  width: 8rem;
+  height: 2rem;
+  background: var(--naranja);
+  border: 1px var(--blanco) solid;
+  border-radius: 4px;
+  font-size: 1rem;
+  padding: 0.3rem 0;
+  color: var(--blanco);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.modal-container button:hover{
+  background: #C14A09;
+  transition: transform 0.3s ease;
+}
+/* fin del estilo del modal  */
