@@ -1,0 +1,116 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+}
+.premium, .standar, .basico{
+    height: 630px;
+}
+.titulo{
+    font-size: 3rem;
+    font-weight: 900;
+    margin: 0;
+}
+.contenido {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.error-plan {
+    color: var(--blanco);
+    font-size: 2rem;
+    font-weight: 900;
+}
+
+.botones {
+    display: flex;
+    gap: 1rem;
+    width: 500px;
+    height: 40px;
+}
+
+.btn-finalizar-compra {
+    border-radius: 20px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    width: 600px;
+    height: 40px;
+    transition: all 0.4s ease-in-out;
+}
+
+.detalles-compra {
+    background-color: var(--blanco);
+    border: var(--naranja) 1px solid;
+    color: var(--naranja);
+}
+
+.detalles-compra:hover {
+    background-color: var(--black);
+    color: var(--blanco);
+    transition: all 0.4s ease-in-out;
+}
+
+
+.btn-inscribirse {
+    color: var(--blanco);
+    background-color: var(--naranja);
+}
+
+.btn-inscribirse:hover{
+    color: var(--gris);
+    transition: all 0.4s ease-in-out;
+}
+
+/* metodos de pago  */
+
+.finalizar-compra{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.titulo-pago{
+    color: var(--blanco);
+}
+.contenedor-pago {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.contenedor-tarjetas,
+.tranferencia {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+    background-color: var(--blanco);
+    margin: 0 1rem 2rem 0;
+    padding: 1rem 2rem;
+    border-radius: 20px;
+}
+
+.metodos-pago-list,
+.lista-tarjetas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    list-style: none;
+}
+.lista-tarjetas{
+    padding: 0.2rem 3.4rem;
+}

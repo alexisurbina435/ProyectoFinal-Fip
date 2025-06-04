@@ -7,7 +7,7 @@
   <title>Superarse - Acondicionamiento físico y salud</title>
   <link rel="stylesheet" href="../styles/styles.css">
   <link rel="stylesheet" href="../styles/dropdown.css">
-  <link rel="stylesheet" href="../styles/contacto.css">
+  <link rel="stylesheet" href="../styles/planillaSalud.css">
   <link rel="stylesheet" href="../styles/modal.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
@@ -56,52 +56,147 @@
     <!-- Fin Header -->
 
     <!-- Seccion formulario-->
-    <section class="contacto">
-      <form action="" class="formulario" id="formulario">
-        <img src="../images/logo2.png" alt="contact-logo" class="contact-logo">
-        <h1 class="form-title">¡Hola!</h1>
-        <p class="form-text">Escribí tus datos y contanos tu inquietud.
-          Te daremos una respuesta en menos de
-          24 horas hábiles.</p>
 
-        <label for="name" class="form-label">Nombre completo</label>
-
-        <div class="input-container">
-          <i class="fa-regular fa-user form-icon"></i>
-          <input type="text" id="nombre" name="nombre" class="form-input" placeholder="nombre completo" required>
-        </div>
-
-        <label for="email" class="form-label">Correo electrónico</label>
-        <div class="input-container">
-          <i class="fa-regular fa-envelope form-icon"></i>
-          <input type="email" id="email" name="email" class="form-input" placeholder="ejemplo123@gmail.com" required>
-        </div>
-        <label for="message" class="form-label">Consulta</label>
-        <textarea name="consulta" id="consulta" placeholder="Escribi tu consulta"></textarea>
-        <button type="submit" class="form-button" id="showPopup">Enviar</button>
-
-      </form>
-      <!-- inicio del modal  -->
-      <div class="overlay" id="overlay">
-        <div class="overlay-block"></div>
+    <section class="planilla-salud">
+      <div class="conten-fondo">
+        <img src="../images/fondo-mejorado.png" alt="banner gimnasio" class="fondo">
+        >
       </div>
-      <dialog id="favDialog">
-        <div class="modal-container">
-          <p>Formulario enviado.<br>Gracias por contactarnos</p>
-          <button id="closeModal">Cerrar</button>
+      <div class="form-container">
+        <div class="title">
+          <h2>Planilla de salud</h2>
+          <!-- <h1>DATOS PERSONALES</h1> -->
+          <!-- <h2>Planilla de salud</h2> -->
+          <!-- <img src="../images/logo-sinfondo.png" alt="logo gimnasio" class="logo-sinfondo"> -->
         </div>
-      </dialog>
-      <!-- fin del modal  -->
+        <form action="" class="formulario" id="formulario">
+
+          <fieldset class="datos-personales">
+            <legend>DATOS PERSONALES</legend>
+            <div class="input-container">
+              <label for="name">EDAD</label>
+              <div class="inputs">
+                <input type="number" min="1" id="edad" name="edad" class="form-input" placeholder="edad" required>
+              </div>
+            </div>
+
+            <div class="input-container">
+              <label for="name">DNI</label>
+              <div class="inputs">
+                <input type="number" min="1" id="dni" name="dni" class="form-input" placeholder="dni" required>
+              </div>
+            </div>
+            
+
+            <div class="input-container">
+              <label for="name">Fecha de nacimiento</label>
+              <div class="inputs">
+                <input type="date" id="fecha-nacimiento" name="fecha-nacimiento" class="form-input" required>
+              </div>
+            </div>
+            <div class="input-container">
+              <label for="name">Dirección</label>
+              <div class="inputs">
+                <input type="text" id="direccion" name="direccion" class="form-input" placeholder="dirección" required>
+              </div>
+            </div>
+
+
+            <div class="input-container">
+              <label for="name">Ciudad</label>
+              <div class="inputs">
+                <input type="text" id="ciudad" name="ciudad" class="form-input" placeholder="ciudad" required>
+              </div>
+            </div>
+
+            <div class="input-container">
+              <label for="name">Provincia</label>
+              <div class="inputs">
+                <input type="text" id="provincia" name="provincia" class="form-input" placeholder="provincia" required>
+              </div>
+            </div>
+
+            <div class="input-container">
+              <label for="name">Código Postal</label>
+              <div class="inputs">
+                <input type="number" min="1" id="codigo-postal" name="codigo-postal" class="form-input"
+                  placeholder="código postal" required>
+              </div>
+            </div>
+
+            <div class="input-container">
+              <label for="name">País</label>
+              <div class="inputs">
+                <input type="text" id="pais" name="pais" class="form-input" placeholder="país" required>
+              </div>
+            </div>
+          </fieldset>
+
+
+          <fieldset class="informacion">
+            <legend>INFORMACIÓN IMPORTANTE</legend>
+
+            <div class="check-contenedor">
+              <div class="checkboxs">
+                <label for="name" class="form-label">¿PADECE ALGUNA CONDICIÓN MEDICA?</label>
+                <input type="checkbox" name="opcion" value="si" id="si-condicion">SI
+                <input type="checkbox" name="opcion" value="no" id="no-condicion">NO
+              </div>
+              <div class="input-contenedor">
+                <label for="name">SI ES AFIRMATIVO ESPECIFIQUE:</label>
+                <div class="textarea-form">
+                  <textarea name="lesion" id="lesion" class="form-textarea"
+                    placeholder="si es afirmativo especifique"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="check-contenedor">
+              <div class="checkboxs">
+                <label for="name" class="form-label">¿ESTA TOMANDO ALGUNA MEDICACIÓN?</label>
+                <input type="checkbox" name="opcion" value="si" id="si-medicacion">SI
+                <input type="checkbox" name="opcion" value="no" id="no-medicacion">NO
+              </div>
+              <div class="input-contenedor">
+                <label for="name">SI ES AFIRMATIVO ESPECIFIQUE:</label>
+                <div class="textarea-form">
+                  <textarea name="medicamento" id="medicamento" class="form-textarea"
+                    placeholder="si es afirmativo especifique" ></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="check-contenedor">
+              <div class="checkboxs">
+                <label for="name" class="form-label">¿TIENE EXPERIENCIA ENTRENANDO?</label>
+                <input type="checkbox" name="opcion" value="si" id="si-entreno">SI
+                <input type="checkbox" name="opcion" value="no" id="no-entreno">NO
+              </div>
+              <div class="input-contenedor">
+                <label for="name">OBJETIVOS:</label>
+                <div class="textarea-form">
+                  <textarea name="objetivos" id="objetivo" class="form-textarea" placeholder="objetivos"></textarea>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+
+          <button type="submit" class="form-button" id="showPopup">Enviar</button>
+        </form>
+
+        <!-- inicio del modal  -->
+        <div class="overlay" id="overlay">
+          <div class="overlay-block"></div>
+        </div>
+        <dialog id="favDialog">
+          <div class="modal-container">
+            <p>Planilla enviada.<br>Gracias por elegirnos</p>
+            <button id="closeModal">Cerrar</button>
+          </div>
+        </dialog>
+        <!-- fin del modal  -->
     </section>
     <!-- Fin seccion formulario -->
-
-
-
-    <!-- Seccion remeras -->
-    <!-- <section class="seccion-remeras"> 
-        <img src="../images/remeras.jpg" alt="banner remeras" class="banner-remeras">
-      </section> -->
-    <!-- Fin seccion-remeras -->
 
     <!-- Footer -->
     <footer class="footer">
@@ -175,7 +270,7 @@
 
   </main>
   <script src="../javascript/dropdown.js"></script>
-  <script src="../javascript/contacto.js"></script>
+  <script src="../javascript/planillaSalud.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 </body>
 
