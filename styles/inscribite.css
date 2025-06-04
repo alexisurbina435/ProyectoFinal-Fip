@@ -1,0 +1,117 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+}
+
+.titulo {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 2rem;
+    color: var(--blanco);
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.40);
+}
+
+.subtitulo{
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 1.8rem;
+}
+
+.inscripcion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 3rem 0 5rem 0;
+}
+
+.link-inscripcion {
+    color: var(--blanco);
+    text-decoration: none;
+}
+
+.contenedor-inscripcion {
+    width: 400px;
+    height: 700px;
+    background-color: var(--gris-osc);
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    display: flex;
+    margin: 0 1rem 0 1rem;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    transition: all 0.5s ease-in-out;
+
+}
+
+.contenedor-inscripcion:hover {
+    transform: scale(1.1);
+    transition: all 0.5s ease;
+}
+
+.premium {
+    background-image: url('../images/premium2.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.standar {
+    background-image: url('../images/standar2.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.basico {
+    background-image: url('../images/basico2.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.plan {
+    margin-top: 17rem;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--naranja);
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.beneficios {
+    font-size: 1.5rem;
+    color: var(--blanco);
+}
+
+.lista-beneficios {
+    list-style-type: square;
+}
+
+.btn-inscripcion {
+    width: 150px;
+    height: 40px;
+    background-color: var(--naranja);
+    border-radius: 10px;
+    border: none;
+    color: var(--blanco);
+    font-size: 1.5rem;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    margin-top: 1rem;
+    transition: all 0.4s ease-in-out;
+}
+
+.btn-inscripcion:hover {
+    cursor: pointer;
+    background-color: var(--blanco);
+    color: var(--naranja);
+    transition: all 0.4s ease-in-out;
+}
