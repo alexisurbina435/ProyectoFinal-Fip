@@ -70,18 +70,17 @@
 }
 
 .rating-stars {
-  width: 100px;
+  width: 2rem;
   height: auto;
 }
 
 .product-price {
   display: flex;
   align-items: center;
-  gap: 1rem;
 }
 
 .price-icon {
-  width: 50px;
+  width: 3rem;
   height: auto;
 }
 
