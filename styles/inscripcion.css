@@ -1,19 +1,15 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
 body {
     height: 100vh;
 }
 .premium, .standar, .basico{
+    width: 380px;
     height: 630px;
 }
 .titulo{
     font-size: 3rem;
     font-weight: 900;
-    margin: 0;
+    margin-top: 100px;
 }
 .contenido {
     display: flex;

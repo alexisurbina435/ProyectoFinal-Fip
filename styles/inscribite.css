@@ -1,16 +1,16 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
-body {
-    height: 100vh;
+
+.inscribite{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
 .titulo {
     text-align: center;
-    margin-top: 2rem;
+    margin-top: 7rem;
     font-size: 2rem;
     color: var(--blanco);
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.40);
@@ -20,13 +20,14 @@ body {
     text-align: center;
     margin-top: 1rem;
     font-size: 1.8rem;
+    margin-bottom: 2%;
 }
 
 .inscripcion {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 3rem 0 5rem 0;
+    /* margin: 3rem 0 5rem 0; */
 }
 
 .link-inscripcion {
@@ -35,7 +36,9 @@ body {
 }
 
 .contenedor-inscripcion {
-    width: 400px;
+    /* ancho anterior 400px */
+    width: 320px;
+    /* max-width: 320px; */
     height: 700px;
     background-color: var(--gris-osc);
     border-radius: 10px;
@@ -51,7 +54,7 @@ body {
 }
 
 .contenedor-inscripcion:hover {
-    transform: scale(1.1);
+    transform: scale(1.02);
     transition: all 0.5s ease;
 }
 
@@ -59,7 +62,7 @@ body {
     background-image: url('../images/premium2.jpg');
     background-size: cover;
     background-position: center;
-    position: relative;
+    /* position: relative; */
     overflow: hidden;
 }
 
@@ -67,7 +70,7 @@ body {
     background-image: url('../images/standar2.jpg');
     background-size: cover;
     background-position: center;
-    position: relative;
+    /* position: relative; */
     overflow: hidden;
 }
 
@@ -75,7 +78,7 @@ body {
     background-image: url('../images/basico2.jpg');
     background-size: cover;
     background-position: center;
-    position: relative;
+    /* position: relative; */
     overflow: hidden;
 }
 
@@ -92,9 +95,6 @@ body {
     color: var(--blanco);
 }
 
-.lista-beneficios {
-    list-style-type: square;
-}
 
 .btn-inscripcion {
     width: 150px;

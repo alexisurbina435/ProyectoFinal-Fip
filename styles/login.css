@@ -21,7 +21,7 @@
     /* cambie el tamaño del logo */
     width: 300px;
     object-fit: contain;
-    margin: 0;
+    margin-top: 2rem;
     /* width: 442px; */
     /* height: 347px; */
     /* margin-bottom: 64px; */
