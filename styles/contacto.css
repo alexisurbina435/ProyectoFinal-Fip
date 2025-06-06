@@ -1,74 +1,54 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: sans-serif;
-}
-.contacto{
+
+
+.contacto {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 5rem;
     background-color: var(--negro);
 }
 
-.contact-logo{
+
+.contact-logo {
     width: 300px;
     object-fit: contain;
-    margin: 0;
+    margin-top: 4rem;
 }
-.form-title{
+
+.form-title {
     font-size: 2.5rem;
 }
 
-.form-text{
+.form-text {
     width: 34%;
     font-size: 1.5rem;
     margin-bottom: 1rem;
+    text-align: center;
 }
 
-.formulario{
+.formulario {
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
     padding: 1rem;
     color: var(--blanco);
     gap: 0.5rem;
 }
 
-.form-label{
-    font-size: 0.9rem;
-    width: 16rem;
-    display: flex;
-}
-
-.input-container {
-    position: relative;
-    display: inline-block;
-}
-.input-container i {
-    position: absolute;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--blanco);
-}
-
-
-.input-container input, textarea{
-    width: 16rem;
+textarea {
+    width: 16.5rem;
     border-radius: 4px;
-    padding: 0.5rem 0;
-    padding-left: 2rem;
+    padding: 1rem 0.5rem 6rem 0.5rem;
     border: none;
     outline: none;
-    background: #3B3F40;
+    background: #404040;
     color: var(--blanco);
-}
-
-textarea{
-    padding: 0.5rem 0.5rem 6rem 0.5rem;
     resize: none;
+    font-size: 1rem;
 }
 
-.form-button{
+.form-button {
     width: 13rem;
     height: 2rem;
     background: var(--naranja);
@@ -82,7 +62,12 @@ textarea{
     cursor: pointer;
 }
 
-.form-button:hover{
+.form-button:hover {
     background: #C14A09;
     transition: transform 0.3s ease;
+}
+
+.burger-icon{
+    color: var(--naranja);
+    font-size: 1.7rem;
 }
