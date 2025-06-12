@@ -8,7 +8,7 @@ let ciudadInput = document.getElementById("ciudad");
 let provInput = document.getElementById("provincia");
 let codigoInput = document.getElementById("codigo-postal");
 let paisInput = document.getElementById("pais");
-
+let sexo = document.getElementById("sexo");
 //Textareas de los checkbox
 let lesionInput = document.getElementById("lesion");
 let medicamentoInput = document.getElementById("medicamento");
@@ -44,6 +44,7 @@ Formulario.addEventListener("submit", (e) => {
         { label: "Provincia", value: provInput.value, min: 4 },
         { label: "Código postal", value: codigoInput.value, min: 4 },
         { label: "País", value: paisInput.value, min: 5 },
+        { label: "Sexo", value: sexo.value },
         { label: "Objetivo", value: objetivoInput.value, min: 4 },
     ];
 

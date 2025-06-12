@@ -1,14 +1,17 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-    text-decoration: none;
-}
+
+
 body{
+    /* font-family: 'Poppins', sans-serif; */
     background: var(--gris);
     height: 100vh;
 }
+/* si quiero ponerlo como antes que la planilla ocupe toda la pantalla tengo que sacar todo lo de .planilla-salud y descomentar lo de .conten-fondo y sacar el margin top  */
+/* .planilla-salud{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+} */
 
 /* .logo-sinfondo{
     width: 160px;
@@ -19,6 +22,12 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+    /* margin-top: 6rem; */
+}
+.conten-fondo img{
+    width: 80%;
+    object-fit: contain;
+    margin-top: 5.5rem;
 }
 
 .form-container{
@@ -99,6 +108,17 @@ legend::after {
     background: #3B3F40;
     color: var(--blanco);
     
+}
+/* input de eleccion de sexo  */
+#sexo{
+    display: flex;
+    width: 13rem;
+    padding: 0.8rem 0.5rem;
+    border: none;
+    outline: none;
+    background: #3B3F40;
+    color: var(--blanco);
+    border-radius: 4px;
 }
 
 .informacion {
