@@ -1,20 +1,131 @@
-/*
-fetch ("https://pokeapi.co/api/v2/ability/1/")
-.then(response => response.json())
-.then(json => console.log(json))
-.catch(error => console.error("Error al hacer fetch:", error));
-*/
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelector("#listaProductos").addEventListener("click", getDataElements);
+});
 
 
-const funcionAnonima = async ()=>{
-    try{ 
-        const response = await fetch ("https://pokeapi.co/api/v2/")
-        const json = await response.json()
-        console.log(json.results[3].name)
-    }
-    catch(error){
-        console.log(error)
-    }   
+let arrayProductos =[]; 
+
+const listaProductos = document.querySelector("#listaProductos");
+document.addEventListener('DOMContentLoaded', function() {
+  eventListeners();
+});
+ 
+function eventListeners(){
+  listaProductos.addEventListener("click", getDataElemnts)
 
 }
-funcionAnonima();
+
+function getDataElemnts(e){
+  if(e.target.classList.contains('boton-Carrito')){
+    const elementHtml = e.target.parentElement.parentElement.parentElement;
+    selectData(elementHtml)
+  }
+
+}
+
+function selectData(producto){
+  const idProducto = parseInt(producto.closest('article').id, 10);
+   const existente = arrayProductos.find(p => p.id === idProducto);
+
+  if (existente) {
+    existente.quantity++;
+  } else {
+  const productoObj = {
+    img: producto.querySelector('img').src,
+    tittle: producto.querySelector('h5').textContent,
+    price : parseFloat(producto.querySelector('span.precio-actual').textContent.replace('$', '')),
+    id : parseInt(producto.closest('article').id,10),
+    quantity: 1
+  };
+
+  arrayProductos = [...arrayProductos, productoObj];
+ actualizarContadorCarrito()
+ console.log(arrayProductos)
+}
+}
+
+function actualizarContadorCarrito() {
+  const contador = document.querySelector("#contador-carrito");
+  const totalCantidad = arrayProductos.reduce((total, producto) => total + producto.quantity, 0);
+  contador.textContent = totalCantidad;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// const botonesCarrito = document.querySelectorAll(".boton-Carrito");
+// botonesCarrito.forEach(boton => {
+//   boton.addEventListener("click", e => {
+//     const agregarProducto=(e.target.classList.contains("boton-Carrito"))
+//       Productos =[...Productos, agregarProducto]
+  
+//   });
+// });
+// })
+
+
+
+  // function actualizarContador() {
+  //   if (contadorCarrito) {
+  //     contadorCarrito.textContent = cantidad.toString();
+  //   }
+  // }
+
+  // if (botonesCarrito) {
+  //   botonesCarrito.addEventListener("click", () => {
+  //     cantidad++;
+  //     mensaje.textContent = "✅ Producto agregado al carrito";
+  //     mensaje.style.color = "green";
+  //     actualizarContador();
+
+  //     setTimeout(() => {
+  //       mensaje.textContent = "";
+  //     }, 2000);
+  //   });
+  // }
+
+  // if (sacarDelCarrito) {
+  //   sacarDelCarrito.addEventListener("click", () => {
+  //     if (cantidad > 0) {
+  //       cantidad--;
+  //       mensaje.textContent = "✅ Producto eliminado del carrito";
+  //       mensaje.style.color = "green";
+  //       actualizarContador();
+
+  //       setTimeout(() => {
+  //         mensaje.textContent = "";
+  //       }, 2000);
+  //     }
+  //   });
+  // }
+
+
+// // si el usuario no esta registrado redirige a la pagina de crear usuario 
+// botonesComprar.forEach((boton) => {
+//     boton.addEventListener("click", ()=>{
+//     const usuarioLogueado = localStorage.getItem("usuarioLogueado") === "true";
+    
+//     if (!usuarioLogueado) {
+//       // Si no está logueado, redirigimos
+//       window.location.href = "register.html";
+//     } else {
+//       // Usuario registrado, continuar con la compra
+//       const nombre = localStorage.getItem("nombreUsuario");
+//       alert("puede continuar con el proceso de su compra, " + nombre + "!");
+//     }
+//     function comprar(){
+
+// }
+
+//     });
+// });
+// })
+

@@ -139,3 +139,17 @@
 }
 
 /*fin de productos */
+.cart-button {
+  position: relative;
+}
+
+.contador-carrito {
+   background-color: red;
+  color: white;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 50%;
+  position: absolute;
+  top: -5px;
+  right: -10px;
+}

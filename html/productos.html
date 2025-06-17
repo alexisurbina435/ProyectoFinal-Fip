@@ -26,7 +26,7 @@
               aria-label="Inscribite">Inscribite ya!</a></li>
         </ul>
         <div class="icons-container">
-          <button class="cart-button" aria-label="Shopping Cart">
+          <button  class="cart-button" aria-label="Shopping Cart">
             <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"
               class="cart-icon">
               <path
@@ -34,6 +34,7 @@
                 stroke="#EE5F0D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </button>
+          <span class="contador-carrito" id="contador-carrito">0</span>
           <div class="user-container">
             <div class="dropdown">
               <div class="select">
@@ -74,7 +75,7 @@
     <!-- Seccion productos -->
     <section class="container my-5" id="listaProductos">
     <div class="row g-4">
-    <article class="col-12 col-md-3">
+    <article  id="1" class="col-12 col-md-3">
     <div class="card h-100 text-center">
     <img
     decoding="async"
@@ -92,18 +93,18 @@
     <i class="fa-solid fa-star icon-star"></i>
     <i class="fa-solid fa-star icon-star"></i>
     </div>
-    <span class="precio-viejo" id="precio-viejo"><span>$</span> 60.000</span>
-    <span class="precio-actual" id="precio-actual"><span>$</span> 40.500</span>
+    <span class="precio-viejo" ></span><span>$</span> 60.000</span>
+    <span class="precio-actual"><span>$</span> 40.500</span>
     <sup class="descuento">15% OFF</sup>
     <div class ="botones">
-    <button class="producto-boton">Comprar Ahora</button>
-    <button class="producto-boton">Agregar al Carrito</button>
+    <button id="boton-Comprar" class="boton-Comprar">Comprar Ahora</button>
+    <button id="boton-Carrito" class="boton-Carrito">Agregar al Carrito</button>
     </div>
     </div>
     </div>
     </article>
 
-    <article class="col-12 col-md-3">
+    <article  id="2" class="col-12 col-md-3">
     <div class="card h-100 text-center">
     <img
     decoding="async"
@@ -121,18 +122,18 @@
     <i class="fa-solid fa-star icon-star"></i>
     <i class="fa-solid fa-star icon-star"></i>
     </div>
-    <span class="precio-viejo" id="precio-viejo"><span>$</span> 90.000</span>
-    <span class="precio-actual" id="precio-actual"><span>$</span> 130.000</span>
+    <span class="precio-viejo"><span>$</span> 90.000</span>
+    <span class="precio-actual"><span>$</span> 130.000</span>
     <sup class="descuento">15% OFF</sup>
     <div class="botones">
-    <button class="producto-boton">Comprar Ahora</button>
-    <button class="producto-boton">Agregar al Carrito</button>
+    <button id="boton-Comprar" class="boton-Comprar">Comprar Ahora</button>
+    <button id= "boton-Carrito" class="boton-Carrito">Agregar al Carrito</button>
     </div>
     </div>  
     </div>
     </article>
 
-    <article class="col-12 col-md-3">
+    <article  id="3" class="col-12 col-md-3">
     <div class="card h-100 text-center">
     <img decoding="async"src="../images/whey-protein.webp" class="carrusel dinamico img-thumbnail"alt="Proteína de suero concentrada"/>
     <div class="card-body">
@@ -145,18 +146,18 @@
     <i class="fa-solid fa-star icon-star"></i>
     <i class="fa-solid fa-star icon-star"></i>
     </div>
-    <span class="precio-viejo" id="precio-viejo"><span>$</span> 100.000</span>
-    <span class="precio-actual " id="precio-actual"><span>$</span> 80.200</span>
+    <span class="precio-viejo"><span>$</span> 100.000</span>
+    <span class="precio-actual"><span>$</span> 80.200</span>
     <sup class="descuento">15% OFF</sup>
     <div class="botones">
-    <button class="producto-boton">Comprar Ahora</button>
-    <button class="producto-boton">Agregar al Carrito</button>
+    <button id="boton-Comprar" class="boton-Comprar">Comprar Ahora</button>
+    <button id= "boton-Carrito" class="boton-Carrito">Agregar al Carrito</button>
     </div>           
     </div>
     </div>
     </article>
 
-    <article class="col-12 col-md-3">
+    <article  id="4" class="col-12 col-md-3">
     <div class="card h-100 text-center">
     <img
     decoding="async"
@@ -173,18 +174,18 @@
     <i class="fa-solid fa-star icon-star"></i>
     <i class="fa-solid fa-star icon-star"></i>
     </div>
-    <span class="precio-viejo" id="precio-viejo"><span>$</span> 50.000</span>
-    <span class="precio-actual" id="precio-actual"><span>$</span> 34.209</span>
+    <span class="precio-viejo"><span>$</span> 50.000</span>
+    <span class="precio-actual"><span>$</span> 34.209</span>
     <sup class="descuento">15% OFF</sup>
     <div class="botones">
-    <button class="producto-boton">Comprar Ahora</button>
-    <button class="producto-boton">Agregar al Carrito</button>
+    <button id="boton-Comprar" class="boton-Comprar">Comprar Ahora</button>
+    <button id= "boton-Carrito" class="boton-Carrito">Agregar al Carrito</button>
     </div>
     </div>
     </div>
     </article>
 
-    <article class="col-12 col-md-3">
+    <article  id="5" class="col-12 col-md-3">
     <div class="card h-100 text-center">
     <img
     decoding="async"
@@ -201,18 +202,18 @@
     <i class="fa-solid fa-star icon-star"></i>
     <i class="fa-solid fa-star icon-star"></i>
     </div>
-    <span class="precio-viejo" id="precio-viejo"><span>$</span> 120.000</span>
-    <span class="precio-actual" id="precio-actual"><span>$</span> 90.000</span>
+    <span class="precio-viejo"><span>$</span> 120.000</span>
+    <span class="precio-actual"><span>$</span> 90.000</span>
     <sup class="descuento">15% OFF</sup>
     <div class="botones">
-    <button class="producto-boton">Comprar Ahora</button>
-    <button class="producto-boton">Agregar al Carrito</button>
+    <button id="boton-Comprar" class="boton-Comprar">Comprar Ahora</button>
+    <button id= "boton-Carrito" class="boton-Carrito">Agregar al Carrito</button>
     </div>
     </div>
     </div>
     </article>
 
-    <article class="col-12 col-md-3">
+    <article  id="6" class="col-12 col-md-3">
     <div class="card h-100 text-center">
     <img
     decoding="async"
@@ -229,18 +230,18 @@
     <i class="fa-solid fa-star icon-star"></i>
     <i class="fa-solid fa-star icon-star"></i>
     </div>
-    <span class="precio-viejo" id="producto-viejo"><span>$</span> 35.000</span>
-    <span class="precio-actual" id="precio-actual"><span>$</span> 25.000</span>
+    <span class="precio-viejo"><span>$</span> 35.000</span>
+    <span class="precio-actual"><span>$</span> 25.000</span>
     <span class="descuento">15% OFF</span>
     <div class="botones">
-    <button class="producto-boton">Comprar Ahora</button>
-    <button class="producto-boton">Agregar al Carrito</button>
+    <button id="boton-Comprar" class="boton-Comprar">Comprar Ahora</button>
+    <button id= "boton-Carrito" class="boton-Carrito">Agregar al Carrito</button>
     </div>  
     </div>
     </div>
     </article>
 
-    <article class="col-12 col-md-3">
+    <article  id="7" class="col-12 col-md-3">
     <div class="card h-100 text-center">
     <img
     decoding="async"
@@ -259,18 +260,18 @@
     <i class="fa-solid fa-star icon-star"></i>
     <i class="fa-solid fa-star icon-star"></i>
     </div>
-    <span class="precio-viejo" id="precio-viejo"><span>$</span> 35.000</span>
-    <span class="precio-actual" id="precio-actual"><span>$</span> 20.000</span>
+    <span class="precio-viejo"><span>$</span> 35.000</span>
+    <span class="precio-actual"><span>$</span> 20.000</span>
     <span class="descuento">15% OFF</span>
     <div class="botones">
-    <button class="producto-boton">Comprar Ahora</button>
-    <button class="producto-boton">Agregar al Carrito</button>
+    <button id="boton-Comprar" class="boton-Comprar">Comprar Ahora</button>
+    <button id= "boton-Carrito" class="boton-Carrito">Agregar al Carrito</button>
     </div>
     </div>  
     </div>
     </article>
 
-    <article class="col-12 col-md-3">
+    <article id="8" class="col-12 col-md-3">
     <div class="card h-100 text-center">
     <img
     decoding="async"
@@ -288,12 +289,12 @@
     <i class="fa-solid fa-star icon-star"></i>
     <i class="fa-solid fa-star icon-star"></i>
     </div>
-    <span class="precio-viejo" id="precio-viejo"><span>$</span> 27.000</span>
-    <span class="precio-actual" id="precio-actual"><span>$</span> 22.000</span>
+    <span class="precio-viejo"><span>$</span> 27.000</span>
+    <span class="precio-actual"><span>$</span> 22.000</span>
     <span class="descuento">15% OFF</span>
     <div class="botones">
-    <button class="producto-boton">Comprar Ahora</button>
-    <button class="producto-boton">Agregar al Carrito</button>
+    <button id="boton-Comprar" class="boton-Comprar">Comprar Ahora</button>
+    <button id= "boton-Carrito" class="boton-Carrito">Agregar al Carrito</button>
     </div>
     </div>
     </div>
@@ -305,8 +306,7 @@
 
     <!-- Seccion remeras -->
     <section class="seccion-remeras">
-    <img
-    src="../images/remeras.jpg"
+    <img src="../images/remeras.jpg"
     alt="banner remeras"
     class="banner-remeras"
     />
