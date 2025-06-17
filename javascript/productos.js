@@ -1,34 +1,33 @@
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelector("#listaProductos").addEventListener("click", getDataElements);
-});
 
-
+// array de productos 
 let arrayProductos =[]; 
-
+// seleccionamos el id de lista productos para poder acceder a article completo donde se alojan los productos 
 const listaProductos = document.querySelector("#listaProductos");
+
 document.addEventListener('DOMContentLoaded', function() {
   eventListeners();
 });
- 
+// agrega un event en las card
 function eventListeners(){
-  listaProductos.addEventListener("click", getDataElemnts)
+  listaProductos.addEventListener("click", getDataElements)
 
 }
-
-function getDataElemnts(e){
+// reccorre el DOM
+function getDataElements(e){
   if(e.target.classList.contains('boton-Carrito')){
     const elementHtml = e.target.parentElement.parentElement.parentElement;
     selectData(elementHtml)
   }
 
 }
-
+// selecciona los datos de producto y si existe lo actualiza
 function selectData(producto){
   const idProducto = parseInt(producto.closest('article').id, 10);
    const existente = arrayProductos.find(p => p.id === idProducto);
 
   if (existente) {
     existente.quantity++;
+    actualizarContadorCarrito();
   } else {
   const productoObj = {
     img: producto.querySelector('img').src,
@@ -43,7 +42,7 @@ function selectData(producto){
  console.log(arrayProductos)
 }
 }
-
+// actualiza el contador del carrito
 function actualizarContadorCarrito() {
   const contador = document.querySelector("#contador-carrito");
   const totalCantidad = arrayProductos.reduce((total, producto) => total + producto.quantity, 0);

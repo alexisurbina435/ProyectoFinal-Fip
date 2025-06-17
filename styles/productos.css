@@ -139,17 +139,21 @@
 }
 
 /*fin de productos */
+
+/*estilos  del carrito */
 .cart-button {
   position: relative;
 }
 
 .contador-carrito {
-   background-color: red;
-  color: white;
-  font-size: 12px;
+   background-color:#EE5F0D;
+  color: rgb(255, 249, 249);
+  font-size: 18px;
   padding: 2px 6px;
-  border-radius: 50%;
+  border-radius: 40%;
   position: absolute;
   top: -5px;
   right: -10px;
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
 }
