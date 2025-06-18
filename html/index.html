@@ -8,7 +8,8 @@
       <link rel="stylesheet" href="../styles/dropdown.css">
       <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  </head>
+      <link rel="stylesheet" href="../styles/inscribite.css">
+    </head>
   <body>
     <main class="main">  
 
@@ -50,10 +51,95 @@
       <!-- Fin Header -->
 
       <!-- Seccion banner -->
-        <section class="banner">
-          <img src="../images/fondo-mejorado.png" alt="Banner Principal" class="banner-img">
-        </section>
+      <section class="banner">
+        <img src="../images/fondo-mejorado.png" alt="Banner Principal" class="banner-img">
+      </section>
       <!-- Fin seccion banner -->
+
+      <!-- TEXTO ILUSTRATIVO -->
+      <section class="texto container">
+        <h3>
+          Rinde al maximo, luce increible. Todo lo que necesitas esta aqui
+        </h3>
+      </section>
+      <!-- Fin texto ilustrativo -->
+
+      <!-- Carrusel de productos -->
+      <section class="carrusel-productos-container">
+        <button class="carrusel-arrow left" aria-label="Anterior">&#10094;</button>
+        <div class="carrusel-productos" id="carrusel-productos">
+          <!-- Productos insertados por JS -->
+        </div>
+        <button class="carrusel-arrow right" aria-label="Siguiente">&#10095;</button>
+      </section>
+      <!-- Fin carrusel de productos -->
+
+
+       <!-- Seccion formulario-->
+    
+    <section class="inscribite">
+        <div class="titulo">
+          <h1>Elegí el plan de tu preferencia.</h1>
+          <h3 class="subtitulo">¡Eleva tu nivel! Encuentra el plan perfecto para alcanzar tus objetivos.</h3>
+        </div>
+        <div class="inscripcion">
+             
+            <a href="inscripcion.html?plan=premium" class="link-inscripcion"><div class="contenedor-inscripcion premium">
+                <div class="plan">
+                    <h1>Plan Premium</h1>
+                    <h3>$40.000</h3>
+                </div>
+                <div class="beneficios">
+                    <ul class="lista-beneficios">
+                        <li>Entrenamiento online libre</li>
+                        <li>Entrenamiento progresivo</li>
+                        <li>Clase consulta ilimitadas</li>
+                        <li>Subscripcion mensual</li>
+                        <li>Descuento en tienda 15%</li>
+                        <li>Entrenos one-one</li>
+                    </ul>
+                    <a href="inscripcion.html?plan=premium"><button type="submit" class="btn-inscripcion">¡Inscribite!</button></a>
+                </div>
+            </div></a>
+
+            <a href="inscripcion.html?plan=standar" class="link-inscripcion"><div class="contenedor-inscripcion standar">
+                <div class="plan">
+                    <h1>Plan Standar</h1>
+                    <h3>$35.000</h3>
+                </div>
+                <div class="beneficios">
+                    <ul class="lista-beneficios">
+                        <li>Entrenamiento online libre</li>
+                        <li>Entrenamiento progresivo</li>
+                        <li>Clase consulta limitadas</li>
+                        <li>Subscripcion mensual</li>
+                        <li>Descuento en tienda 10%</li>
+                        <li>3 entrenos diferentes</li>
+                    </ul>
+                    <a href="inscripcion.html?plan=standar"><button type="submit" class="btn-inscripcion">¡Inscribite!</button></a>
+                </div>
+              </div></a>
+
+            <a href="inscripcion.html?plan=basic" class="link-inscripcion"><div class="contenedor-inscripcion basico">
+                <div class="plan">
+                    <h1>Plan Basic</h1>
+                    <h3>$29.000</h3>
+                </div>
+                <div class="beneficios">
+                    <ul class="lista-beneficios">
+                        <li>Entrenamiento online</li>
+                        <li>Entrenamiento progresivo</li>
+                        <li>Clase consulta limitadas</li>
+                        <li>Subscripcion mensual</li>
+                        <li>Descuento en tienda 5%</li>
+                        <li>Entrenos 2 veces</li>
+                    </ul>
+                    <a href="inscripcion.html?plan=basic"><button type="submit" class="btn-inscripcion" value="basico">¡Inscribite!</button></a>
+                </div>
+            </div></a>
+        </div>
+    </section>
+    <!-- Fin seccion formulario -->
 
 
 
@@ -129,5 +215,6 @@
 
     </main>
      <script src="../javascript/dropdown.js"></script>
+     <script src="../javascript/index.js"></script>
   </body>
 </html>
