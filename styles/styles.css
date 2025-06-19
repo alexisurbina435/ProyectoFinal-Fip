@@ -23,6 +23,7 @@ body {
 .main {
     min-height: 100vh;
     background-color: var(--gris);
+
 }
 
 /* Header */
@@ -44,6 +45,7 @@ body {
     height: 6rem;
     /* margin: auto; */
     background-color: var(--gris-osc);
+    z-index: 1000;
 }
 
 .header::before{
@@ -252,7 +254,6 @@ ul .nav-item:nth-child(4):hover {
 .footer-content {
     max-width: 100%;
     margin: 0 auto;
-    padding: 0 var(--spacing);
 }
 
 /* arreglo centrado footer  */
