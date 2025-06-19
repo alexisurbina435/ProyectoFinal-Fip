@@ -29,7 +29,7 @@
     margin: auto;
 }
 /* cards   */
-.card .img-thumbnail {
+.cards-container .img-thumbnail {
     width: 180px;
     height: 180px;
     object-fit: contain;
@@ -39,7 +39,7 @@
     border-color: #EE5F0D;
 }
 /* descripcion de cards   */
-.card-body .Descripción{
+.card-body .descripción{
     margin-bottom: 0.5rem;
     text-align: center;
 }
@@ -63,18 +63,9 @@
     font-size: 1.2rem; 
     color: #bb5c21;
 }
-/* precio producto viejo  */
-.card-body .precio-viejo {
-    display: flex;
-    flex-direction: row ;
-    color: #888;
-    text-decoration: line-through;
-    margin-right: 0.5rem;
-    font-size: 0.95rem;
-    margin-bottom: 0.5rem;
-}
-/* precio producto actual  */
-.card-body .precio-actual {
+
+/* precio producto */
+.card-body .precio{
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -85,17 +76,7 @@
     margin-right: 0.5rem;
     margin-bottom: 0.5rem;
 }
-.card-body .descuento{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    color: #0d8cee;
-    font-weight: bold;
-    font-size: 1.rem;
-    margin-right: 0.5rem;
-    margin-bottom: 0.5rem;
 
-}
 .card{
     min-height: 350px;
     display: flex;

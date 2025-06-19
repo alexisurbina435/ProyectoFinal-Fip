@@ -172,6 +172,44 @@ ul .nav-item:nth-child(4):hover {
     align-items: center;
     height: 30rem;
 }
+
+/* carrousel */
+.product-carousel-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  overflow: hidden;
+  padding: 20px 238px;
+}
+
+.carousel-wrapper {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  width: 100%;
+}
+
+.product-card {
+  flex: 0 0 20%;
+  background: #2E3138;
+  color: white;
+  padding: 1rem;
+  border-radius: 10px;
+  min-width: 220px;
+  text-align: center;
+}
+
+.btn-prev,
+.btn-next {
+  background-color: #0D6EFD;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
 /* Banner-remeras */
 .seccion-remeras {
   text-align: center;
