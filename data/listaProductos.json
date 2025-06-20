@@ -1,6 +1,5 @@
-{
-    "productos":[
-    {
+
+[    {
         "id":1,
         "nombre": "Creatina",
         "descripcion":"Suplemento En Polvo Star Nutrition Creatine Monohydrate",
@@ -65,4 +64,3 @@
         "stock": 10
     }
 ]
-}
