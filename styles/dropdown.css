@@ -97,4 +97,11 @@
 }
 
 
+@media(max-width: 760px) {
+    
+    .mobile{
+        display: flex;
+    }
+}
+
 /* FIN DROPDOWN ACCEDER Y CREAR CUENTA */
