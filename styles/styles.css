@@ -84,11 +84,8 @@ body {
     display: flex;
     gap: 5rem;
 }
-<<<<<<< HEAD
-=======
 
 /* soluciones el error del subrayado por el bootstrap, era agregar el text-decoration: none; en los a directamente */
->>>>>>> desarrollo
 .nav-links{
     background: none;
     border: none;
@@ -100,15 +97,10 @@ body {
     color: var(--blanco);
     cursor: pointer;
     transition: all 0.5s ease;
-<<<<<<< HEAD
-}
-ul .nav-item:nth-child(-n+3){
-=======
     text-decoration: none;
 }
 
 .nav-links{
->>>>>>> desarrollo
     padding: 6px 10px;
 }
 .nav-links:hover {
@@ -116,14 +108,6 @@ ul .nav-item:nth-child(-n+3){
     /* transform: scale(1.05);
     transition: all 0.5s ease; */
 }
-<<<<<<< HEAD
-ul .nav-item:nth-child(4) {
-    background-color: var(--naranja);
-    border-radius: 20px;
-    padding: 6px 0px;
-    transition: all 0.6s ease;
- }
-=======
 
 ul .nav-inscribite {
     background-color: var(--naranja); 
@@ -133,7 +117,6 @@ ul .nav-inscribite {
     white-space: nowrap;
  } 
 
->>>>>>> desarrollo
 /* le agregue un fondo y hover al inscribite ya */
 .nav-inscribite:hover {
     background-color: var(--blanco);
@@ -184,24 +167,12 @@ ul .nav-inscribite {
   transform: scale(1.2);
   transition: transform 0.3s ease;
 } */
-<<<<<<< HEAD
-.user-icon {
-=======
 
 /* .user-icon {
->>>>>>> desarrollo
     margin: 0;
     padding: 0;
     width: 43px;
     height: 43px;
-<<<<<<< HEAD
-}
-.bottom-line {
-    background-color: var(--naranja);
-    width: 100%;
-    height: 1px;
-}
-=======
 } */
 
 /* .bottom-line {
@@ -210,7 +181,6 @@ ul .nav-inscribite {
     height: 1px;
 } */
 
->>>>>>> desarrollo
 /* Banner principal */
 .content-banner {
     display: grid;
@@ -248,8 +218,8 @@ ul .nav-inscribite {
     align-items: center;
     text-align: center;
     width: 100%;
-    color: var(--blanco);
-    margin-top: 1rem;
+    color: var(--nego);
+    
     /* position: relative; */
 }
 
@@ -351,8 +321,6 @@ ul .nav-inscribite {
   object-fit: contain;
   border-radius: 20px;
 }
-<<<<<<< HEAD
-=======
 
 .entrena{
     /* font-size: 2rem; */
@@ -373,7 +341,6 @@ ul .nav-inscribite {
 } */
 /* fin seccion remera  */
 
->>>>>>> desarrollo
 /* Footer */
 .footer {
     background-color: var(--gris-osc);
@@ -436,16 +403,6 @@ ul .nav-inscribite {
 .footer-nav-link:hover {
     color: var(--naranja);
 }
-<<<<<<< HEAD
-.footer-tagline {
-    text-align: center;
-    margin-top: 0.375rem;
-    font-size: 1.25rem;
-    color: var(--blanco);
-}
-=======
-
->>>>>>> desarrollo
 .footer-line {
     margin: 0.875rem auto 0;
     height: 5px;

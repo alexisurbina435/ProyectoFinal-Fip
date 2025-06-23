@@ -1,13 +1,25 @@
-.cards-container {
-   background-color: var(--negro);
+.seccion-productos{
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
-    gap: 2rem;
-    padding: 20 var(--spacing);
-    margin: 20px auto;
-    max-width: var(--max-width);
-    margin: auto;
+    width: flex;
+    background-color:#88745f;
+    
+
+}
+
+.cards-container{
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-items: center;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    gap: 15px;
+    flex-grow: 0;
+    flex-shrink: 1;
+   
+    
+    
 }
 
 /*texto card */
@@ -19,6 +31,7 @@
     background-color: var(--naranja);
 }
 
+
 /* cards   */
 .cards-container .img-thumbnail {
     width: 180px;
@@ -28,12 +41,14 @@
     margin: 0 auto;
     display: block;
     border-color: #EE5F0D;
+    
 }
+
 /* descripcion de cards   */
-.card-body .descripción{
+/* .card-body .descripción{
     margin-bottom: 0.5rem;
     text-align: center;
-}
+} */
 /* estrellas  */
 .estrellas{
     display: flex;
@@ -52,7 +67,7 @@
 .fa-star {
    display: inline-block; 
     font-size: 1.2rem; 
-    color: #bb5c21;
+    color: oklab(from color l a b);
 }
 
 /* precio producto */
@@ -60,7 +75,7 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    color: #f7f8fc;
+    color: var(--naranja);
     font-weight: bold;
     margin-top: auto;
     font-size: 2.0rem;
@@ -69,17 +84,18 @@
 }
 
 .card{
-    min-height: 350px;
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
 }
 
 .card-body{
+    height: 100%;
     display: flex;
     flex-direction: column;
     flex: 1;
-    padding: 1.5rem;
+    justify-content: space-between;
     background-color: #b8afaf;     
 }
 
