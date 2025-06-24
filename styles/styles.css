@@ -138,6 +138,7 @@ ul .nav-inscribite {
     padding: 0;
     cursor: pointer;
     transition: transform 0.3s ease;
+    position: relative;
 }
 .cart-button:hover {
   transform: scale(1.2);
@@ -149,6 +150,20 @@ ul .nav-inscribite {
     width: 48px;
     height: 48px;
 }
+
+.cart-count {
+    position: absolute;
+    top: -0.2rem;
+    right: -0.2rem;
+    background-color: var(--naranja);
+    color: var(--blanco);
+    border-radius: 50%;
+    padding: 0.10rem 0.4rem;
+    font-size: 0.65rem;
+    font-weight: bold;
+    visibility: hidden;
+}
+
 .user-container {
     display: flex;
     justify-content: center;
