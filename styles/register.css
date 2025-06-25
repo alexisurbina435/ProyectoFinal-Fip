@@ -1,8 +1,12 @@
+.checkboxes{
+   width: 20rem;
+}
 .checkbox-group {
   margin-top: 1rem;
   font-size: 14px;
   color: var(--blanco);
   align-self: self-start;
+  white-space: nowrap;
 }
 
 .checkbox-group label {
@@ -30,4 +34,14 @@
 }
 .go-login{
   font-size: 1rem;
+}
+
+.icon-register{
+  color: white;
+}
+
+@media(max-width: 760px) {
+    .checkbox-group{
+        white-space: wrap;
+    }
 }

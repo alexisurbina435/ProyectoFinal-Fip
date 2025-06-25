@@ -5,7 +5,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 95vh;
+    min-height: 110vh;
 }
 
 .titulo {
@@ -132,25 +132,27 @@
         height: 600px;
     }
     .titulo{
-        font-size: 1.5rem;
+        font-size: 1.2rem;
         text-shadow: 0px 3px 3px rgba(255, 255, 255, 0.3);
     }
     .subtitulo{
-        font-size: 1.3rem;
+        font-size: 1rem;
     }
     .inscribite{
-        height: 160vh;
+        display: flex;
+        margin-top: 2rem;
+        height: 170vh;
     }
     .contenedor-inscripcion {
     /* ancho anterior 400px */
-        max-width: 390px;
+        width: 250px;
         height: 400px;
     }
     .plan{
-        font-size: 1.4rem;
+        font-size: 1.2rem;
     }
     .beneficios{
-        font-size: 1.2rem;
+        font-size: 1rem;
     }
     .btn-inscripcion{
         width: 50%;
@@ -158,10 +160,4 @@
         font-size: 1rem;
     }
     
-}
-
-@media (max-width: 640px) {
-    .inscribite{
-        height: 170vh;
-    }
 }

@@ -47,12 +47,13 @@
     display: flex;
     gap: 10px;
     align-items: center;
-    padding: 10px 16px;
+    padding: 10px 10px;
     background: #404040;
     border: 1px solid #737373;
     border-radius: 4px;
     height: 40px;
 }
+
 
 /* quite el bordeado a los input por dentro y cambie el color de la letra */
 .input-wrapper input {
@@ -96,7 +97,7 @@
 }
 
 .btn {
-    width: 269px;
+    width: 14rem;
     height: 40px;
     border-radius: 4px;
     font-size: 16px;
@@ -104,6 +105,7 @@
     color: #F5F5F5;
     cursor: pointer;
     border: 1px solid;
+    transition: transform 0.5s ease;
 }
 
 .btn-login {
@@ -112,7 +114,21 @@
     margin-bottom: 1rem;
 }
 
+.btn-login:hover {
+    background: #737373;
+    transition: transform 0.5s ease;
+}
+
 .btn-register {
     background: #EA580C;
     border-color: #EA580C;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+.btn-register:hover {
+    background: #C14A09;
+    transition: transform 0.5s ease;
 }
