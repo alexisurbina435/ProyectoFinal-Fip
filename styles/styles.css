@@ -345,7 +345,7 @@ ul .nav-inscribite {
 .banner-remeras {
   margin: 2rem 0 5rem 0;
   /* width: 100%; */
-  width: 100vh;
+  width: 64rem;
   /* height: 30.5rem; */
   object-fit: contain;
   border-radius: 20px;
