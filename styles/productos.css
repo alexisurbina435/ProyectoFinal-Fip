@@ -1,110 +1,125 @@
-.cards-container {
-   background-color: var(--negro);
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    gap: 2rem;
-    padding: 20 var(--spacing);
-    margin: 20px auto;
-    max-width: var(--max-width);
-    margin: auto;
-}
-
-/*texto card */
-.texto {
-    font-size: 2rem;
-    text-align: center;
-    margin: 2rem 0;
-    color : var(--blanco);
-    background-color: var(--naranja);
-}
-
-/* cards   */
-.cards-container .img-thumbnail {
-    width: 180px;
-    height: 180px;
-    object-fit: contain;
-    object-position: center;
-    margin: 0 auto;
-    display: block;
-    border-color: #EE5F0D;
-}
-/* descripcion de cards   */
-.card-body .descripción{
-    margin-bottom: 0.5rem;
-    text-align: center;
-}
-.estrellas{
-    display: flex;
-    align-items: right;
-    flex-direction: row;
-    gap: 0.5rem;
-    width: 1.5rem;
-    height: 1.5rem;
-    
-    justify-content: flex-start;
-
-    align-items: right;
-    font-size: 0.9rem;
-    color: #bb5c21;
-}
-.fa-star {
-   display: inline-block; 
-    font-size: 1.2rem; 
-    color: #bb5c21;
-}
-
-/* precio producto */
-.card-body .precio{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    color: #f7f8fc;
-    font-weight: bold;
-    margin-top: auto;
-    font-size: 2.0rem;
-    margin-right: 0.5rem;
-    margin-bottom: 0.5rem;
-}
-
-.card{
-    min-height: 350px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-}
-
-.card-body{
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    padding: 1.5rem;
-    background-color: #b8afaf;     
-}
-
-/* color del boton comprar, agegar carrito */
-.card-body .botones{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50%;
-    gap: 10px; 
-    padding: 1rem 1.5rem;            
-    font-family: 'Roboto', sans-serif;                 
-    margin: auto;
-    margin-top :auto;       
-    background-color: transparent;
-}
-.card-body .botones button {
-    flex: 1;
-    min-width: 100px;
-    font-family: 'Roboto', sans-serif;
-    font-size: 15px;
-    background-color: #88745f;
-    color: #fafafa;
-    border: none;
-    border-radius: 6px;
+.img-prod {
+    width: 10rem;
+    /* height: 100%; */
+    border-radius: 20px;
     cursor: pointer;
-    transition: background 0.3s;
-    padding: 0.7rem 1.2rem;
+    aspect-ratio: 1;
+    object-fit: contain;
+    border: 1px solid #ccc;
+    background-color: var(--blanco);
+    margin-top: 1rem;
+}
+
+.seccion-productos {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sub-productos{
+    color: var(--blanco);
+    font-size: 1.6rem;
+    margin-bottom: 2rem;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+}
+
+.card-producto {
+    width: 20rem;
+    border: 1px solid #ccc;
+    background-color: #E3E2E0;
+    border-radius: 20px;
+    padding: 1rem;
+    height: 23.3rem;
+}
+
+.card {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+
+}
+
+.detalle-prod {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    /* margin-top: 1rem; */
+}
+
+.producto-nombre {
+    white-space: nowrap;
+}
+
+.precio{
+    font-weight: 600;
+    font-size: 1.3rem;
+}
+
+.botones {
+    display: flex;
+    gap: 0 0.6rem;
+    padding: 1rem 0;
+}
+
+.comprarAhora {
+    background-color: var(--naranja);
+    color: var(--blanco);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.comprarAhora:hover {
+    background-color: #C14A09;
+}
+
+.agregarCarrito {
+    background-color: var(--gris-osc);
+    color: var(--blanco);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.agregarCarrito:hover {
+    background-color: #9a9a9a;
+}
+
+@media (max-width: 768px) {
+    .cards-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .seccion-productos{
+        height: 200vh;
+    }
+    .sub-productos{
+        font-size: 1.3rem;
+    }
+    .img-prod{
+        width: 8rem;
+    }
+
+    .card-producto{
+        width: 13rem;
+    }
+    .producto-nombre{
+        font-size: 1rem;
+    }
+
+    .botones{
+        padding: 0;
+        white-space: nowrap;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem 0;
+    }
+    
 }

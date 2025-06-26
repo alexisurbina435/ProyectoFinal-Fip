@@ -24,28 +24,23 @@ let llenarProductos = function (data) {
     // Cards de productos
     data.forEach(producto => {
         const card = document.createElement("article");
-        card.classList.add("col-12", "col-md-3");
+        card.classList.add("card-producto");
         card.innerHTML += `
-                    <div class="card h-100 text-center">
-                        <img decoding="async" src="${producto.img}" class="carrusel dinamico img-thumbnail"
-                            alt="${producto.descripcion}" />
-                        <div class="card-body">
-                            <h5 class="producto-nombre">${producto.nombre}</h5>
-                            <span class="descripcion">${producto.descripcion}</span>
-                            <div class="estrellas">
-                                <i class="fa-solid fa-star icon-star"></i>
-                                <i class="fa-solid fa-star icon-star"></i>
-                                <i class="fa-solid fa-star icon-star"></i>
-                                <i class="fa-solid fa-star icon-star"></i>
-                                <i class="fa-solid fa-star icon-star"></i>
-                            </div>
-                            <span class="precio"><span>$</span> ${producto.precio}</span>
+                    <div class="card">
+                        <div>
                             <span class="stock">Stock disponible: ${producto.stock}</span>
-                            <div class="botones">
-                                <button class="comprarAhora">Comprar Ahora</button>
-                                <button class="agregarCarrito">Agregar al Carrito</button>
-                            </div>
+                            <img decoding="async" src="${producto.img}" class="img-prod"
+                            alt="${producto.descripcion}" />
                         </div>
+                        <div class="detalle-prod">
+                            <h2 class="producto-nombre">${producto.nombre}</h2>
+                            <p class="descripcion-prod">${producto.descripcion}</p>
+                            <p class="precio"><span>$</span> ${producto.precio}</p>
+                        </div>
+                        <div class="botones">
+                            <button class="comprarAhora">Comprar Ahora</button>
+                            <button class="agregarCarrito">Agregar al Carrito</button>
+                         </div>
                     </div>
                 `;
 
