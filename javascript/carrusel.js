@@ -25,9 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const prodDiv = document.createElement('div');
       prodDiv.className = 'carrusel-producto';
       prodDiv.innerHTML = `
-        <img src="../images/${prod.imagen}" alt="${prod.nombre}" class="carrusel-producto-img">
+        <img src=${prod.img} alt="${prod.nombre}" class="carrusel-producto-img">
         <h4 class="carrusel-producto-nombre">${prod.nombre}</h4>
-        <p class="carrusel-producto-precio">$${prod.precioActual}</p>
+        <p class="carrusel-producto-precio">$${prod.precio}</p>
       `;
       carrusel.appendChild(prodDiv);
     }
