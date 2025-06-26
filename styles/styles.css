@@ -2,12 +2,11 @@
     --gris: #23252B;
     --gris-osc: #1A1A1A;
     --naranja: #EE5F0D;
-    --blanco: #ffffff;
+    --blanco: #FFFFFF;
     --negro: #000000;
     --max-width: 1920px;
     --spacing: 1rem;
 }
-
 * {
     margin: 0;
     padding: 0;
@@ -15,18 +14,15 @@
     list-style: none;
     /* text-decoration: none; */
 }
-
 body {
     font-family: 'Poppins', sans-serif;
 }
-
 .main {
     min-height: 100vh;
     width: 100%;
     background-color: var(--gris);
     overflow: hidden;
 }
-
 /* Header */
 /* .top-line {
   background-color: var(--naranja);
@@ -49,7 +45,6 @@ body {
     background-color: var(--gris-osc);
     z-index: 1000;
 }
-
 .header::before{
     content: "";
     display: block;
@@ -61,7 +56,6 @@ body {
     left: 0;
     right: 0;
 }
-
 .header::after{
     content: "";
     display: block;
@@ -73,13 +67,11 @@ body {
     left: 0;
     right: 0;
 }
-
 .logo {
     aspect-ratio: 46.11/50.00;
     height: 60px;
     width: 55px;
 }
-
 .navigation {
     display: flex;
     align-items: center;
@@ -140,7 +132,6 @@ ul .nav-inscribite {
     gap: 1.75rem;
     align-items: center;
 }
-
 .cart-button {
     background: none;
     border: none;
@@ -149,12 +140,10 @@ ul .nav-inscribite {
     transition: transform 0.3s ease;
     position: relative;
 }
-
 .cart-button:hover {
   transform: scale(1.2);
   transition: transform 0.3s ease;
 }
-
 .cart-icon {
     margin: 0;
     padding: 0;
@@ -183,14 +172,12 @@ ul .nav-inscribite {
     border-radius: 50px;
     width: 42px;
 }
-
 /* .user-button {
     background: none;
     border: none;
     padding: 0;
     cursor: pointer;
 } */
-
 /* .user-button:hover {
   transform: scale(1.2);
   transition: transform 0.3s ease;
@@ -246,8 +233,8 @@ ul .nav-inscribite {
     align-items: center;
     text-align: center;
     width: 100%;
-    color: var(--blanco);
-    margin-top: 1rem;
+    color: var(--nego);
+    
     /* position: relative; */
 }
 
@@ -341,7 +328,6 @@ ul .nav-inscribite {
   display: flex;
   justify-content: center;
 }
-
 .banner-remeras {
   margin: 2rem 0 5rem 0;
   /* width: 100%; */
@@ -376,14 +362,12 @@ ul .nav-inscribite {
     padding-top: 2rem;
 
 }
-
 .footer-content {
     max-width: 100%;
     margin: 0 auto;
     /* saque el padding spacing por que la linea sino no completa la pantalla  */
     /* padding: 0 var(--spacing); */
 }
-
 /* arreglo centrado footer  */
 .footer-grid {
     display: grid;
@@ -393,101 +377,82 @@ ul .nav-inscribite {
     justify-content: space-evenly;
     place-items: center;
 }
-
 .contact {
     font-style: normal;
 }
-
 .contact-item {
     display: flex;
     gap: 0.625rem;
     margin-top: var(--spacing);
     color: var(--blanco);
 }
-
 .contact-icon {
     width: 1rem;
     aspect-ratio: 1;
     object-fit: contain;
     align-self: flex-start;
 }
-
 .contact-text {
     font-size: 1rem;
 }
-
-
-
 .brand-logo {
     width: 350px;
     aspect-ratio: 1;
     object-fit: contain;
 }
-
 .footer-nav {
     margin: 0 2.5rem;
 }
-
 .footer-nav-list {
     list-style: none;
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
 }
-
 .footer-nav-link {
     color: var(--blanco);
     text-decoration: none;
     font-size: 1rem;
     transition: color 0.3s ease;
 }
-
 .footer-nav-link:hover {
     color: var(--naranja);
 }
-
 .footer-line {
     margin: 0.875rem auto 0;
     height: 5px;
     border: 3px solid var(--blanco);
     max-width: 100%;
 }
-
 .copyright {
     padding: 0 1px 1rem;
     background-color: var(--negro);
 }
-
 .copyright-line {
     height: 5px;
     border: 3px solid var(--blanco);
 }
-
 .copyright-content {
     display: flex;
     justify-content: end;
     margin: 0.875rem auto 0;
 }
-
 .copyright-text {
     color: var(--blanco);
     font-size: 1rem;
     font-weight: 300;
 }
-
 .social-media{
     display: flex;
     justify-content: center;
     gap: 4.5rem;
     margin: 1rem;
 }
-
 .social-icon{
     font-size: 2rem;
     color: var(--naranja);
     transition: all 0.4s ease;
 }
-
 .social-icon:hover{
     transform: scale(1.1);
     transition: all 0.5s ease;
