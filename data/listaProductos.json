@@ -10,7 +10,7 @@
     {
         "id":2,
         "nombre": "Whey protein advance",
-        "descripcion":" Suplemento de proteína de suero de alta calidad",
+        "descripcion":" Suplemento de proteína de suero de alta calidad de whey protein",
         "img":"../images/whey-protein-advance.webp",
         "precio": 130000,
         "stock": 0
@@ -18,7 +18,7 @@
     {
         "id":3,
         "nombre": "Whey protein concentrate",
-        "descripcion":"Proteína de suero concentrada",
+        "descripcion":"Proteína de suero concentrada de whey protein",
         "img":"../images/whey-protein-concentrate.webp",
         "precio": 80200,
         "stock": 10
@@ -26,7 +26,7 @@
     {
         "id":4,
         "nombre": "Pre workout pulver",
-        "descripcion":"Suplemento pre-entrenamiento en polvo",
+        "descripcion":"Suplemento pre-entrenamiento en polvo oxido nitrico",
         "img":"../images/Oxido_Nitrico.webp",
         "precio": 34200,
         "stock": 10
@@ -42,7 +42,7 @@
     {
         "id":6,
         "nombre": "Remera",
-        "descripcion":"Remera de entrenamiento",
+        "descripcion":"Remera de entrenamiento de gimnasio superarse",
         "img":"../images/remera-frente.png",
         "precio": 25000,
         "stock": 10
@@ -58,7 +58,7 @@
     {
         "id":8,
         "nombre": "Aminoacido pulver",
-        "descripcion":"Aminoácidos en polvo de la marca Pulver",
+        "descripcion":"Aminoácidos en polvo de la marca Pulver de gran calidad",
         "img":"../images/aminoacido-pulver.webp",
         "precio": 22000,
         "stock": 10
