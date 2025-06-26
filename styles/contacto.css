@@ -21,7 +21,7 @@
 }
 
 .form-text {
-    width: 34%;
+    width: 25rem;
     font-size: 1.5rem;
     margin-bottom: 1rem;
     text-align: center;
@@ -34,6 +34,15 @@
     padding: 1rem;
     color: var(--blanco);
     gap: 0.5rem;
+}
+
+.form-label{
+    font-size: 1rem;
+    color: var(--blanco);
+    font-weight: 600;
+    display: flex;
+    align-self: start;
+    margin-left: 4.7rem;
 }
 
 textarea {
@@ -60,14 +69,16 @@ textarea {
     color: var(--blanco);
     font-size: 1rem;
     cursor: pointer;
+    transition: transform 0.5s ease;
 }
 
 .form-button:hover {
     background: #C14A09;
-    transition: transform 0.3s ease;
+    transition: transform 0.5s ease;
 }
 
 .burger-icon{
     color: var(--naranja);
     font-size: 1.7rem;
 }
+

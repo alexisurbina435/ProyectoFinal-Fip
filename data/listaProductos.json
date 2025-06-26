@@ -1,91 +1,66 @@
 [
     {
         "id":1,
-        "nombre": "creatina",
-        "desripsion":"Suplemento En Polvo Star Nutrition Creatine Monohydrate",
-        "img":"../images/creatina.webp",
-        "precioViejo": 60000,
-        "precioActual": 40500,
-        "decuento": 0.15,
-        "stock": 1
-
+        "nombre": "Creatina",
+        "descripcion":"Suplemento En Polvo Star Nutrition Creatine Monohydrate",
+        "img":"../images/Creatina.webp",
+        "precio": 40500,
+        "stock": 10
     },
     {
         "id":2,
-        "nombre": "whey protein advance",
-        "desripsion":" Suplemento de proteína de suero de alta calidad",
-        "img":"../images/wey-protein-advance.webp",
-        "precioViejo": 160000,
-        "precioActual": 130000,
-        "decuento": 0.15,
-        "stock": 1
-
+        "nombre": "Whey protein advance",
+        "descripcion":" Suplemento de proteína de suero de alta calidad de whey protein",
+        "img":"../images/whey-protein-advance.webp",
+        "precio": 130000,
+        "stock": 0
     },
     {
         "id":3,
-        "nombre": "whey protein concentrate",
-        "desripsion":"Proteína de suero concentrada",
-        "img":"../images/wey-protein-advance.webp",
-        "precioViejo": 10000,
-        "precioActual": 80200,
-        "decuento": 0.15,
-        "stock": 1
-
+        "nombre": "Whey protein concentrate",
+        "descripcion":"Proteína de suero concentrada de whey protein",
+        "img":"../images/whey-protein-concentrate.webp",
+        "precio": 80200,
+        "stock": 10
     },
     {
         "id":4,
         "nombre": "Pre workout pulver",
-        "desripsion":"Suplemento pre-entrenamiento en polvo",
-        "img":"../images/pre-workout.webp",
-        "precioViejo": 50000,
-        "precioActual": 34200,
-        "decuento": 0.15,
-        "stock": 1
-
+        "descripcion":"Suplemento pre-entrenamiento en polvo oxido nitrico",
+        "img":"../images/Oxido_Nitrico.webp",
+        "precio": 34200,
+        "stock": 10
     },
     {
         "id":5,
-        "nombre": "aminoacido",
-        "desripsion":"Suplemento En Polvo Star Nutrition Creatine Monohydrate",
+        "nombre": "Aminoacido",
+        "descripcion":"Suplemento En Polvo Star Nutrition Creatine Monohydrate",
         "img":"../images/aminoacido.webp",
-        "precioViejo": 12000,
-        "precioActual": 90000,
-        "decuento": 0.15,
-        "stock": 1
-
+        "precio": 90000,
+        "stock": 10
     },
     {
         "id":6,
-        "nombre": "remera",
-        "desripsion":"Remera de entrenamiento",
-        "img":"../images/remera-frente.webp",
-        "precioViejo": 35000,
-        "precioActual": 25000,
-        "decuento": 0.15,
-        "stock": 1
-
+        "nombre": "Remera",
+        "descripcion":"Remera de entrenamiento de gimnasio superarse",
+        "img":"../images/remera-frente.png",
+        "precio": 25000,
+        "stock": 10
     },
     {
         "id":7,
         "nombre": "BCAA Pulver",
-        "desripsion":"Suplemento En Polvo Star Nutrition Creatine Monohydrate",
+        "descripcion":"Suplemento En Polvo Star Nutrition Creatine Monohydrate",
         "img":"../images/BCAA.webp",
-        "precioViejo": 35000,
-        "precioActual": 20000,
-        "decuento": 0.15,
-        "stock": 1
-
+        "precio": 20000,
+        "stock": 10
     },
     {
         "id":8,
-        "nombre": "aminoacido pulver",
-        "desripsion":"Aminoácidos en polvo de la marca Pulver",
+        "nombre": "Aminoacido pulver",
+        "descripcion":"Aminoácidos en polvo de la marca Pulver de gran calidad",
         "img":"../images/aminoacido-pulver.webp",
-        "precioViejo": 27000,
-        "precioActual": 22000,
-        "decuento": 0.15,
-        "stock": 1
-
+        "precio": 22000,
+        "stock": 10
     }
-
 ]
