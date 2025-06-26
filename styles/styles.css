@@ -709,3 +709,57 @@ ul .nav-inscribite {
     }
 }
 
+/* Popup de detalle de producto */
+#popup-producto {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+#popup-producto .producto-detail {
+  background: #fff;
+  border-radius: 16px;
+  max-width: 700px;
+  width: 90vw;
+  padding: 2rem;
+  position: relative;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  animation: popupIn 0.2s;
+}
+#popup-producto .product-main-image {
+  width: 100%;
+  max-width: 250px;
+  border-radius: 12px;
+  object-fit: contain;
+}
+#popup-producto .product-info {
+  min-width: 220px;
+}
+#cerrar-popup-producto {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: var(--naranja);
+  cursor: pointer;
+  z-index: 2;
+}
+@keyframes popupIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+@media (max-width: 600px) {
+  #popup-producto .producto-detail {
+    padding: 1rem;
+    max-width: 98vw;
+  }
+  #popup-producto .product-main-image {
+    max-width: 120px;
+  }
+}
+
