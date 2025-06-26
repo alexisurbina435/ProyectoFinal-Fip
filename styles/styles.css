@@ -574,6 +574,42 @@ ul .nav-inscribite {
   font-weight: 700;
   margin: 0;
 }
+
+.carrusel-botones {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 0.7rem;
+  }
+  .carrusel-botones .comprarAhora {
+    background-color: var(--naranja);
+    color: var(--blanco);
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background 0.3s;
+  }
+  .carrusel-botones .comprarAhora:hover {
+    background-color: #C14A09;
+  }
+  .carrusel-botones .agregarCarrito {
+    background-color: var(--gris-osc);
+    color: var(--blanco);
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background 0.3s;
+  }
+  .carrusel-botones .agregarCarrito:hover {
+    background-color: #9a9a9a;
+  }
+
 @media (max-width: 900px) {
   .carrusel-productos {
     gap: 1rem;
