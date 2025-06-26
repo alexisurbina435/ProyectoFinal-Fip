@@ -24,7 +24,7 @@ let llenarProductos = function (data) {
     // Cards de productos
     data.forEach(producto => {
         const card = document.createElement("article");
-        card.classList.add("col-12", "col-md-3") ;
+        card.classList.add("card-item") ;
         card.innerHTML += `
                     <div class="card h-100 text-center">
                         <img decoding="async" src="${producto.img}" class="carrusel dinamico img-thumbnail"
