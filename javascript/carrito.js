@@ -5,7 +5,7 @@ fetch('../data/listaProductos.json')
         return response.json();
     })
     .then(data => {
-        if (window.location.pathname.includes("productos.html")) {
+        if (window.location.pathname.includes("productos.html"),("productosLog.html")) {
             llenarProductos(data);
         }
     })
@@ -163,7 +163,7 @@ function cargarCarrito() {
 
 // activar las funciones
 window.addEventListener("load", function () {
-    if (this.window.location.href.includes("carrito.html")) {
+    if (this.window.location.href.includes("carrito.html"),("carritoLog.html")) {
         cargarCarrito();
     }
 })
