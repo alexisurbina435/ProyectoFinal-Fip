@@ -1,0 +1,111 @@
+.compraDirecta-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 900px;
+  margin: 7rem auto 2rem auto;
+  padding: 1.5rem;
+  background: #23252B;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+}
+.carrito-content {
+  background: #2E3138;
+  border-radius: 8px;
+  padding: 1.5rem 1rem;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+.producto-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 0.5rem;
+  background: #23252B;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  margin-bottom: 0.5rem;
+}
+.producto-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  border-radius: 6px;
+  border: 1px solid #ee5f0d;
+  background: #fff;
+}
+.producto-item h6 {
+  font-size: 1rem;
+  margin: 0 0 0.2rem 0;
+  color: #fff;
+}
+.producto-item span {
+  font-size: 0.95rem;
+  color: #ccc;
+}
+.total-compra {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #fff;
+  margin-top: 1.2rem;
+  border-top: 2px solid #ee5f0d;
+  padding-top: 1rem;
+}
+.pago-content {
+  background: #2E3138;
+  border-radius: 8px;
+  padding: 1.5rem 1rem;
+  color: #fff;
+}
+.formulario-envio {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.formulario-envio h3 {
+  color: #ee5f0d;
+  font-size: 1.1rem;
+  margin-bottom: 0.2rem;
+}
+.form-select {
+  padding: 0.5rem 0.7rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background: #fff;
+  color: #23252B;
+}
+.btn-success {
+  background: #ee5f0d;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.7rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background 0.2s;
+}
+.btn-success:hover {
+  background: #C14A09;
+}
+@media (max-width: 700px) {
+  .compraDirecta-content {
+    padding: 0.5rem;
+  }
+  .carrito-content, .pago-content {
+    padding: 1rem 0.3rem;
+  }
+  .producto-item img {
+    width: 40px;
+    height: 40px;
+  }
+  .total-compra {
+    font-size: 1.05rem;
+  }
+} 

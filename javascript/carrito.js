@@ -178,35 +178,58 @@ window.addEventListener("load", function () {
 
 // Producto listo para comprar directo
 function cargarCompraDirecta() {
-    const producto = JSON.parse(localStorage.getItem("compraDirecta"));
     const detalle = document.getElementById("detalleCompra");
-  
-    if (!producto) {
+    const pagoContent = document.getElementById("pagoContent");
+    const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    if (!carrito.length) {
         detalle.innerHTML = "<p>No hay productos para comprar.</p>";
+        if (pagoContent) pagoContent.innerHTML = "";
         return;
     }
-
-    // Mostrar detalles y paso a paso de compra
-    detalle.innerHTML = `
-        <div class="producto-envio card p-3 mb-4">
-            <img src="${producto.img}" alt="${producto.descripcion}" class="img-fluid mb-2">
-            <h4>${producto.nombre}</h4>
-            <p>${producto.descripcion}</p>
-            <p><strong>Precio:</strong> $${producto.precio}</p>
-        </div>
-
+    let totalPrecio = 0;
+    detalle.innerHTML = "";
+    // Detalle de productos
+    carrito.forEach(producto => {
+        detalle.innerHTML += `
+            <div class="producto-item">
+                <img src="${producto.img}" alt="${producto.descripcion}">
+                <div>
+                    <h6>${producto.nombre}</h6>
+                    <span>${producto.descripcion}</span>
+                </div>
+                <div>
+                    <span>$ ${producto.precio}</span>
+                </div>
+                <div>
+                    <span>Cantidad: ${producto.cantidad}</span>
+                </div>
+            </div>
+        `;
+        totalPrecio += producto.precio * producto.cantidad;
+    });
+    // Total
+    detalle.innerHTML += `<div class="total-compra"><span>Total:</span> <span>$${totalPrecio}</span></div>`;
+    // Formas de pago
+    if (pagoContent) {
+        pagoContent.innerHTML = `
         <div class="formulario-envio">
-            <h5>Elegí el método de envío:</h5>
+            <h3>Elegí el método de pago:</h3>
+            <select class="form-select mb-3">
+                <option value="">Seleccioná una opción</option>
+                <option value="efectivo">Efectivo</option>
+                <option value="tarjeta">Tarjeta de crédito/débito</option>
+                <option value="transferencia">Transferencia bancaria</option>
+            </select>
+            <h3>Elegí el método de envío:</h3>
             <select class="form-select mb-3">
                 <option value="">Seleccioná una opción</option>
                 <option value="retiro">Retiro en tienda</option>
                 <option value="domicilio">Envío a domicilio</option>
             </select>
-
-            <h5>Confirmar pago:</h5>
-            <button class="btn btn-success">Pagar ahora</button>
+            <button class="btn btn-success">Confirmar y pagar</button>
         </div>
-    `;
+        `;
+    }
 }
 
 // cambiar la cantidad del input con los botones (no baja de 1 y no pasa de stock)
