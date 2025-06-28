@@ -160,18 +160,22 @@ function cargarCarrito() {
             contadorIconoCarrito();
         });
     });
+
+    contadorIconoCarrito();
 }
 
 // activar las funciones
 window.addEventListener("load", function () {
     if (this.window.location.href.includes("carrito.html"),("carritoLog.html")) {
         cargarCarrito();
+        contadorIconoCarrito();
     }
 })
 
 window.addEventListener("load", function () {
     if (this.window.location.href.includes("compraDirecta.html")) {
         cargarCompraDirecta();
+        contadorIconoCarrito();
     }
 });
 
