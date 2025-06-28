@@ -551,6 +551,7 @@ ul .nav-inscribite {
   flex-direction: column;
   align-items: center;
   transition: box-shadow 0.2s;
+  gap: 0.5rem;
 }
 .carrusel-producto:hover {
   box-shadow: 0 4px 24px rgba(234,88,12,0.12);
@@ -563,7 +564,6 @@ ul .nav-inscribite {
   margin-bottom: 0.7rem;
 }
 .carrusel-producto-nombre {
-  font-size: 1.1rem;
   font-weight: 600;
   margin: 0.3rem 0 0.2rem 0;
   text-align: center;
@@ -572,14 +572,14 @@ ul .nav-inscribite {
   color: #ee5f0d;
   font-size: 1.1rem;
   font-weight: 700;
-  margin: 0;
+  margin: auto 0 0;
 }
 
 .carrusel-botones {
     display: flex;
     gap: 0.5rem;
     justify-content: center;
-    margin-top: 0.7rem;
+    margin-top: auto;
   }
   .carrusel-botones .comprarAhora {
     background-color: var(--naranja);
@@ -645,7 +645,7 @@ ul .nav-inscribite {
 .texto.container {
   display: flex;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin: 1.5rem 0 1.5rem;
 }
 .texto.container h3 {
   position: relative;
