@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let productos = [];
   let startIndex = 0;
   const VISIBLE_COUNT = 4;
+  let isTransitioning = false;
 
   // Cargar productos desde JSON
   fetch('../data/listaProductos.json')
@@ -16,7 +17,30 @@ document.addEventListener('DOMContentLoaded', () => {
       renderCarrusel();
     });
 
-  function renderCarrusel() {
+  function renderCarrusel(withTransition = false) {
+    if (withTransition && isTransitioning) return;
+    
+    if (withTransition) {
+      isTransitioning = true;
+      // Fade out
+      carrusel.style.transform = 'translateX(20px)';
+      
+      setTimeout(() => {
+        updateCarruselContent();
+        // Fade in
+        carrusel.style.opacity = '1';
+        carrusel.style.transform = 'translateX(0)';
+        
+        setTimeout(() => {
+          isTransitioning = false;
+        }, 300);
+      }, 200);
+    } else {
+      updateCarruselContent();
+    }
+  }
+
+  function updateCarruselContent() {
     carrusel.innerHTML = '';
     for (let i = 0; i < VISIBLE_COUNT; i++) {
       // Loop
@@ -90,15 +114,17 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   leftArrow.addEventListener('click', () => {
+    if (isTransitioning) return;
     // Loop hacia atrás
     startIndex = (startIndex - 1 + productos.length) % productos.length;
-    renderCarrusel();
+    renderCarrusel(true);
   });
 
   rightArrow.addEventListener('click', () => {
+    if (isTransitioning) return;
     // Loop hacia adelante
     startIndex = (startIndex + 1) % productos.length;
-    renderCarrusel();
+    renderCarrusel(true);
   });
 });
 
