@@ -123,15 +123,15 @@ function cargarCarrito() {
                     <span>${producto.descripcion}</span>
                 </div>
                 <div>
-                    <span>$ ${producto.precio}</span>
+                    <span style="font-size: 1.2rem; font-weight: bold; color: white;">$ ${producto.precio}</span>
                 </div>
                 <div>
-                    <button type="submit" class="eliminar">Eliminar</button>
                     <div>
                         <button class="restar" ${producto.cantidad === 1 ? "disabled" : ""}>-</button>
                         <input type="number" value="${producto.cantidad}" min="1" class="input-cantidad" disabled>
                         <button class="sumar" ${producto.cantidad === producto.stock ? "disabled" : ""}>+</button>
                     </div>
+                    <button type="submit" class="eliminar">Eliminar</button>
                 </div>
             </div>
         `;

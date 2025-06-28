@@ -90,12 +90,14 @@
 .producto-item {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 1rem;
-    padding: 0.75rem 0.5rem;
+    padding: 1rem;
     background: #23252B;
     border-radius: 8px;
     box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.8rem;
+    min-height: 80px;
 }
 
 .producto-item img {
@@ -105,23 +107,48 @@
     border-radius: 6px;
     border: 1px solid #ee5f0d;
     background: #fff;
+    flex-shrink: 0;
 }
 
 .producto-item h6 {
     font-size: 1rem;
     margin: 0 0 0.2rem 0;
     color: #fff;
+    font-weight: 600;
 }
 
 .producto-item span {
-    font-size: 0.95rem;
+    font-size: 1.1rem;
     color: #ccc;
+    line-height: 1.2;
 }
 
 .producto-item > div {
     display: flex;
     flex-direction: column;
     gap: 0.2rem;
+    min-width: 0;
+    flex: 1;
+}
+
+.producto-item > div:first-of-type {
+    flex: 2;
+    margin-right: 1rem;
+}
+
+.producto-item > div:nth-of-type(2) {
+    flex: 1;
+    text-align: center;
+}
+
+.producto-item > div:nth-of-type(3) {
+    flex: 1;
+    text-align: center;
+}
+
+.producto-item > div:last-of-type {
+    flex: 1.5;
+    align-items: center;
 }
 
 .producto-item button {
@@ -129,11 +156,16 @@
     color: #fff;
     border: none;
     border-radius: 4px;
-    padding: 0.2rem 0.6rem;
+    padding: 0.3rem 0.8rem;
     font-size: 0.9rem;
     cursor: pointer;
     margin: 0.1rem 0;
     transition: background 0.2s;
+    white-space: nowrap;
+}
+
+.eliminar {
+    width: 7rem;
 }
 
 .producto-item button:hover {
@@ -141,7 +173,7 @@
 }
 
 .producto-item .input-cantidad {
-    width: 2.2rem;
+    width: 2.5rem;
     text-align: center;
     border: 1px solid #ccc;
     border-radius: 3px;
@@ -161,8 +193,28 @@
     .carrito-content, .carrito-resumen {
         width: 100%;
     }
+    .producto-item {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        padding: 0.8rem;
+        min-height: auto;
+    }
     .producto-item img {
         width: 45px;
         height: 45px;
+    }
+    .producto-item > div:first-of-type {
+        flex: 1;
+        margin-right: 0.5rem;
+    }
+    .producto-item > div:nth-of-type(2),
+    .producto-item > div:nth-of-type(3) {
+        flex: 0 0 auto;
+        text-align: left;
+    }
+    .producto-item > div:last-of-type {
+        flex: 1 0 100%;
+        justify-content: center;
+        margin-top: 0.5rem;
     }
 }
