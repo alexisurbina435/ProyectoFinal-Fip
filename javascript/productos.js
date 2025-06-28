@@ -1,121 +1,130 @@
-// Traer el json
-fetch('../data/listaProductos.json')
-    .then(response => {
-        if (!response.ok) throw new Error("No se pudo cargar el archivo JSON");
-        return response.json();
-    })
-    .then(data => {
-        if (window.location.pathname.includes("productos.html"), ("productosLog.html")) {
-            llenarProductos(data);
-        }
-    })
-    .catch(error => {
-        console.error("Error al cargar el JSON:", error);
-    });
 
-window.addEventListener("DOMContentLoaded", contadorIconoCarrito);
-//Funcion para llenar los productos y botones funcionales
-let llenarProductos = function (data) {
-    const productosContainer = document.getElementById("productosContainer");
+// array de productos 
+let arrayProductos =[]; 
+// seleccionamos el id de lista productos para poder acceder a article completo donde se alojan los productos 
+const listaProductos = document.querySelector("#listaProductos");
 
-    if (!productosContainer) {
-        console.error("No se encontró el contenedor de productos.");
-        return;
-    }
-    // Cards de productos
-    data.forEach(producto => {
-        const card = document.createElement("article");
-        card.classList.add("col-12", "col-md-3");
-        card.innerHTML += `
-                    <div class="card h-100 text-center">
-                        <img decoding="async" src="${producto.img}" class="carrusel dinamico img-thumbnail"
-                            alt="${producto.descripcion}" />
-                        <div class="card-body">
-                            <h5 class="producto-nombre">${producto.nombre}</h5>
-                            <span class="descripcion">${producto.descripcion}</span>
-                            <div class="estrellas">
-                                <i class="fa-solid fa-star icon-star"></i>
-                                <i class="fa-solid fa-star icon-star"></i>
-                                <i class="fa-solid fa-star icon-star"></i>
-                                <i class="fa-solid fa-star icon-star"></i>
-                                <i class="fa-solid fa-star icon-star"></i>
-                            </div>
-                            <span class="precio"><span>$</span> ${producto.precio}</span>
-                            <span class="stock">Stock disponible: ${producto.stock}</span>
-                            <div class="botones">
-                                <button class="comprarAhora">Comprar Ahora</button>
-                                <button class="agregarCarrito">Agregar al Carrito</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
+document.addEventListener('DOMContentLoaded', function() {
+  eventListeners();
+});
+// agrega un event en las card
+function eventListeners(){
+  listaProductos.addEventListener("click", getDataElements)
 
+}
+// reccorre el DOM
+function getDataElements(e){
+  if(e.target.classList.contains('boton-Carrito')){
+    const elementHtml = e.target.parentElement.parentElement.parentElement;
+    selectData(elementHtml)
+  }
 
-        /*card.querySelector(".card-producto").addEventListener("click", () => {
-            localStorage.setItem("productoDetalle", JSON.stringify(producto));
-            if (checkLogin()) {
-                window.location.href = "productoDetalladoLog.html";
-            } else {
-                window.location.href = "productoDetallado.html";
-            }
-        });*/
+}
+// selecciona los datos de producto y si existe lo actualiza
+function selectData(producto){
+  const idProducto = parseInt(producto.closest('article').id, 10);
+   const existente = arrayProductos.find(p => p.id === idProducto);
 
+  if (existente) {
+    existente.quantity++;
+    actualizarContadorCarrito();
+  } else {
+  const productoObj = {
+    img: producto.querySelector('img').src,
+    tittle: producto.querySelector('h5').textContent,
+    price : parseFloat(producto.querySelector('span.precio-actual').textContent.replace('$', '')),
+    id : parseInt(producto.closest('article').id,10),
+    quantity: 1
+  };
 
-        const botonAgregar = card.querySelector(".agregarCarrito");
-        const botonComprar = card.querySelector(".comprarAhora");
-        const stock = card.querySelector(".stock");
-
-        // Verifica stock y activa la funcion de agregar
-        botonAgregar.addEventListener("click", function () {
-            if (!checkLogin()) return;
-            if (stock.textContent.split(":")[1].trim() <= 0) {
-                alert("No hay stock disponible");
-            } else {
-                botonAgregarCarrito(producto);
-                alert("Producto agregado al carrito");
-                contadorIconoCarrito();
-            }
-        });
-        botonComprarAhora(botonComprar, stock, producto);
-        productosContainer.appendChild(card);
-    });
+  arrayProductos = [...arrayProductos, productoObj];
+ actualizarContadorCarrito()
+ console.log(arrayProductos)
+}
+}
+// actualiza el contador del carrito
+function actualizarContadorCarrito() {
+  const contador = document.querySelector("#contador-carrito");
+  const totalCantidad = arrayProductos.reduce((total, producto) => total + producto.quantity, 0);
+  contador.textContent = totalCantidad;
 }
 
-// verifica que el producto este en el carrito, si esta lo suma la cantidad, sino lo agrega y actualiza el storage
-let botonAgregarCarrito = function (producto) {
-    const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-    const index = carrito.findIndex(item => item.id === producto.id);
-    if (index !== -1) {
-        carrito[index].cantidad += 1;
-    } else {
-        producto.cantidad = 1;
-        carrito.push(producto);
-    }
-    localStorage.setItem("carrito", JSON.stringify(carrito));
-}
 
-// verifica, almacena el producto en el localStorage y redirecciona a la compra directa
-function botonComprarAhora(botonComprar, stock, producto) {
-    botonComprar.addEventListener("click", function () {
-        if (!checkLogin()) return;
-        const stockDisponible = parseInt(stock.textContent.split(":")[1].trim());
-        if (stockDisponible <= 0) {
-            alert("No hay stock disponible");
-        } else {
-            localStorage.setItem("compraDirecta", JSON.stringify(producto));
-            botonAgregarCarrito(producto);
-            window.location.href = "compraDirecta.html";
-            contadorIconoCarrito();
-        }
-    });
-}
 
-function checkLogin() {
-    if (!this.window.location.href.includes("productosLog.html")) {
-        alert("Debes iniciar sesión para comprar");
-        window.location.href = "login.html";
-        return false;
-    } else {
-        return true;
-    }
-}
+
+
+
+
+
+
+
+
+
+// const botonesCarrito = document.querySelectorAll(".boton-Carrito");
+// botonesCarrito.forEach(boton => {
+//   boton.addEventListener("click", e => {
+//     const agregarProducto=(e.target.classList.contains("boton-Carrito"))
+//       Productos =[...Productos, agregarProducto]
+  
+//   });
+// });
+// })
+
+
+
+  // function actualizarContador() {
+  //   if (contadorCarrito) {
+  //     contadorCarrito.textContent = cantidad.toString();
+  //   }
+  // }
+
+  // if (botonesCarrito) {
+  //   botonesCarrito.addEventListener("click", () => {
+  //     cantidad++;
+  //     mensaje.textContent = "✅ Producto agregado al carrito";
+  //     mensaje.style.color = "green";
+  //     actualizarContador();
+
+  //     setTimeout(() => {
+  //       mensaje.textContent = "";
+  //     }, 2000);
+  //   });
+  // }
+
+  // if (sacarDelCarrito) {
+  //   sacarDelCarrito.addEventListener("click", () => {
+  //     if (cantidad > 0) {
+  //       cantidad--;
+  //       mensaje.textContent = "✅ Producto eliminado del carrito";
+  //       mensaje.style.color = "green";
+  //       actualizarContador();
+
+  //       setTimeout(() => {
+  //         mensaje.textContent = "";
+  //       }, 2000);
+  //     }
+  //   });
+  // }
+
+
+// // si el usuario no esta registrado redirige a la pagina de crear usuario 
+// botonesComprar.forEach((boton) => {
+//     boton.addEventListener("click", ()=>{
+//     const usuarioLogueado = localStorage.getItem("usuarioLogueado") === "true";
+    
+//     if (!usuarioLogueado) {
+//       // Si no está logueado, redirigimos
+//       window.location.href = "register.html";
+//     } else {
+//       // Usuario registrado, continuar con la compra
+//       const nombre = localStorage.getItem("nombreUsuario");
+//       alert("puede continuar con el proceso de su compra, " + nombre + "!");
+//     }
+//     function comprar(){
+
+// }
+
+//     });
+// });
+// })
+
