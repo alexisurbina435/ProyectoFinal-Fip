@@ -1,23 +1,25 @@
-
 body {
     height: 100vh;
 }
-.premium, .standar, .basico{
-    width: 380px;
-    height: 630px;
+
+ .contenedor-inscripcion  {
+    width: 350px;
+    height: 600px;
 }
-.titulo{
+
+.titulo {
     font-size: 3rem;
     font-weight: 900;
     margin-top: 100px;
 }
+
 .contenido {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     gap: 2rem;
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
 }
 
 .error-plan {
@@ -59,14 +61,14 @@ body {
     background-color: var(--naranja);
 }
 
-.btn-inscribirse:hover{
+.btn-inscribirse:hover {
     color: var(--gris);
     transition: all 0.4s ease-in-out;
 }
 
 /* metodos de pago  */
 
-.finalizar-compra{
+.finalizar-compra {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -74,9 +76,10 @@ body {
     gap: 2rem;
 }
 
-.titulo-pago{
+.titulo-pago {
     color: var(--blanco);
 }
+
 .contenedor-pago {
     display: flex;
     justify-content: center;
@@ -106,26 +109,35 @@ body {
     gap: 1rem;
     list-style: none;
 }
-.lista-tarjetas{
+
+.lista-tarjetas {
     padding: 0.2rem 3.5rem;
 }
 
 @media(max-width: 760px) {
-    
-}
 
-@media(max-width: 640px){
-    .botones{
-     flex-direction: column;   
+    .contenedor-inscripcion {
+        width: 280px;
+        height: 450px;
+    }
+    .beneficios {
+        font-size: 1.3rem;
+    }
+    .titulo {
+        font-size: 2rem;
     }
 
-    .contenedor-pago{
+    .botones {
+        flex-direction: column;
+    }
+
+    .contenedor-pago {
         display: grid;
         grid-template-columns: repeat(1, 1fr);
     }
 
     .contenedor-tarjetas,
-    .tranferencia{
+    .tranferencia {
         padding: 0.5rem 0.4rem;
         margin: 0 0 2rem 0;
     }

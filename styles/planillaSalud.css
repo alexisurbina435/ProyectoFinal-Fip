@@ -5,24 +5,11 @@ body{
     background: var(--gris);
     height: 100vh;
 }
-/* si quiero ponerlo como antes que la planilla ocupe toda la pantalla tengo que sacar todo lo de .planilla-salud y descomentar lo de .conten-fondo y sacar el margin top  */
-/* .planilla-salud{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-} */
 
-/* .logo-sinfondo{
-    width: 160px;
-    object-fit: contain;
-    margin-right: 4rem;
-} */
 .conten-fondo{
     display: flex;
     align-items: center;
     justify-content: center;
-    /* margin-top: 6rem; */
 }
 .conten-fondo img{
     width: 80%;
@@ -35,14 +22,11 @@ body{
 }
 
 .title{
-    /* text-align: center; */
     padding: 1.5rem 0;
     font-size: 2rem;
-    /* margin-left: rem; */
     margin-bottom: 2rem;
     color: var(--gris-osc);
     display: flex;
-    /* justify-content: space-evenly; */
     justify-content: center;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -80,7 +64,6 @@ body{
     color: var(--blanco);
     width: 13rem;
     height: 2.5rem;
-    /* margin-bottom: 1.5rem; */
     box-shadow:  0px 4px 4px rgba(0, 0, 0, 0.25);
     
 }
@@ -126,13 +109,10 @@ legend::after {
     display: grid;
     grid-template-columns: repeat(3,1fr);
     gap: 2rem;
-    /* padding: 0 11rem 0 0; */
     color: var(--negro);
     font-size: bold;
     font-weight: 600;
     border: none;
-    /* margin-left: 13rem; */
-    
 }
 
 .checkboxs{
@@ -181,7 +161,6 @@ textarea::-webkit-scrollbar-thumb {
     width: 10rem;
     height: 2.5rem;
     background: var(--naranja);
-    /* margin: 1.5rem 0 1.5rem 2rem; */
     margin: 1.5rem 0;
     border: none;
     border-radius: 10px;
