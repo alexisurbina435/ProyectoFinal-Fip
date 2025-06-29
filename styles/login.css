@@ -8,7 +8,6 @@
 }
 
 .login-container {
-    /* background-color: var(--negro); */
     border-radius: 50px;
     padding: 2%;
     display: flex;
@@ -22,15 +21,9 @@
     width: 300px;
     object-fit: contain;
     margin-top: 2rem;
-    /* width: 442px; */
-    /* height: 347px; */
-    /* margin-bottom: 64px; */
-    /* aspect-ratio: 442.27/347; */
 }
 
 .input-group {
-    /* cambie el ancho de los input */
-    /* width: 384px; */
     width: 16rem;
     margin-bottom: 10px;
 }

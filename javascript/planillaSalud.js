@@ -118,6 +118,6 @@ Formulario.addEventListener("submit", (e) => {
     //Cerrar modal y recargar pagina
     closeBtn.addEventListener("click", () => {
         favDialog.close();
-        setTimeout(() => { window.location.reload(); }, 600);
+        setTimeout(() => { window.location.href = "indexLog.html"; }, 600);
     });
 });
