@@ -1,21 +1,64 @@
 // Carrusel de productos
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   const carrusel = document.getElementById('carrusel-productos');
   const leftArrow = document.querySelector('.carrusel-arrow.left');
   const rightArrow = document.querySelector('.carrusel-arrow.right');
   let productos = [];
   let startIndex = 0;
-  const VISIBLE_COUNT = 4;
+  let VISIBLE_COUNT = 4; // Va a a cambiar según el tamaño de pantalla
+  // Variable para controlar la transicion
   let isTransitioning = false;
 
-  // Cargar productos desde JSON
-  fetch('../data/listaProductos.json')
-    .then(res => res.json())
-    .then(data => {
-      productos = data;
+  // Función para determinar el número de productos visibles según el tamaño de pantalla
+  function getVisibleCount() {
+    const width = window.innerWidth;
+    if (width <= 480) return 2; // Cel pequeños
+    if (width <= 600) return 2; // Cel grandes
+    if (width <= 768) return 3; // Tablets pequeñas
+    if (width <= 900) return 3; // Tablets grandes
+    return 4; // Desktop
+  }
+
+  // Actualizar el número de productos visibles cuando cambie el tamaño de pantalla
+  function updateVisibleCount() {
+    const newVisibleCount = getVisibleCount();
+    if (newVisibleCount !== VISIBLE_COUNT) {
+      VISIBLE_COUNT = newVisibleCount;
       renderCarrusel();
-    });
+    }
+  }
+
+  // Escuchar cambios en el tamaño de pantalla
+  window.addEventListener('resize', updateVisibleCount);
+
+  // Función asíncrona para cargar productos desde JSON
+  async function cargarProductos() {
+    try {
+      const response = await fetch('../data/listaProductos.json');
+      
+      if (!response.ok) {
+        throw new Error(`Error HTTP: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      productos = data;
+      VISIBLE_COUNT = getVisibleCount(); // Establecer el valor inicial
+      renderCarrusel();
+    } catch (error) {
+      console.error('Error al cargar productos:', error);
+      // Mostrar mensaje de error al usuario
+      carrusel.innerHTML = `
+        <div style="text-align: center; color: #ee5f0d; padding: 2rem;">
+          <p>Error al cargar los productos</p>
+          <p>Por favor, recarga la página</p>
+        </div>
+      `;
+    }
+  }
+
+  // Cargar productos
+  await cargarProductos();
 
   function renderCarrusel(withTransition = false) {
     if (withTransition && isTransitioning) return;
@@ -113,6 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // Navegación del carrusel
   leftArrow.addEventListener('click', () => {
     if (isTransitioning) return;
     // Loop hacia atrás

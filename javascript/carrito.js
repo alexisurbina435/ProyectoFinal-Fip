@@ -276,38 +276,28 @@ function mostrarPopupProducto(producto) {
     // Crear overlay
     const overlay = document.createElement('div');
     overlay.id = 'popup-producto';
-    overlay.style.position = 'fixed';
-    overlay.style.top = '0';
-    overlay.style.left = '0';
-    overlay.style.width = '100vw';
-    overlay.style.height = '100vh';
-    overlay.style.background = 'rgba(0,0,0,0.6)';
-    overlay.style.display = 'flex';
-    overlay.style.alignItems = 'center';
-    overlay.style.justifyContent = 'center';
-    overlay.style.zIndex = '9999';
     overlay.innerHTML = `
-      <div class="producto-detail" style="background:#fff; border-radius:16px; max-width:700px; width:90vw; padding:2rem; position:relative; box-shadow:0 8px 32px rgba(0,0,0,0.25);">
-        <button id="cerrar-popup-producto" style="position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:2rem; color:#EE5F0D; cursor:pointer;">&times;</button>
+      <div class="producto-detail">
+        <button id="cerrar-popup-producto">&times;</button>
         <div style="display:flex; flex-wrap:wrap; gap:2rem; align-items:center;">
-          <div class="product-images" style="flex:1; min-width:200px;">
-            <img src="${producto.img}" alt="${producto.nombre}" class="product-main-image" style="width:100%; max-width:250px; border-radius:12px; object-fit:contain;">
+          <div class="product-images">
+            <img src="${producto.img}" alt="${producto.nombre}" class="product-main-image">
           </div>
-          <div class="product-info" style="flex:2; min-width:220px;">
-            <h1 class="product-title" style="font-size:1.5rem; margin-bottom:0.5rem;">${producto.nombre}</h1>
-            <div class="product-rating" style="margin-bottom:0.5rem;">
+          <div class="product-info">
+            <h1 class="product-title">${producto.nombre}</h1>
+            <div class="product-rating">
               <span class="rating-number">4.7</span>
               <span style="color:gold;">&#9733;&#9733;&#9733;&#9733;</span>
             </div>
-            <div class="product-price" style="margin-bottom:0.5rem; font-size:1.2rem; color:#105A37; font-weight:bold;">
+            <div class="product-price">
               <span>$${producto.precio}</span>
             </div>
-            <div class="stock-status" style="margin-bottom:0.5rem; color:#105A37;">Stock disponible: ${producto.stock}</div>
+            <div class="stock-status">Stock disponible: ${producto.stock}</div>
             <button class="comprarAhora" style="margin-right:0.5rem;">Comprar Ahora</button>
             <button class="agregarCarrito">Agregar al Carrito</button>
-            <div class="product-description" style="margin-top:1rem;">
-              <h2 style="font-size:1.1rem; margin-bottom:0.3rem;">Descripción</h2>
-              <div class="description-box" style="background:#f7f7f7; border-radius:8px; padding:0.7rem;">${producto.descripcion}</div>
+            <div class="product-description">
+              <h2>Descripción</h2>
+              <div class="description-box">${producto.descripcion}</div>
             </div>
           </div>
         </div>

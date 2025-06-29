@@ -397,6 +397,7 @@ ul .nav-inscribite {
   gap: 1rem;
   margin: 2rem 0 2.5rem 0;
   position: relative;
+  padding: 0 1rem;
 }
 .carrusel-arrow {
   background: none;
@@ -414,6 +415,7 @@ ul .nav-inscribite {
   z-index: 2;
   box-shadow: none;
   padding: 0 0.5rem;
+  flex-shrink: 0;
 }
 .carrusel-arrow:hover {
   color: #ff7f32;
@@ -461,6 +463,7 @@ ul .nav-inscribite {
   font-weight: 600;
   margin: 0.3rem 0 0.2rem 0;
   text-align: center;
+  font-size: 1rem;
 }
 .carrusel-producto-precio {
   color: #ee5f0d;
@@ -475,6 +478,7 @@ ul .nav-inscribite {
     justify-content: center;
     flex-direction: column;
     margin-top: auto;
+    width: 100%;
   }
   .carrusel-botones .comprarAhora {
     background-color: var(--naranja);
@@ -486,6 +490,7 @@ ul .nav-inscribite {
     font-size: 1rem;
     font-weight: 600;
     transition: background 0.3s;
+    width: 100%;
   }
   .carrusel-botones .comprarAhora:hover {
     background-color: #C14A09;
@@ -500,11 +505,25 @@ ul .nav-inscribite {
     font-size: 1rem;
     font-weight: 600;
     transition: background 0.3s;
+    width: 100%;
   }
   .carrusel-botones .agregarCarrito:hover {
     background-color: #9a9a9a;
   }
 
+/* Responsive para tablets grandes */
+@media (max-width: 1200px) {
+  .carrusel-productos {
+    max-width: 900px;
+    gap: 1.2rem;
+  }
+  .carrusel-producto {
+    min-width: 200px;
+    max-width: 250px;
+  }
+}
+
+/* Responsive para tablets */
 @media (max-width: 900px) {
   .carrusel-productos {
     gap: 1rem;
@@ -513,9 +532,60 @@ ul .nav-inscribite {
   .carrusel-producto {
     min-width: 160px;
     max-width: 180px;
+    padding: 0.8rem;
+  }
+  .carrusel-producto-img {
+    max-width: 120px;
+    height: 120px;
+  }
+  .carrusel-producto-nombre {
+    font-size: 0.9rem;
+  }
+  .carrusel-producto-precio {
+    font-size: 1rem;
+  }
+  .carrusel-botones .comprarAhora,
+  .carrusel-botones .agregarCarrito {
+    font-size: 0.9rem;
+    padding: 0.3rem 0.6rem;
   }
 }
+
+/* Responsive para tablets pequeñas */
+@media (max-width: 768px) {
+  .carrusel-productos {
+    max-width: 600px;
+    gap: 0.8rem;
+  }
+  .carrusel-producto {
+    min-width: 140px;
+    max-width: 160px;
+    padding: 0.6rem;
+    margin: auto;
+    min-height: 17rem;
+  }
+  .carrusel-producto-img {
+    max-width: 100px;
+    height: 100px;
+  }
+  .carrusel-producto-nombre {
+    font-size: 0.8rem;
+  }
+  .carrusel-producto-precio {
+    font-size: 0.9rem;
+  }
+  .carrusel-botones .comprarAhora,
+  .carrusel-botones .agregarCarrito {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.5rem;
+  }
+}
+
+/* Responsive para móviles grandes */
 @media (max-width: 600px) {
+  .carrusel-productos-container {
+    padding: 0 0.5rem;
+  }
   .carrusel-productos {
     gap: 0.5rem;
     max-width: 350px;
@@ -524,15 +594,61 @@ ul .nav-inscribite {
     min-width: 120px;
     max-width: 140px;
     padding: 0.5rem;
+    margin: auto;
+    min-height: 15rem;
   }
   .carrusel-producto-img {
     max-width: 90px;
     height: 90px;
   }
+  .carrusel-producto-nombre {
+    font-size: 0.75rem;
+  }
+  .carrusel-producto-precio {
+    font-size: 0.8rem;
+  }
   .carrusel-arrow {
-    width: 36px;
-    height: 36px;
     font-size: 1.3rem;
+    padding: 0 0.3rem;
+  }
+  .carrusel-botones .comprarAhora,
+  .carrusel-botones .agregarCarrito {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.4rem;
+  }
+}
+
+/* Responsive para móviles pequeños */
+@media (max-width: 480px) {
+  .carrusel-productos {
+    max-width: 280px;
+    gap: 0.4rem;
+  }
+  .carrusel-producto {
+    min-width: 100px;
+    max-width: 120px;
+    padding: 0.4rem;
+    margin: auto;
+    min-height: 13rem;
+  }
+  .carrusel-producto-img {
+    max-width: 70px;
+    height: 70px;
+  }
+  .carrusel-producto-nombre {
+    font-size: 0.7rem;
+  }
+  .carrusel-producto-precio {
+    font-size: 0.75rem;
+  }
+  .carrusel-arrow {
+    font-size: 1.1rem;
+    padding: 0 0.2rem;
+  }
+  .carrusel-botones .comprarAhora,
+  .carrusel-botones .agregarCarrito {
+    font-size: 0.65rem;
+    padding: 0.15rem 0.3rem;
   }
 }
 
