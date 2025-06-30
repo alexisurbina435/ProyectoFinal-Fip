@@ -32,13 +32,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Escuchar cambios en el tamaño de pantalla
   window.addEventListener('resize', updateVisibleCount);
 
-  // Función asíncrona para cargar productos desde JSON
+  // Cargar productos desde JSON
   async function cargarProductos() {
     try {
       const response = await fetch('../data/listaProductos.json');
       
       if (!response.ok) {
-        throw new Error(`Error HTTP: ${response.status}`);
+        throw new Error(`Error HTTP: ${response.status} - ${response.statusText}`);
       }
       
       const data = await response.json();
