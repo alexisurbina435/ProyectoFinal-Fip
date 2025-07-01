@@ -75,6 +75,21 @@
   padding: 0.7rem;
 }
 
+#popup-producto .rating-stars {
+  color: gold;
+}
+
+#popup-producto .producto-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-items: center;
+}
+
+#popup-producto .comprarAhora {
+  margin-right: 0.5rem;
+}
+
 #cerrar-popup-producto {
   position: absolute;
   top: 1rem;

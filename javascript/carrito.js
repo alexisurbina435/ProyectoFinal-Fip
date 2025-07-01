@@ -279,7 +279,7 @@ function mostrarPopupProducto(producto) {
     overlay.innerHTML = `
       <div class="producto-detail">
         <button id="cerrar-popup-producto">&times;</button>
-        <div style="display:flex; flex-wrap:wrap; gap:2rem; align-items:center;">
+        <div class="producto-container">
           <div class="product-images">
             <img src="${producto.img}" alt="${producto.nombre}" class="product-main-image">
           </div>
@@ -287,13 +287,13 @@ function mostrarPopupProducto(producto) {
             <h1 class="product-title">${producto.nombre}</h1>
             <div class="product-rating">
               <span class="rating-number">4.7</span>
-              <span style="color:gold;">&#9733;&#9733;&#9733;&#9733;</span>
+              <span class="rating-stars">&#9733;&#9733;&#9733;&#9733;</span>
             </div>
             <div class="product-price">
               <span>$${producto.precio}</span>
             </div>
             <div class="stock-status">Stock disponible: ${producto.stock}</div>
-            <button class="comprarAhora" style="margin-right:0.5rem;">Comprar Ahora</button>
+            <button class="comprarAhora">Comprar Ahora</button>
             <button class="agregarCarrito">Agregar al Carrito</button>
             <div class="product-description">
               <h2>Descripción</h2>
