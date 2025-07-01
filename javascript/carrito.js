@@ -5,7 +5,7 @@ fetch('../data/listaProductos.json')
         return response.json();
     })
     .then(data => {
-        if (window.location.pathname.includes("productos.html"),("productosLog.html")) {
+        if (window.location.pathname.includes("productos.html"), ("productosLog.html")) {
             llenarProductos(data);
         }
     })
@@ -47,9 +47,17 @@ let llenarProductos = function (data) {
         const botonAgregar = card.querySelector(".agregarCarrito");
         const botonComprar = card.querySelector(".comprarAhora");
         const stock = card.querySelector(".stock");
+        const img = card.querySelector(".img-prod");
+
+        // Evento para mostrar popup de detalle
+        img.addEventListener('click', function () {
+            mostrarPopupProducto(producto);
+        });
 
         // Verifica stock y activa la funcion de agregar
         botonAgregar.addEventListener("click", function () {
+            if (!checkLogin()) return;
+
             if (stock.textContent.split(":")[1].trim() <= 0) {
                 alert("No hay stock disponible");
             } else {
@@ -78,6 +86,7 @@ let botonAgregarCarrito = function (producto) {
 // verifica, almacena el producto en el localStorage y redirecciona a la compra directa
 function botonComprarAhora(botonComprar, stock, producto) {
     botonComprar.addEventListener("click", function () {
+        if (!checkLogin()) return;
         const stockDisponible = parseInt(stock.textContent.split(":")[1].trim());
         if (stockDisponible <= 0) {
             alert("No hay stock disponible");
@@ -95,7 +104,7 @@ function cargarCarrito() {
     const carritoContainer = document.getElementById("carritoContainer");
     const precio = document.getElementById("precioResumen");
     const total = document.getElementById("totalResumen");
-    
+
     const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
     // verifica que no este vacio
     if (carrito.length === 0) {
@@ -117,15 +126,15 @@ function cargarCarrito() {
                     <span>${producto.descripcion}</span>
                 </div>
                 <div>
-                    <span>$ ${producto.precio}</span>
+                    <span style="font-size: 1.2rem; font-weight: bold; color: white;">$ ${producto.precio}</span>
                 </div>
                 <div>
-                    <button type="submit" class="eliminar">Eliminar</button>
                     <div>
                         <button class="restar" ${producto.cantidad === 1 ? "disabled" : ""}>-</button>
                         <input type="number" value="${producto.cantidad}" min="1" class="input-cantidad" disabled>
                         <button class="sumar" ${producto.cantidad === producto.stock ? "disabled" : ""}>+</button>
                     </div>
+                    <button type="submit" class="eliminar">Eliminar</button>
                 </div>
             </div>
         `;
@@ -150,57 +159,84 @@ function cargarCarrito() {
             let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
             carrito.splice(i, 1);
             localStorage.setItem("carrito", JSON.stringify(carrito));
-            cargarCarrito(); 
+            cargarCarrito();
             contadorIconoCarrito();
         });
     });
+
+    contadorIconoCarrito();
 }
 
 // activar las funciones
 window.addEventListener("load", function () {
-    if (this.window.location.href.includes("carrito.html"),("carritoLog.html")) {
+    if (this.window.location.href.includes("carrito.html"), ("carritoLog.html")) {
         cargarCarrito();
+        contadorIconoCarrito();
     }
 })
 
 window.addEventListener("load", function () {
     if (this.window.location.href.includes("compraDirecta.html")) {
         cargarCompraDirecta();
+        contadorIconoCarrito();
     }
 });
 
 
 // Producto listo para comprar directo
 function cargarCompraDirecta() {
-    const producto = JSON.parse(localStorage.getItem("compraDirecta"));
     const detalle = document.getElementById("detalleCompra");
-  
-    if (!producto) {
+    const pagoContent = document.getElementById("pagoContent");
+    const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    if (!carrito.length) {
         detalle.innerHTML = "<p>No hay productos para comprar.</p>";
+        if (pagoContent) pagoContent.innerHTML = "";
         return;
     }
-
-    // Mostrar detalles y paso a paso de compra
-    detalle.innerHTML = `
-        <div class="producto-envio card p-3 mb-4">
-            <img src="${producto.img}" alt="${producto.descripcion}" class="img-fluid mb-2">
-            <h4>${producto.nombre}</h4>
-            <p>${producto.descripcion}</p>
-            <p><strong>Precio:</strong> $${producto.precio}</p>
-        </div>
-
+    let totalPrecio = 0;
+    detalle.innerHTML = "";
+    // Detalle de productos
+    carrito.forEach(producto => {
+        detalle.innerHTML += `
+            <div class="producto-item">
+                <img src="${producto.img}" alt="${producto.descripcion}">
+                <div>
+                    <h6>${producto.nombre}</h6>
+                    <span>${producto.descripcion}</span>
+                </div>
+                <div>
+                    <span>$ ${producto.precio}</span>
+                </div>
+                <div>
+                    <span>Cantidad: ${producto.cantidad}</span>
+                </div>
+            </div>
+        `;
+        totalPrecio += producto.precio * producto.cantidad;
+    });
+    // Total
+    detalle.innerHTML += `<div class="total-compra"><span>Total:</span> <span>$${totalPrecio}</span></div>`;
+    // Formas de pago
+    if (pagoContent) {
+        pagoContent.innerHTML = `
         <div class="formulario-envio">
-            <h5>Elegí el método de envío:</h5>
+            <h3>Elegí el método de pago:</h3>
+            <select class="form-select mb-3">
+                <option value="">Seleccioná una opción</option>
+                <option value="efectivo">Efectivo</option>
+                <option value="tarjeta">Tarjeta de crédito/débito</option>
+                <option value="transferencia">Transferencia bancaria</option>
+            </select>
+            <h3>Elegí el método de envío:</h3>
             <select class="form-select mb-3">
                 <option value="">Seleccioná una opción</option>
                 <option value="retiro">Retiro en tienda</option>
                 <option value="domicilio">Envío a domicilio</option>
             </select>
-
-            <h5>Confirmar pago:</h5>
-            <button class="btn btn-success">Pagar ahora</button>
+            <button class="btn btn-success">Confirmar y pagar</button>
         </div>
-    `;
+        `;
+    }
 }
 
 // cambiar la cantidad del input con los botones (no baja de 1 y no pasa de stock)
@@ -219,7 +255,7 @@ function cambiarCantidad(i, j) {
     carrito[i] = producto;
     localStorage.setItem("carrito", JSON.stringify(carrito));
     cargarCarrito();
-    contadorIconoCarrito(); 
+    contadorIconoCarrito();
 }
 
 // actualizar el contador del carrito
@@ -233,5 +269,81 @@ function contadorIconoCarrito() {
     } else {
         contador.style.visibility = "hidden";
     }
+}
+
+// verificar si el usuario esta logueado
+function checkLogin() {
+    const url = window.location.href;
+    const paginasLogueadas = ["productosLog.html", "indexLog.html"];
+
+    if (!paginasLogueadas.some(pagina => url.includes(pagina))) {
+        alert("Debes iniciar sesión para comprar");
+        window.location.href = "login.html";
+        return false;
+    }
+    return true;
+}
+
+// Popup de detalle de producto
+function mostrarPopupProducto(producto) {
+    // Si ya existe, eliminarlo
+    let popupExistente = document.getElementById('popup-producto');
+    if (popupExistente) popupExistente.remove();
+    // Crear overlay
+    const overlay = document.createElement('div');
+    overlay.id = 'popup-producto';
+    overlay.innerHTML = `
+      <div class="producto-detail">
+        <button id="cerrar-popup-producto">&times;</button>
+        <div class="producto-container">
+          <div class="product-images">
+            <img src="${producto.img}" alt="${producto.nombre}" class="product-main-image">
+          </div>
+          <div class="product-info">
+            <h1 class="product-title">${producto.nombre}</h1>
+            <div class="product-rating">
+              <span class="rating-number">4.7</span>
+              <span class="rating-stars">&#9733;&#9733;&#9733;&#9733;</span>
+            </div>
+            <div class="product-price">
+              <span>$${producto.precio}</span>
+            </div>
+            <div class="stock-status">Stock disponible: ${producto.stock}</div>
+            <button class="comprarAhora">Comprar Ahora</button>
+            <button class="agregarCarrito">Agregar al Carrito</button>
+            <div class="product-description">
+              <h2>Descripción</h2>
+              <div class="description-box">${producto.descripcion}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    // Cerrar popup
+    document.getElementById('cerrar-popup-producto').onclick = () => overlay.remove();
+    overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
+    // Botones funcionales dentro del popup
+    overlay.querySelector('.comprarAhora').onclick = function () {
+        if (!checkLogin()) return;
+        if (producto.stock <= 0) {
+            alert('No hay stock disponible');
+        } else {
+            localStorage.setItem('compraDirecta', JSON.stringify(producto));
+            botonAgregarCarrito(producto);
+            window.location.href = 'compraDirecta.html';
+            contadorIconoCarrito();
+        }
+    };
+    overlay.querySelector('.agregarCarrito').onclick = function () {
+        if (!checkLogin()) return;
+        if (producto.stock <= 0) {
+            alert('No hay stock disponible');
+        } else {
+            botonAgregarCarrito(producto);
+            alert('Producto agregado al carrito');
+            contadorIconoCarrito();
+        }
+    };
 }
 

@@ -5,15 +5,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 110vh;
+    margin: 8rem 0 2rem 0;
 }
 
 .titulo {
     text-align: center;
-    /* margin-top: 7rem; */
     font-size: 2rem;
     color: var(--blanco);
-    /* text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.40); */
     text-shadow: 0px 3px 3px rgba(255, 255, 255, 0.3);
 }
 
@@ -28,7 +26,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /* margin: 3rem 0 5rem 0; */
     gap: 1rem;
 }
 
@@ -38,15 +35,12 @@
 }
 
 .contenedor-inscripcion {
-    /* ancho anterior 400px */
     width: 320px;
-    /* max-width: 320px; */
     height: 600px;
     background-color: var(--gris-osc);
     border-radius: 10px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     display: flex;
-    /* margin: 0 1rem 0 1rem; */
     padding-bottom: 1rem;
     justify-content: end;
     gap: 1rem;
@@ -66,7 +60,6 @@
     background-image: url('../images/premium2.jpg');
     background-size: cover;
     background-position: center;
-    /* position: relative; */
     overflow: hidden;
 }
 
@@ -74,7 +67,6 @@
     background-image: url('../images/standar2.jpg');
     background-size: cover;
     background-position: center;
-    /* position: relative; */
     overflow: hidden;
 }
 
@@ -82,12 +74,10 @@
     background-image: url('../images/basico2.jpg');
     background-size: cover;
     background-position: center;
-    /* position: relative; */
     overflow: hidden;
 }
 
 .plan {
-    /* margin-top: 17rem; */
     display: flex;
     flex-direction: column;
     font-size: 1.8rem;
@@ -100,7 +90,6 @@
     font-size: 1.5rem;
     color: var(--blanco);
 }
-
 
 .btn-inscripcion {
     width: 150px;
@@ -141,7 +130,7 @@
     .inscribite{
         display: flex;
         margin-top: 2rem;
-        height: 170vh;
+        margin: 8rem 0 2rem 0;
     }
     .contenedor-inscripcion {
     /* ancho anterior 400px */
@@ -151,8 +140,8 @@
     .plan{
         font-size: 1.2rem;
     }
-    .beneficios{
-        font-size: 1rem;
+    .beneficios {
+        font-size: 1.1rem;
     }
     .btn-inscripcion{
         width: 50%;

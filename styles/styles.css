@@ -2,24 +2,20 @@
     --gris: #23252B;
     --gris-osc: #1A1A1A;
     --naranja: #EE5F0D;
-    --blanco: #ffffff;
+    --blanco: #FFFFFF;
     --negro: #000000;
     --max-width: 1920px;
     --spacing: 1rem;
 }
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     list-style: none;
-    /* text-decoration: none; */
 }
-
 body {
     font-family: 'Poppins', sans-serif;
 }
-
 .main {
     min-height: 100vh;
     width: 100%;
@@ -27,29 +23,16 @@ body {
     overflow: hidden;
 }
 
-/* Header */
-/* .top-line {
-  background-color: var(--naranja);
-  width: 100%;
-  height: 1.5rem;
-  margin-bottom: 0.5rem;
-} */
-/* cambios en el header, header after y before */
-/* y quite las lineas del html  */
-/* soluciones el error del hover de inscribite que sobrepasaba el header  */
 .header {
     display: flex;
     position: fixed;
     justify-content: center;
     align-items: end;
-    /* padding: 0 2.75rem; */
     width: 100%;
     min-height: 6rem;
-    /* margin: auto; */
     background-color: var(--gris-osc);
     z-index: 1000;
 }
-
 .header::before{
     content: "";
     display: block;
@@ -61,7 +44,6 @@ body {
     left: 0;
     right: 0;
 }
-
 .header::after{
     content: "";
     display: block;
@@ -73,35 +55,27 @@ body {
     left: 0;
     right: 0;
 }
-
 .logo {
     aspect-ratio: 46.11/50.00;
     height: 60px;
     width: 55px;
 }
-
 .navigation {
     display: flex;
     align-items: center;
-    /* margin-top: 1rem; */
     gap: 5.5rem;
-    /* margin-top: 1rem; */
+
 }
-/* le agregue un borde y fondo al incribie y lo cambie por inscribite ya!  */
+
 .nav-list{
     display: flex;
     gap: 5rem;
 }
 
-/* soluciones el error del subrayado por el bootstrap, era agregar el text-decoration: none; en los a directamente */
 .nav-links{
     background: none;
     border: none;
-    /* padding: 6px; */
-    /* padding: 6px 10px; */
-    /* margin: 0; */
     font-size: 1.3rem;
-    /* line-height: 1.5rem; */
     color: var(--blanco);
     cursor: pointer;
     transition: all 0.5s ease;
@@ -113,8 +87,6 @@ body {
 }
 .nav-links:hover {
     color: var(--naranja);
-    /* transform: scale(1.05);
-    transition: all 0.5s ease; */
 }
 
 ul .nav-inscribite {
@@ -131,16 +103,12 @@ ul .nav-inscribite {
     transform: scale(1.08);
     transition: all 0.5s ease;
 }
-/* .nav-inscribite{
-    width: 100%;
-    padding: 0.5rem 0.5rem;
-} */
+
 .icons-container {
     display: flex;
     gap: 1.75rem;
     align-items: center;
 }
-
 .cart-button {
     background: none;
     border: none;
@@ -149,12 +117,10 @@ ul .nav-inscribite {
     transition: transform 0.3s ease;
     position: relative;
 }
-
 .cart-button:hover {
   transform: scale(1.2);
   transition: transform 0.3s ease;
 }
-
 .cart-icon {
     margin: 0;
     padding: 0;
@@ -184,30 +150,6 @@ ul .nav-inscribite {
     width: 42px;
 }
 
-/* .user-button {
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-} */
-
-/* .user-button:hover {
-  transform: scale(1.2);
-  transition: transform 0.3s ease;
-} */
-
-/* .user-icon {
-    margin: 0;
-    padding: 0;
-    width: 43px;
-    height: 43px;
-} */
-
-/* .bottom-line {
-    background-color: var(--naranja);
-    width: 100%;
-    height: 1px;
-} */
 
 /* Banner principal */
 .content-banner {
@@ -235,104 +177,9 @@ ul .nav-inscribite {
     height: 100%;
 
 }
+
+/* SE BORRO SECCION DE PRODUCTOS, SE AGREGO NUEVO CARRUSEL DE PRODUCTOS */
 /* section productos  */
-.seccion-producto{
-    padding: 1rem;
-    height: 25vh;
-}
-.descripcion{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    text-align: center;
-    width: 100%;
-    color: var(--blanco);
-    margin-top: 1rem;
-    /* position: relative; */
-}
-
-/* .descripcion::after{
-    position: absolute;
-    display: block;
-    content: "";
-    width: 30%;
-    height: 4px;
-    background-color: var(--naranja);
-    left: 23rem;
-    bottom: 0;
-} */
-.descripcion a{
-    color: var(--blanco);
-}
-
-.descripcion a:hover{
-    color: var(--naranja);
-}
-
-/* card de productos  */
-
-.productos-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* padding: 1rem; */
-    /* border: 1px solid red; */
-    /* gap: 4rem; */
-}
-.productos{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* gap: 3rem; */
-    padding: 1rem;
-    /* border: 1px solid red; */
-    /* width: 15%; */
-}
-.card-product{
-    text-align: center;
-    padding: 1rem;
-    border-radius: 10px;
-    background-color: var(--blanco); 
-    width: 17rem;
-}
-.card-product img{
-    width: 8rem;
-    object-fit: contain;
-}
-
-.descrip-prod{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 0.2rem;
-    margin: 0.5rem 0 0.5rem 0;
-}
-.descrip-prod p{
-    font-size: 1.2rem;
-    font-weight: 600;
-}
-.descrip-prod h1{
-    font-size: 1.4rem;
-}
-.botones-prod{
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-}
-.btn-prod{
-    white-space: nowrap;
-    color: var(--negro);
-    font-size: 1rem;
-    font-weight: 600;
-    padding: 0.2rem 0.5rem;
-    border-radius: 10px;
-    transition: all 0.5s ease;
-    cursor: pointer;
-}
-.btn-prod:hover{
-    color: var(--naranja);
-}
 
 /* inicio seccion remeras  */
 /* Banner-remeras */
@@ -341,7 +188,6 @@ ul .nav-inscribite {
   display: flex;
   justify-content: center;
 }
-
 .banner-remeras {
   margin: 2rem 0 5rem 0;
   /* width: 100%; */
@@ -352,22 +198,9 @@ ul .nav-inscribite {
 }
 
 .entrena{
-    /* font-size: 2rem; */
     color: var(--blanco);
-    /* position: relative; */
 }
 
-/* .entrena::after{
-    content: "";
-    display: block;
-    width: 60%;
-    height: 0.2rem;
-    background-color: var(--naranja);
-    position: absolute;
-    bottom: 0;
-    left: 1rem;
-    right: 0;
-} */
 /* fin seccion remera  */
 
 /* Footer */
@@ -376,14 +209,11 @@ ul .nav-inscribite {
     padding-top: 2rem;
 
 }
-
 .footer-content {
     max-width: 100%;
     margin: 0 auto;
-    /* saque el padding spacing por que la linea sino no completa la pantalla  */
-    /* padding: 0 var(--spacing); */
-}
 
+}
 /* arreglo centrado footer  */
 .footer-grid {
     display: grid;
@@ -393,101 +223,82 @@ ul .nav-inscribite {
     justify-content: space-evenly;
     place-items: center;
 }
-
 .contact {
     font-style: normal;
 }
-
 .contact-item {
     display: flex;
     gap: 0.625rem;
     margin-top: var(--spacing);
     color: var(--blanco);
 }
-
 .contact-icon {
     width: 1rem;
     aspect-ratio: 1;
     object-fit: contain;
     align-self: flex-start;
 }
-
 .contact-text {
     font-size: 1rem;
 }
-
-
-
 .brand-logo {
     width: 350px;
     aspect-ratio: 1;
     object-fit: contain;
 }
-
 .footer-nav {
     margin: 0 2.5rem;
 }
-
 .footer-nav-list {
     list-style: none;
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
 }
-
 .footer-nav-link {
     color: var(--blanco);
     text-decoration: none;
     font-size: 1rem;
     transition: color 0.3s ease;
 }
-
 .footer-nav-link:hover {
     color: var(--naranja);
 }
-
 .footer-line {
     margin: 0.875rem auto 0;
     height: 5px;
     border: 3px solid var(--blanco);
     max-width: 100%;
 }
-
 .copyright {
     padding: 0 1px 1rem;
     background-color: var(--negro);
 }
-
 .copyright-line {
     height: 5px;
     border: 3px solid var(--blanco);
 }
-
 .copyright-content {
     display: flex;
     justify-content: end;
     margin: 0.875rem auto 0;
 }
-
 .copyright-text {
     color: var(--blanco);
     font-size: 1rem;
     font-weight: 300;
 }
-
 .social-media{
     display: flex;
     justify-content: center;
     gap: 4.5rem;
     margin: 1rem;
 }
-
 .social-icon{
     font-size: 2rem;
     color: var(--naranja);
     transition: all 0.4s ease;
 }
-
 .social-icon:hover{
     transform: scale(1.1);
     transition: all 0.5s ease;
@@ -496,6 +307,7 @@ ul .nav-inscribite {
 .mobile{
     display: none;
 }
+
 
 @media (max-width: 760px) {
     .content-banner img{
@@ -537,4 +349,3 @@ ul .nav-inscribite {
         gap: 0.8rem;
     }
 }
-

@@ -20,26 +20,15 @@
 }
 
 .select{
-    /* background-color: #2a2f3b; */
-    /* color: #fff; */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* border: 2px #2a2f3b solid; */
     border-radius: 0.5em;
     padding: 1rem;
     cursor: pointer;
     transition: background 0.3s;
 }
 
-.select-clicked{
-    /* border: 2px var(--gris-osc)   solid; */
-    box-shadow: 0 0 0.8em var(--gris-osc);  
-}
-
-.select:hover{
-    background: var(--gris-osc);
-}
 
 .caret{
     width: 0;

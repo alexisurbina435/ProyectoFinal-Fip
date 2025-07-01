@@ -29,11 +29,15 @@
     font-size: 1.5rem;
 }
 
-.login-container a {
-  color: rgb(1, 1, 197) !important;
+.checkbox-group a:visited {
+  color: rgb(1, 1, 197) ;
 }
 .go-login{
   font-size: 1rem;
+  color: var(--blanco) ;
+}
+.go-login:active{
+  color: var(--naranja) ;
 }
 
 .icon-register{

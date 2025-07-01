@@ -1,6 +1,5 @@
 .img-prod {
     width: 10rem;
-    /* height: 100%; */
     border-radius: 20px;
     cursor: pointer;
     aspect-ratio: 1;
@@ -11,14 +10,14 @@
 }
 
 .seccion-productos {
-    height: 100vh;
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    margin: 3rem 0;
 }
 
-.sub-productos{
+.sub-productos {
     color: var(--blanco);
     font-size: 1.6rem;
     margin-bottom: 2rem;
@@ -51,14 +50,13 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    /* margin-top: 1rem; */
 }
 
 .producto-nombre {
     white-space: nowrap;
 }
 
-.precio{
+.precio {
     font-weight: 600;
     font-size: 1.3rem;
 }
@@ -75,8 +73,11 @@
     border: none;
     padding: 0.5rem 1rem;
     border-radius: 5px;
+    font-weight: 600;
     cursor: pointer;
+    transition: background 0.3s;
 }
+
 .comprarAhora:hover {
     background-color: #C14A09;
 }
@@ -87,39 +88,52 @@
     border: none;
     padding: 0.5rem 1rem;
     border-radius: 5px;
+    font-weight: 600;
+    transition: background 0.3s;
     cursor: pointer;
 }
+
 .agregarCarrito:hover {
     background-color: #9a9a9a;
 }
 
-@media (max-width: 768px) {
+@media(max-width: 1024px) {
     .cards-container {
         grid-template-columns: repeat(2, 1fr);
     }
-    .seccion-productos{
-        height: 200vh;
+}
+
+@media (max-width: 768px) {
+    .cards-container {
+        grid-template-columns: repeat(3, 1fr);
     }
-    .sub-productos{
+
+    .seccion-productos {
+        height: 140vh;
+    }
+
+    .sub-productos {
         font-size: 1.3rem;
     }
-    .img-prod{
+
+    .img-prod {
         width: 8rem;
     }
 
-    .card-producto{
+    .card-producto {
         width: 13rem;
     }
-    .producto-nombre{
+
+    .producto-nombre {
         font-size: 1rem;
     }
 
-    .botones{
+    .botones {
         padding: 0;
         white-space: nowrap;
         display: flex;
         flex-direction: column;
         gap: 0.5rem 0;
     }
-    
+
 }

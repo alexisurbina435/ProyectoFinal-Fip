@@ -6,13 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Superarse - Acondicionamiento físico y salud</title>
     <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="../styles/carrusel.css">
     <link rel="stylesheet" href="../styles/dropdown.css">
     <link rel="stylesheet" href="../styles/inscribite.css">
+    <link rel="stylesheet" href="../styles/popup.css">
     <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="icon" type="image/png" href="../images/logo.png">
+    <link rel="stylesheet" href="../styles/productos.css" />
 </head>
 
 <body>
@@ -100,91 +103,25 @@
         </section>
         <!-- Fin seccion banner -->
 
-        <!-- Seccion productos -->
-        <section class="seccion-producto">
-            <div class="descripcion">
-                <h1>Optimiza tu rendimiento con los mejores suplementos</h1>
-                <a href="productos.html">Ver todos</a>
-            </div>
-            <div class="productos-container">
-                <article class="productos">
-                    <div class="card-product">
-                        <div class="img-prod">
-                            <img src="../images/Oxido_Nitrico.webp" alt="">
-                        </div>
-                        <div class="descrip-prod">
-                            <p><span>$</span>20000</p>
-                            <h1>Oxido Nitrico</h1>
-                        </div>
-                        <div class="botones-prod">
-                            <button type="submit" class="btn-prod">Comprar</button>
-                            <button type="submit" class="btn-prod">Agregar al carrito</button>
-                        </div>
-                </article>
 
-                <article class="productos">
-                    <div class="card-product">
-                        <div class="img-prod">
-                            <img src="../images/Oxido_Nitrico.webp" alt="">
-                        </div>
-                        <div class="descrip-prod">
-                            <p><span>$</span>20000</p>
-                            <h1>Oxido Nitrico</h1>
-                        </div>
-                        <div class="botones-prod">
-                            <button type="submit" class="btn-prod">Comprar</button>
-                            <button type="submit" class="btn-prod">Agregar al carrito</button>
-                        </div>
-                </article>
-
-                <article class="productos">
-                    <div class="card-product">
-                        <div class="img-prod">
-                            <img src="../images/Oxido_Nitrico.webp" alt="">
-                        </div>
-                        <div class="descrip-prod">
-                            <p><span>$</span>20000</p>
-                            <h1>Oxido Nitrico</h1>
-                        </div>
-                        <div class="botones-prod">
-                            <button type="submit" class="btn-prod">Comprar</button>
-                            <button type="submit" class="btn-prod">Agregar al carrito</button>
-                        </div>
-                </article>
-
-                <article class="productos">
-                    <div class="card-product">
-                        <div class="img-prod">
-                            <img src="../images/Oxido_Nitrico.webp" alt="">
-                        </div>
-                        <div class="descrip-prod">
-                            <p><span>$</span>20000</p>
-                            <h1>Oxido Nitrico</h1>
-                        </div>
-                        <div class="botones-prod">
-                            <button type="submit" class="btn-prod">Comprar</button>
-                            <button type="submit" class="btn-prod">Agregar al carrito</button>
-                        </div>
-                </article>
-
-                <article class="productos">
-                    <div class="card-product">
-                        <div class="img-prod">
-                            <img src="../images/Oxido_Nitrico.webp" alt="">
-                        </div>
-                        <div class="descrip-prod">
-                            <p><span>$</span>20000</p>
-                            <h1>Oxido Nitrico</h1>
-                        </div>
-                        <div class="botones-prod">
-                            <button type="submit" class="btn-prod">Comprar</button>
-                            <button type="submit" class="btn-prod">Agregar al carrito</button>
-                        </div>
-                </article>
-            </div>
+        <!-- TEXTO ILUSTRATIVO -->
+        <section class="texto container">
+            <h3>
+                Rinde al maximo, luce increible. Todo lo que necesitas esta aqui
+            </h3>
         </section>
+        <!-- Fin texto ilustrativo -->
 
-        <!-- Fin seccion productos -->
+        <!-- Carrusel de productos -->
+        <section class="carrusel-productos-container">
+            <button class="carrusel-arrow left" aria-label="Anterior">&#10094;</button>
+            <div class="carrusel-productos" id="carrusel-productos">
+                <!-- Productos insertados por JS -->
+            </div>
+            <button class="carrusel-arrow right" aria-label="Siguiente">&#10095;</button>
+        </section>
+        <!-- Fin carrusel de productos -->
+
         <!-- seccion inscripcion  -->
         <section class="inscribite">
             <div class="titulo">
@@ -349,6 +286,7 @@
     <script src="../javascript/dropdown.js"></script>
     <script src="../javascript/carrusel.js"></script>
     <script src="../javascript/logout.js"></script>
+    <script src="../javascript/carrito.js"></script>
 </body>
 
 </html>
