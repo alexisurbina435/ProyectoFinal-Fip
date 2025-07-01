@@ -5,6 +5,9 @@
 Google Drive: https://drive.google.com/drive/folders/1ivtS-f3BuQGGg50bVAPPad5Y34KkpL3n?usp=drive_link
 
 link de Jira https://brareising.atlassian.net/jira/software/projects/SCRUM/boards/1/backlog?epics=visible&atlOrigin=eyJpIjoiNjNjMTdkNzJlNDRiNDVhZTk0Y2FlYTE3ZTNkNGEyMWEiLCJwIjoiaiJ9
+
+
+
 link de whimsical https://whimsical.com/wireframes-pagina-web-Eth7g4CMjRF9HSs1HNMGEx
 
 ## Descripcion
