@@ -104,13 +104,20 @@ function cargarCarrito() {
     const carritoContainer = document.getElementById("carritoContainer");
     const precio = document.getElementById("precioResumen");
     const total = document.getElementById("totalResumen");
+    const carritoVacio = document.getElementById("carrito-resumen");
 
     const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
     // verifica que no este vacio
     if (carrito.length === 0) {
         carritoContainer.innerHTML = "No hay productos en el carrito";
-        precio.innerHTML = `<span>$</span><span> 0</span>`;
-        total.innerHTML = `<span>$</span><span> 0</span>`;
+        carritoContainer.style.margin = 'auto';
+        carritoVacio.style.display = "none";
+        let btn = document.createElement('button');
+        carritoContainer.appendChild(btn);
+        btn.classList.add('continuar-compra');
+        btn.textContent = "Seguir comprando";
+        btn.style.margin = 'auto';
+        btn.setAttribute('onclick', 'window.location.href = "productos.html"');
         return;
     }
 
