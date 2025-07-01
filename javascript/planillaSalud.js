@@ -9,6 +9,7 @@ let provInput = document.getElementById("provincia");
 let codigoInput = document.getElementById("codigo-postal");
 let paisInput = document.getElementById("pais");
 let sexo = document.getElementById("sexo");
+let clases = document.getElementById("clase");
 //Textareas de los checkbox
 let lesionInput = document.getElementById("lesion");
 let medicamentoInput = document.getElementById("medicamento");
@@ -45,6 +46,7 @@ Formulario.addEventListener("submit", (e) => {
         { label: "Código postal", value: codigoInput.value, min: 4 },
         { label: "País", value: paisInput.value, min: 5 },
         { label: "Sexo", value: sexo.value },
+        { label: "Tipo de clase", value: clases.value},
         { label: "Objetivo", value: objetivoInput.value, min: 4 },
     ];
 
@@ -113,7 +115,7 @@ Formulario.addEventListener("submit", (e) => {
     favDialog.showModal();
     overlay.classList.toggle('overlay-block');
     let blob = new Blob([informacion], { type: "text/plain;charset=utf-8" });
-    saveAs(blob, "contacto.txt");
+    saveAs(blob, "planillaSalud.txt");
 
     //Cerrar modal y recargar pagina
     closeBtn.addEventListener("click", () => {

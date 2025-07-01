@@ -29,13 +29,6 @@
     transition: background 0.3s;
 }
 
-.select-clicked{
-    box-shadow: 0 0 0.8em var(--gris-osc);  
-}
-
-.select:hover{
-    background: var(--gris-osc);
-}
 
 .caret{
     width: 0;

@@ -14,7 +14,7 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    margin: 8rem 0 8rem;
+    margin: 3rem 0;
 }
 
 .sub-productos {
@@ -75,6 +75,7 @@
     border-radius: 5px;
     font-weight: 600;
     cursor: pointer;
+    transition: background 0.3s;
 }
 
 .comprarAhora:hover {
@@ -88,6 +89,7 @@
     padding: 0.5rem 1rem;
     border-radius: 5px;
     font-weight: 600;
+    transition: background 0.3s;
     cursor: pointer;
 }
 
@@ -95,13 +97,19 @@
     background-color: #9a9a9a;
 }
 
-@media (max-width: 768px) {
+@media(max-width: 1024px) {
     .cards-container {
         grid-template-columns: repeat(2, 1fr);
     }
+}
+
+@media (max-width: 768px) {
+    .cards-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
 
     .seccion-productos {
-        height: 200vh;
+        height: 140vh;
     }
 
     .sub-productos {

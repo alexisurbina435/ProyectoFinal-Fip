@@ -8,5 +8,6 @@ let logout = document.getElementById("logout");
 logout.addEventListener("click", () => {
     alert("Hasta pronto!");
     localStorage.removeItem("usuarioLog");
+    localStorage.removeItem("carrito");
     window.location.href = "index.html";
 })
