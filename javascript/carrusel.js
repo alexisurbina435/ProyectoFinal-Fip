@@ -106,6 +106,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       });
       // Botón Agregar al Carrito
       prodDiv.querySelector('.agregarCarrito').addEventListener('click', function() {
+        if (!checkLogin()) return;
         if (prod.stock <= 0) {
           alert('No hay stock disponible');
         } else {
@@ -116,6 +117,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       });
       // Botón Comprar Ahora
       prodDiv.querySelector('.comprarAhora').addEventListener('click', function() {
+        if (!checkLogin()) return;
         if (prod.stock <= 0) {
           alert('No hay stock disponible');
         } else {

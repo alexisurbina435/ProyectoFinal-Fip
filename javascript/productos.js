@@ -1,4 +1,4 @@
-
+/*
 // array de productos 
 let arrayProductos =[]; 
 // seleccionamos el id de lista productos para poder acceder a article completo donde se alojan los productos 
@@ -127,3 +127,4 @@ function actualizarContadorCarrito() {
 //     });
 // });
 // })
+*/
