@@ -1,0 +1,299 @@
+
+/* Carrusel de productos */
+.carrusel-productos-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem 0 2.5rem 0;
+  position: relative;
+  padding: 0 1rem;
+}
+.carrusel-arrow {
+  background: none;
+  border: none;
+  color: #ee5f0d;
+  font-size: 3rem;
+  border-radius: 0;
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color 0.2s;
+  z-index: 2;
+  box-shadow: none;
+  padding: 0 0.5rem;
+  flex-shrink: 0;
+}
+.carrusel-arrow:hover {
+  color: #ff7f32;
+  background: none;
+}
+.carrusel-productos {
+  display: flex;
+  gap: 1.5rem;
+  overflow: hidden;
+  width: 100%;
+  max-width: 1100px;
+  min-height: 320px;
+  justify-content: center;
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.carrusel-producto {
+  background: #E3E2E0;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  padding: 1rem;
+  min-width: 220px;
+  max-width: 300px;
+  flex: 1 0 22%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: box-shadow 0.2s;
+  gap: 0.5rem;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.carrusel-producto:hover {
+  box-shadow: 0 4px 24px rgba(234,88,12,0.12);
+}
+.carrusel-producto-img {
+  width: 100%;
+  max-width: 160px;
+  height: 160px;
+  object-fit: contain;
+  margin-bottom: 0.7rem;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  background-color: white;
+}
+.carrusel-producto-nombre {
+  font-weight: 600;
+  margin: 0.3rem 0 0.2rem 0;
+  text-align: center;
+  font-size: 1rem;
+}
+.carrusel-producto-precio {
+  color: #ee5f0d;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: auto 0 0;
+}
+
+.carrusel-botones {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: auto;
+    width: 100%;
+  }
+  .carrusel-botones .comprarAhora {
+    background-color: var(--naranja);
+    color: var(--blanco);
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background 0.3s;
+    width: 100%;
+  }
+  .carrusel-botones .comprarAhora:hover {
+    background-color: #C14A09;
+  }
+  .carrusel-botones .agregarCarrito {
+    background-color: var(--gris-osc);
+    color: var(--blanco);
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background 0.3s;
+    width: 100%;
+  }
+  .carrusel-botones .agregarCarrito:hover {
+    background-color: #9a9a9a;
+  }
+
+  
+/* Texto ilustrativo */
+.texto.container {
+  display: flex;
+  align-items: center;
+  margin: 1.5rem 0 0;
+}
+.texto.container h3 {
+  position: relative;
+
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: inline-block;
+  color: var(--blanco);
+  margin-left: 20%;
+}
+.texto.container h3::after {
+  content: '';
+  display: block;
+  margin-top: 0.5rem;
+  width: 60%;
+  height: 4px;
+  background: #ee5f0d;
+  border-radius: 2px;
+}
+
+/* Responsive para tablets grandes */
+@media (max-width: 1200px) {
+  .carrusel-productos {
+    max-width: 900px;
+    gap: 1.2rem;
+  }
+  .carrusel-producto {
+    min-width: 200px;
+    max-width: 250px;
+  }
+}
+
+/* Responsive para tablets */
+@media (max-width: 900px) {
+  .carrusel-productos {
+    gap: 1rem;
+    max-width: 700px;
+  }
+  .carrusel-producto {
+    min-width: 160px;
+    max-width: 180px;
+    padding: 0.8rem;
+  }
+  .carrusel-producto-img {
+    max-width: 120px;
+    height: 120px;
+  }
+  .carrusel-producto-nombre {
+    font-size: 0.9rem;
+  }
+  .carrusel-producto-precio {
+    font-size: 1rem;
+  }
+  .carrusel-botones .comprarAhora,
+  .carrusel-botones .agregarCarrito {
+    font-size: 0.9rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .texto.container h3{
+    margin-left: 15%;
+  }
+}
+
+/* Responsive para tablets pequeñas */
+@media (max-width: 768px) {
+
+  .carrusel-productos-container {
+    padding: 0 0.5rem;
+    margin: 0;
+  }
+
+  .carrusel-productos {
+    max-width: 600px;
+    gap: 0.8rem;
+  }
+  .carrusel-producto {
+    min-width: 140px;
+    max-width: 160px;
+    padding: 0.6rem;
+    margin: auto;
+    min-height: 17rem;
+  }
+  .carrusel-producto-img {
+    max-width: 100px;
+    height: 100px;
+  }
+  .carrusel-producto-nombre {
+    font-size: 0.8rem;
+  }
+  .carrusel-producto-precio {
+    font-size: 0.9rem;
+  }
+  .carrusel-botones .comprarAhora,
+  .carrusel-botones .agregarCarrito {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.5rem;
+  }
+}
+
+/* Responsive para móviles grandes */
+@media (max-width: 600px) {
+  .carrusel-productos-container {
+    padding: 0 0.5rem;
+  }
+  .carrusel-productos {
+    gap: 0.5rem;
+    max-width: 350px;
+  }
+  .carrusel-producto {
+    min-width: 120px;
+    max-width: 140px;
+    padding: 0.5rem;
+    margin: auto;
+    min-height: 15rem;
+  }
+  .carrusel-producto-img {
+    max-width: 90px;
+    height: 90px;
+  }
+  .carrusel-producto-nombre {
+    font-size: 0.75rem;
+  }
+  .carrusel-producto-precio {
+    font-size: 0.8rem;
+  }
+  .carrusel-arrow {
+    font-size: 1.3rem;
+    padding: 0 0.3rem;
+  }
+  .carrusel-botones .comprarAhora,
+  .carrusel-botones .agregarCarrito {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.4rem;
+  }
+}
+
+/* Responsive para móviles pequeños */
+@media (max-width: 480px) {
+  .carrusel-productos {
+    max-width: 280px;
+    gap: 0.4rem;
+  }
+  .carrusel-producto {
+    min-width: 100px;
+    max-width: 120px;
+    padding: 0.4rem;
+    margin: auto;
+    min-height: 13rem;
+  }
+  .carrusel-producto-img {
+    max-width: 70px;
+    height: 70px;
+  }
+  .carrusel-producto-nombre {
+    font-size: 0.7rem;
+  }
+  .carrusel-producto-precio {
+    font-size: 0.75rem;
+  }
+  .carrusel-arrow {
+    font-size: 1.1rem;
+    padding: 0 0.2rem;
+  }
+  .carrusel-botones .comprarAhora,
+  .carrusel-botones .agregarCarrito {
+    font-size: 0.65rem;
+    padding: 0.15rem 0.3rem;
+  }
+}

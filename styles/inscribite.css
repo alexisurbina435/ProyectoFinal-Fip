@@ -5,7 +5,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 110vh;
+    margin: 8rem 0 2rem 0;
 }
 
 .titulo {
@@ -130,7 +130,7 @@
     .inscribite{
         display: flex;
         margin-top: 2rem;
-        height: 170vh;
+        margin: 8rem 0 2rem 0;
     }
     .contenedor-inscripcion {
     /* ancho anterior 400px */

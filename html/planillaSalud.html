@@ -19,77 +19,7 @@
 <body>
   <main class="main">
 
-    <!-- Header -->
-    <header class="header">
-
-      <nav class="navigation">
-        <a href="indexLog.html"><img src="../images/logo-sinfondo.png" class="logo" alt="logo"></a>
-        <ul class="nav-list">
-          <li class="nav-item"><a href="indexLog.html" class="nav-links" aria-label="Inicio">Inicio</a></li>
-          <li class="nav-item"><a href="productosLog.html" class="nav-links" aria-label="Productos">Productos</a></li>
-          <li class="nav-item"><a href="contactoLog.html" class="nav-links" aria-label="Contacto">Contacto</a>
-          </li>
-          <li class="nav-item"><a href="inscribiteLog.html" class="nav-links nav-inscribite"
-              aria-label="Inscribite">¡Inscribite ya!</a></li>
-        </ul>
-
-        <!--inicio dropdown desktop  -->
-        <div class="icons-container">
-          <button class="cart-button" aria-label="Shopping Cart"><a href="../html/carritoLog.html">
-              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"
-                class="cart-icon">
-                <path
-                  d="M10.62 10H4.62M11.1 10L15.42 25.68C15.7806 26.9165 16.5295 28.0041 17.556 28.7821C18.5825 29.5601 19.8321 29.9871 21.12 30H38.6V10H11.1ZM24.62 37C24.62 38.6569 23.2768 40 21.62 40C19.9631 40 18.62 38.6569 18.62 37C18.62 35.3431 19.9631 34 21.62 34C23.2768 34 24.62 35.3431 24.62 37ZM38.62 37C38.62 38.6569 37.2768 40 35.62 40C33.9631 40 32.62 38.6569 32.62 37C32.62 35.3431 33.9631 34 35.62 34C37.2768 34 38.62 35.3431 38.62 37Z"
-                  stroke="#EE5F0D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-              </svg><span class="cart-count"></span></a>
-          </button>
-          <div class="user-container desktop">
-            <div class="dropdown">
-              <div class="select">
-                <i class="fa-regular fa-user selected icon"></i>
-                <div class="caret"></div>
-              </div>
-              <ul class="menu">
-                <li><a href="#" class="login-links">Rutina</a></li>
-                <li><a href="#" class="login-links">Progreso</a></li>
-                <li><a href="#" class="login-links">Consulta</a></li>
-                <li><a href="#" class="login-links">Blog</a></li>
-                <li><a href="#" class="login-links" id="logout">Cerrar sesión</a></li>
-              </ul>
-            </div>
-          </div>
-          <!-- fin dropdown desktop   -->
-
-          <!-- dropdown mobile  -->
-          <div class="user-container mobile">
-            <div class="dropdown">
-              <div class="select">
-                <i class="fa-regular fa-user selected icon"></i>
-                <div class="caret"></div>
-              </div>
-              <ul class="menu">
-                <li class="nav-item"><a href="inscribiteLog.html" class="login-links"
-                    aria-label="Inscribite">¡Inscribite ya!</a></li>
-                <li class="nav-item"><a href="indexLog.html" class="login-links" aria-label="Inicio">Inicio</a></li>
-                <li class="nav-item"><a href="productosLog.html" class="login-links"
-                    aria-label="Productos">Productos</a></li>
-                <li class="nav-item"><a href="contactoLog.html" class="login-links" aria-label="Contacto">Contacto</a>
-                </li>
-                <li><a href="#" class="login-links">Rutina</a></li>
-                <li><a href="#" class="login-links">Progreso</a></li>
-                <li><a href="#" class="login-links">Consulta</a></li>
-                <li><a href="#" class="login-links">Blog</a></li>
-                <li><a href="#" class="login-links" id="logout">Cerrar sesión</a></li>
-
-              </ul>
-            </div>
-          </div>
-          <!-- fin dropdown mobile  -->
-        </div>
-      </nav>
-    </header>
-    <!-- Fin Header -->
-
+    
     <!-- Seccion formulario-->
 
     <section class="planilla-salud">
@@ -99,9 +29,6 @@
       <div class="form-container">
         <div class="title">
           <h2>Planilla de salud</h2>
-          <!-- <h1>DATOS PERSONALES</h1> -->
-          <!-- <h2>Planilla de salud</h2> -->
-          <!-- <img src="../images/logo-sinfondo.png" alt="logo gimnasio" class="logo-sinfondo"> -->
         </div>
         <form action="" class="formulario" id="formulario">
 
@@ -175,6 +102,15 @@
               </select>
             </div>
 
+            <div class="input-container">
+              <label for="name">Tipo de clases</label>
+              <select name="clase" id="clase" class="form-input">
+                <option value="presencial">Presencial</option>
+                <option value="online">Online</option>
+                <option value="mixto">Mixto</option>
+              </select>
+            </div>
+
           </fieldset>
 
 
@@ -243,82 +179,9 @@
     </section>
     <!-- Fin seccion formulario -->
 
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="footer-content">
-        <div class="footer-grid">
-          <address class="contact">
-            <div class="contact-item">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="rgb(234, 88, 12)" class="bi bi-geo-alt-fill contact-icon">
-                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6" />
-              </svg>
-              <p class="contact-text">Urquiza 1655, Olavarria</p>
-            </div>
-            <div class="contact-item">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="rgb(234, 88, 12)" class="bi bi-telephone-fill contact-icon">
-                <path fill-rule="evenodd"
-                  d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z" />
-              </svg>
-              <p class="contact-text">(2284) 230252</p>
-            </div>
-            <div class="contact-item">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="rgb(234, 88, 12)" class="bi bi-envelope-fill contact-icon">
-                <path
-                  d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586zm3.436-.586L16 11.801V4.697z" />
-              </svg>
-              <p class="contact-text">superarse2020@gmail.com</p>
-            </div>
-            <div class="contact-item">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="rgb(234, 88, 12)" class="bi bi-clock-fill contact-icon">
-                <path
-                  d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z" />
-              </svg>
-              <p class="contact-text">Lun a Vier: 7:00 - 21:00</p>
-            </div>
-          </address>
-
-          <div class="brand">
-            <img src="../images/logo-lomascercano.png" alt="logo superarse" class="brand-logo">
-          </div>
-
-          <nav class="footer-nav">
-            <ul class="footer-nav-list">
-              <li><a href="index.html" class="footer-nav-link">Inicio</a></li>
-              <li><a href="#productos" class="footer-nav-link">Productos</a></li>
-              <li><a href="#planes" class="footer-nav-link">Planes</a></li>
-              <li><a href="inscribite.html" class="footer-nav-link">Inscribite</a></li>
-              <li><a href="contacto.html" class="footer-nav-link">Contacto</a></li>
-            </ul>
-          </nav>
-        </div>
-        <div class="footer-line"></div>
-        <div class="social-media">
-          <div><a href="https://www.facebook.com/superarsegym/" target="_blank"><i
-                class="fa-brands fa-facebook-f social-icon"></i></a></div>
-          <div><a href="https://www.instagram.com/superarsegym/" target="_blank"><i
-                class="fa-brands fa-instagram social-icon"></i></a></div>
-          <div><a href="https://WhatsApp.com/superarsegym" target="_blank"><i
-                class="fa-brands fa-whatsapp social-icon"></i></a></div>
-        </div>
-        <!-- imagenes de redes sociales -->
-
-        <div class="copyright">
-          <div class="copyright-line"></div>
-          <div class="copyright-content">
-            <p class="copyright-text">© 2025 Superarse. Todos los derechos reservados.</p>
-          </div>
-        </div>
-      </div>
-    </footer>
-
-    <!-- Fin Footer -->
-
   </main>
-  <script src="../javascript/dropdown.js"></script>
   <script src="../javascript/planillaSalud.js"></script>
-  <script src="../javascript/carrito.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-  <script src="../javascript/logout.js"></script>
 </body>
 
 </html>
