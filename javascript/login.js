@@ -8,9 +8,20 @@ loginForm.addEventListener("submit", (e) => {
 
   let validarUsuario = usuarios.find(user => user.email === email && user.password === password);
   if (!validarUsuario) {
-    return alert("Email y/o contraseña incorrectos");
+    Swal.fire({
+      icon: 'error',
+      title: 'Credenciales incorrectas',
+      text: 'Email y/o contraseña incorrectos',
+      confirmButtonColor: '#ee5f0d'
+    });
+    return;
   }
-  alert(`Bienvenido ${validarUsuario.name}`);
+  Swal.fire({
+    icon: 'success',
+    title: `¡Bienvenido ${validarUsuario.name}!`,
+    text: 'Has iniciado sesión correctamente',
+    confirmButtonColor: '#ee5f0d'
+  });
   localStorage.setItem("usuarioLog", JSON.stringify(validarUsuario));
   window.location.href = "indexLog.html";
 })

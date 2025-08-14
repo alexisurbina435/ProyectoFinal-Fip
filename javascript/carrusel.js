@@ -108,10 +108,20 @@ document.addEventListener('DOMContentLoaded', async () => {
       prodDiv.querySelector('.agregarCarrito').addEventListener('click', function() {
         if (!checkLogin()) return;
         if (prod.stock <= 0) {
-          alert('No hay stock disponible');
+          Swal.fire({
+            icon: 'warning',
+            title: 'Sin stock',
+            text: 'No hay stock disponible',
+            confirmButtonColor: '#ee5f0d'
+          });
         } else {
           botonAgregarCarrito(prod);
-          alert('Producto agregado al carrito');
+          Swal.fire({
+            icon: 'success',
+            title: '¡Producto agregado!',
+            text: 'Producto agregado al carrito',
+            confirmButtonColor: '#ee5f0d'
+          });
           contadorIconoCarrito();
         }
       });
@@ -119,7 +129,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       prodDiv.querySelector('.comprarAhora').addEventListener('click', function() {
         if (!checkLogin()) return;
         if (prod.stock <= 0) {
-          alert('No hay stock disponible');
+          Swal.fire({
+            icon: 'warning',
+            title: 'Sin stock',
+            text: 'No hay stock disponible',
+            confirmButtonColor: '#ee5f0d'
+          });
         } else {
           localStorage.setItem('compraDirecta', JSON.stringify(prod));
           botonAgregarCarrito(prod);
