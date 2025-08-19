@@ -185,6 +185,223 @@
   color: var(--naranja);
 }
 
+/* Barra de acciones */
+.action-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: var(--gris-osc);
+  border-radius: 10px;
+  border: 1px solid var(--naranja);
+}
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-add {
+  background-color: var(--naranja);
+  color: var(--blanco);
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-add:hover {
+  background-color: #d14a0b;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(238, 95, 13, 0.4);
+}
+
+.search-section {
+  display: flex;
+  align-items: center;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  background-color: var(--gris);
+  border: 2px solid var(--gris);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.search-container:focus-within {
+  border-color: var(--naranja);
+  box-shadow: 0 0 0 3px rgba(238, 95, 13, 0.1);
+}
+
+.search-input {
+  background: none;
+  border: none;
+  padding: 0.8rem 1rem;
+  color: var(--blanco);
+  font-size: 1rem;
+  min-width: 250px;
+}
+
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.search-input:focus {
+  outline: none;
+}
+
+.search-btn {
+  background-color: var(--naranja);
+  color: var(--blanco);
+  border: none;
+  padding: 0.8rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-btn:hover {
+  background-color: #d14a0b;
+}
+
+/* Tabla de administración */
+.table-container {
+  background-color: var(--gris-osc);
+  border-radius: 10px;
+  border: 1px solid var(--naranja);
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--blanco);
+}
+
+.admin-table thead {
+  background-color: var(--naranja);
+}
+
+.admin-table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--blanco);
+  border-bottom: 2px solid var(--gris-osc);
+}
+
+.admin-table tbody tr {
+  border-bottom: 1px solid var(--gris);
+  transition: background-color 0.3s ease;
+}
+
+.admin-table tbody tr:hover {
+  background-color: rgba(238, 95, 13, 0.1);
+}
+
+.admin-table td {
+  padding: 1rem;
+  font-size: 0.95rem;
+}
+
+.admin-table tbody tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.admin-table tbody tr:nth-child(even):hover {
+  background-color: rgba(238, 95, 13, 0.1);
+}
+
+/* Botones de acción en la tabla */
+.action-buttons-table {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.btn-edit, .btn-delete, .btn-view {
+  padding: 0.5rem 0.8rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.btn-edit {
+  background-color: #17a2b8;
+  color: var(--blanco);
+}
+
+.btn-edit:hover {
+  background-color: #138496;
+  transform: translateY(-1px);
+}
+
+.btn-delete {
+  background-color: #dc3545;
+  color: var(--blanco);
+}
+
+.btn-delete:hover {
+  background-color: #c82333;
+  transform: translateY(-1px);
+}
+
+.btn-view {
+  background-color: #28a745;
+  color: var(--blanco);
+}
+
+.btn-view:hover {
+  background-color: #218838;
+  transform: translateY(-1px);
+}
+
+/* Estados */
+.status-active {
+  color: #28a745;
+  font-weight: 600;
+}
+
+.status-inactive {
+  color: #dc3545;
+  font-weight: 600;
+}
+
+.status-pending {
+  color: #ffc107;
+  font-weight: 600;
+}
+
+/* Links en la tabla */
+.table-link {
+  color: var(--naranja);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.table-link:hover {
+  color: var(--blanco);
+  text-decoration: underline;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .admin-options {
@@ -217,6 +434,29 @@
     width: 100%;
     max-width: 300px;
   }
+
+  .action-bar {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .search-container {
+    width: 100%;
+  }
+
+  .search-input {
+    min-width: auto;
+    flex: 1;
+  }
+
+  .table-container {
+    overflow-x: auto;
+  }
+
+  .admin-table {
+    min-width: 800px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -231,5 +471,15 @@
   
   .profile-form {
     padding: 1.5rem;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn-add {
+    width: 100%;
+    justify-content: center;
   }
 }
