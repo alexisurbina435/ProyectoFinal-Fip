@@ -116,30 +116,21 @@ function setupAdminOptions() {
 // Funcion para manejar la seleccion de opciones de administracion
 function handleAdminOption(optionTitle) {
     // Configurar navegacion a las diferentes secciones
-    // Por ahora se muestra un mensaje de ejemplo
-    showNotification(`Redirigiendo a: ${optionTitle}`, 'info');
-    
-    // Redireccion (reemplazar con URLs reales)
-    setTimeout(() => {
+        // Redireccion
         switch(optionTitle) {
             case 'Administrar Clientes':
-                // window.location.href = 'clientes.html';
-                console.log('Ir a administración de clientes');
+                window.location.href = 'clientes.html';
                 break;
             case 'Administrar Rutinas':
-                // window.location.href = 'rutinas.html';
-                console.log('Ir a administración de rutinas');
+                window.location.href = 'rutinas.html';
                 break;
             case 'Administrar Ejercicios':
-                // window.location.href = 'ejercicios.html';
-                console.log('Ir a administración de ejercicios');
+                window.location.href = 'ejercicios.html';
                 break;
             case 'Administrar Tienda':
-                // window.location.href = 'tienda.html';
-                console.log('Ir a administración de tienda');
+                window.location.href = 'tienda.html';
                 break;
         }
-    }, 1000);
 }
 
 // Funcion para mostrar notificaciones
@@ -214,3 +205,47 @@ function checkAdminAuth() {
 
 // Verificacion de autenticacion
 checkAdminAuth();
+
+// Funcion para confirmaciones usando SweetAlert2
+function confirmAction(title, text, confirmText = 'Confirmar', cancelText = 'Cancelar') {
+    return Swal.fire({
+        title: title,
+        text: text,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#ee5f0d',
+        cancelButtonColor: '#d33',
+        confirmButtonText: confirmText,
+        cancelButtonText: cancelText
+    });
+}
+
+// Funcion para mostrar mensajes de exito
+function showSuccessAlert(title, text) {
+    Swal.fire({
+        title: title,
+        text: text,
+        icon: 'success',
+        confirmButtonColor: '#ee5f0d'
+    });
+}
+
+// Funcion para mostrar mensajes de error
+function showErrorAlert(title, text) {
+    Swal.fire({
+        title: title,
+        text: text,
+        icon: 'error',
+        confirmButtonColor: '#ee5f0d'
+    });
+}
+
+// Funcion para mostrar mensajes de informacion
+function showInfoAlert(title, text) {
+    Swal.fire({
+        title: title,
+        text: text,
+        icon: 'info',
+        confirmButtonColor: '#ee5f0d'
+    });
+}
