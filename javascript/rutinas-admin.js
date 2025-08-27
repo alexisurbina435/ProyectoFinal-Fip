@@ -67,8 +67,8 @@ function renderRutinasTable(rutinas) {
             <td>${rutina.nombre}</td>
             <td>${rutina.descripcion}</td>
             <td><span class="status-${rutina.nivel.toLowerCase()}">${rutina.nivel}</span></td>
-            <td>${rutina.duracion}</td>
-            <td><a href="#" class="table-link" onclick="verEjercicios(${rutina.id})">${rutina.ejercicios} ejercicios</a></td>
+            <td class="routine-duration">${rutina.duracion}</td>
+            <td class="routine-duration"><a href="#" class="table-link" onclick="verEjercicios(${rutina.id})">${rutina.ejercicios} ejercicios</a></td>
             <td><span class="status-${rutina.estado.toLowerCase()}">${rutina.estado}</span></td>
             <td>
                 <div class="action-buttons-table">

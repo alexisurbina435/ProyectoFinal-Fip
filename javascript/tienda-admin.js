@@ -77,11 +77,12 @@ function renderProductosTable(productos) {
         const row = document.createElement('tr');
         
         // Determinar la clase de estado segun el stock
-        let estadoClass = 'status-active';
+        // Cambio el nombre de los estado(Activo, Inactivo, Pendiente) para que esten todos iguales en las otras tablas, <revisar>
+        let estadoClass = 'status-activo';
         if (producto.stock === 0) {
-            estadoClass = 'status-inactive';
+            estadoClass = 'status-inactivo';
         } else if (producto.stock < 10) {
-            estadoClass = 'status-pending';
+            estadoClass = 'status-pendiente';
         }
         
         row.innerHTML = `
