@@ -314,6 +314,10 @@
   padding: 1rem;
   font-size: 0.95rem;
 }
+/* cree nueva clase para rutina-admins.js en duracion y repeticiones para que se muestren en una sola linea */
+.routine-duration{
+  white-space: nowrap;
+}
 
 .admin-table tbody tr:nth-child(even) {
   background-color: rgba(255, 255, 255, 0.02);
@@ -327,7 +331,8 @@
 .action-buttons-table {
   display: flex;
   gap: 0.5rem;
-  flex-wrap: wrap;
+  /* cambie a nowrap para que los botones queden todos en la misma linea  */
+  flex-wrap: nowrap;
 }
 
 .btn-edit, .btn-delete, .btn-view {
@@ -372,19 +377,19 @@
   background-color: #218838;
   transform: translateY(-1px);
 }
-
+/* corregir los status en rutinas, clientes y ejercicios(estan definidos como active pero en los js tiene activo con o no con e) */
 /* Estados */
-.status-active {
+.status-activo {
   color: #28a745;
   font-weight: 600;
 }
 
-.status-inactive {
+.status-inactivo {
   color: #dc3545;
   font-weight: 600;
 }
 
-.status-pending {
+.status-pendiente {
   color: #ffc107;
   font-weight: 600;
 }

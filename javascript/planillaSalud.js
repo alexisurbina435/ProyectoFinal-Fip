@@ -66,6 +66,7 @@ Formulario.addEventListener("submit", (e) => {
     //Validando inputs del formulario
     for (let campo of campos) {
         if (!campo.value.trim() || (campo.min && campo.value.length < campo.min)) {
+            e.preventDefault();
             Swal.fire({
                 icon: 'warning',
                 title: 'Campo muy corto',
@@ -80,6 +81,7 @@ Formulario.addEventListener("submit", (e) => {
     //Validando selección de radio buttons
     for (let checkbox of checkboxes) {
         if (!checkbox.si.checked && !checkbox.no.checked) {
+            e.preventDefault();
             Swal.fire({
                 icon: 'warning',
                 title: 'Selección requerida',
@@ -94,6 +96,7 @@ Formulario.addEventListener("submit", (e) => {
 
     //Validando textarea si marca "Sí"
     if (condicionSi.checked && lesionInput.value.trim().length < 7) {
+        e.preventDefault();
         Swal.fire({
             icon: 'warning',
             title: 'Descripción muy corta',
@@ -108,6 +111,7 @@ Formulario.addEventListener("submit", (e) => {
     }
 
     if (medicacionSi.checked && medicamentoInput.value.trim().length < 7) {
+        e.preventDefault();
         Swal.fire({
             icon: 'warning',
             title: 'Descripción muy corta',

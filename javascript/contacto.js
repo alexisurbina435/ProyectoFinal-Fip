@@ -17,6 +17,7 @@ Formulario.addEventListener("submit", (e) => {
     let validacionNombre = /^[a-zA-ZéÉáÁíóúÍÓÚÑñ\s]*$/;
     let email = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{3,4}$/i;
     if (!nombreCompleto.value || !correo.value || !consulta.value) {
+        e.preventDefault();
         Swal.fire({
             icon: 'warning',
             title: 'Campos incompletos',
@@ -27,6 +28,7 @@ Formulario.addEventListener("submit", (e) => {
     }
 
     if (nombreCompleto.value.length < 6) {
+        e.preventDefault();
         Swal.fire({
             icon: 'warning',
             title: 'Nombre muy corto',
@@ -37,6 +39,7 @@ Formulario.addEventListener("submit", (e) => {
     }
 
     if (!validacionNombre.test(nombreCompleto.value)) {
+        e.preventDefault();
         Swal.fire({
             icon: 'error',
             title: 'Nombre inválido',
@@ -47,6 +50,7 @@ Formulario.addEventListener("submit", (e) => {
     }
 
     if (!email.test(correo.value)) {
+        e.preventDefault();
         Swal.fire({
             icon: 'error',
             title: 'Email inválido',
@@ -57,6 +61,7 @@ Formulario.addEventListener("submit", (e) => {
     }
 
     if (consulta.value.length < 10) {
+        e.preventDefault();
         Swal.fire({
             icon: 'warning',
             title: 'Consulta muy corta',
@@ -66,12 +71,12 @@ Formulario.addEventListener("submit", (e) => {
         return;
     }
 
-    Swal.fire({
-        icon: 'success',
-        title: '¡Formulario enviado!',
-        text: 'Tu consulta ha sido enviada correctamente. Te responderemos en menos de 24 horas hábiles.',
-        confirmButtonColor: '#ee5f0d'
-    });
+    // Swal.fire({
+    //     icon: 'success',
+    //     title: '¡Formulario enviado!',
+    //     text: 'Tu consulta ha sido enviada correctamente. Te responderemos en menos de 24 horas hábiles.',
+    //     confirmButtonColor: '#ee5f0d'
+    // });
     // alert("Formulario enviado");
     e.preventDefault();
     favDialog.showModal();
@@ -80,10 +85,10 @@ Formulario.addEventListener("submit", (e) => {
     saveAs(blob, "contacto.txt");
 
     closeBtn.addEventListener("click", () => {
-    favDialog.close();
-    setTimeout(() => {
-        window.location.reload();
-    }, 400); 
+        favDialog.close();
+        setTimeout(() => {
+            window.location.reload();
+        }, 400);
     });
-    
+
 })

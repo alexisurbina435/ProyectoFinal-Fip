@@ -15,6 +15,7 @@ registerForm.addEventListener("submit",  (e) =>{
 
     // const usuarioExistente = usuarios.find((user) => user.email === email);
     if(!email || !password || !password2 || !telefono || !nombreCompleto){
+        e.preventDefault();
         Swal.fire({
             icon: 'warning',
             title: 'Campos incompletos',
@@ -47,6 +48,7 @@ registerForm.addEventListener("submit",  (e) =>{
     const usuarioExistente = usuarios.find((user) => user.email === email);
     
     if (usuarioExistente) {
+        e.preventDefault();
         Swal.fire({
             icon: 'error',
             title: 'Email ya registrado',
@@ -56,6 +58,7 @@ registerForm.addEventListener("submit",  (e) =>{
         return;
     }
     if (password !== password2) {
+        e.preventDefault();
         Swal.fire({
             icon: 'error',
             title: 'Contraseñas no coinciden',
@@ -65,6 +68,7 @@ registerForm.addEventListener("submit",  (e) =>{
         return;
     }
     if (password.length < 8) {
+        e.preventDefault();
         Swal.fire({
             icon: 'error',
             title: 'Contraseña muy corta',

@@ -8,6 +8,7 @@ loginForm.addEventListener("submit", (e) => {
 
   let validarUsuario = usuarios.find(user => user.email === email && user.password === password);
   if (!validarUsuario) {
+    // e.preventDefault();
     Swal.fire({
       icon: 'error',
       title: 'Credenciales incorrectas',
