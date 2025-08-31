@@ -166,9 +166,33 @@ function handleLogout() {
       text: 'Has cerrado sesión correctamente',
       confirmButtonColor: '#ee5f0d'
   }).then(() => {
+      // Limpiar localStorage
       localStorage.removeItem("usuarioLog");
+      localStorage.removeItem("adminAuth");
       localStorage.removeItem("carrito");
-      updateHeader();
+      
+      // Verificar si estamos en una página admin
+      const isOnAdminPage = window.location.pathname.includes('admin-');
+      
+      if (isOnAdminPage) {
+          // Si estamos en una página admin, redirigir a index.html --VER! REDIRIGIR SIEMPRE A INDEX DESPUES DEL LOGOUT?
+          window.location.href = 'index.html';
+      } else {
+          // Si no estamos en página admin, actualizar el header en la misma página
+          // Remover el header existente
+          const existingHeader = document.querySelector('.header');
+          if (existingHeader) {
+              existingHeader.remove();
+          }
+          
+          // Insertar el nuevo header
+          insertHeader();
+          
+          // Reinicializar el dropdown
+          if (typeof initializeDropdown === 'function') {
+              initializeDropdown();
+          }
+      }
   });
 }
 

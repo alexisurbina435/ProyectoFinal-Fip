@@ -1,6 +1,9 @@
 // Funcionalidad para paginas de administracion
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Verificar autenticación de admin primero
+    checkAdminAuth();
+    
     // Cargar datos del perfil en pagina perfil
     if (window.location.pathname.includes('admin-perfil.html')) {
         loadProfileData();
@@ -11,6 +14,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (window.location.pathname.includes('admin-index.html')) {
         setupAdminOptions();
     }
+    
+    // Asegurarse de que el logout funcione en páginas admin
+    setupLogoutHandler();
 });
 
 // Funcion para cargar datos del perfil
@@ -202,10 +208,28 @@ function checkAdminAuth() {
     }
 }
 
-// Verificacion de autenticacion
-checkAdminAuth();
+// Funcion para configurar el manejador de logout en páginas admin
+function setupLogoutHandler() {
+    // Esperar un poco para que el header se inserte primero
+    setTimeout(() => {
+        const logoutBtn = document.getElementById('logout');
+        if (logoutBtn) {
+            // Remover event listeners existentes para evitar duplicados
+            logoutBtn.replaceWith(logoutBtn.cloneNode(true));
+            
+            // Obtener el nuevo botón
+            const newLogoutBtn = document.getElementById('logout');
+            if (newLogoutBtn) {
+                newLogoutBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    handleLogout();
+                });
+            }
+        }
+    }, 200);
+}
 
-// Funcion para confirmaciones usando SweetAlert2
+// Funcion para confirmar acciones usando SweetAlert2
 function confirmAction(title, text, confirmText = 'Confirmar', cancelText = 'Cancelar') {
     return Swal.fire({
         title: title,
