@@ -60,8 +60,20 @@ function insertHeader() {
 
 function getDropdownContent() {
   const usuario = JSON.parse(localStorage.getItem("usuarioLog")) || false;
+  const isAdmin = localStorage.getItem('adminAuth') === 'true';
   
-  if (usuario) {
+  if (isAdmin) {
+      // Usuario admin - dropdown para administradores
+      return `
+          <li><a href="admin-index.html" class="login-links">Panel Admin</a></li>
+          <li><a href="admin-clientes.html" class="login-links">Administrar Clientes</a></li>
+          <li><a href="admin-rutinas.html" class="login-links">Administrar Rutinas</a></li>
+          <li><a href="admin-ejercicios.html" class="login-links">Administrar Ejercicios</a></li>
+          <li><a href="admin-tienda.html" class="login-links">Administrar Tienda</a></li>
+          <li><a href="admin-perfil.html" class="login-links">Perfil Admin</a></li>
+          <li><a href="#" class="login-links" id="logout">Cerrar sesión</a></li>
+      `;
+  } else if (usuario) {
       // Usuario logueado - dropdown para usuarios autenticados
       return `
           <li><a href="#" class="login-links">Rutina</a></li>
@@ -81,8 +93,24 @@ function getDropdownContent() {
 
 function getMobileDropdownContent() {
   const usuario = JSON.parse(localStorage.getItem("usuarioLog")) || false;
+  const isAdmin = localStorage.getItem('adminAuth') === 'true';
   
-  if (usuario) {
+  if (isAdmin) {
+      // Usuario admin - dropdown mobile para administradores
+      return `
+          <li class="nav-item"><a href="inscribite.html" class="login-links" aria-label="Inscribite">¡Inscribite ya!</a></li>
+          <li class="nav-item"><a href="index.html" class="login-links" aria-label="Inicio">Inicio</a></li>
+          <li class="nav-item"><a href="productos.html" class="login-links" aria-label="Productos">Productos</a></li>
+          <li class="nav-item"><a href="contacto.html" class="login-links" aria-label="Contacto">Contacto</a></li>
+          <li><a href="admin-index.html" class="login-links">Panel Admin</a></li>
+          <li><a href="admin-clientes.html" class="login-links">Administrar Clientes</a></li>
+          <li><a href="admin-rutinas.html" class="login-links">Administrar Rutinas</a></li>
+          <li><a href="admin-ejercicios.html" class="login-links">Administrar Ejercicios</a></li>
+          <li><a href="admin-tienda.html" class="login-links">Administrar Tienda</a></li>
+          <li><a href="admin-perfil.html" class="login-links">Perfil Admin</a></li>
+          <li><a href="#" class="login-links" id="logout">Cerrar sesión</a></li>
+      `;
+  } else if (usuario) {
       // Usuario logueado - dropdown mobile para usuarios autenticados
       return `
           <li class="nav-item"><a href="inscribite.html" class="login-links" aria-label="Inscribite">¡Inscribite ya!</a></li>
