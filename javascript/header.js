@@ -76,6 +76,7 @@ function getDropdownContent() {
   } else if (usuario) {
       // Usuario logueado - dropdown para usuarios autenticados
       return `
+          <li><a href="perfil.html" class="login-links">Perfil</a></li>
           <li><a href="#" class="login-links">Rutina</a></li>
           <li><a href="#" class="login-links">Progreso</a></li>
           <li><a href="#" class="login-links">Consulta</a></li>
@@ -117,6 +118,7 @@ function getMobileDropdownContent() {
           <li class="nav-item"><a href="index.html" class="login-links" aria-label="Inicio">Inicio</a></li>
           <li class="nav-item"><a href="productos.html" class="login-links" aria-label="Productos">Productos</a></li>
           <li class="nav-item"><a href="contacto.html" class="login-links" aria-label="Contacto">Contacto</a></li>
+          <li><a href="perfil.html" class="login-links">Perfil</a></li>
           <li><a href="#" class="login-links">Rutina</a></li>
           <li><a href="#" class="login-links">Progreso</a></li>
           <li><a href="#" class="login-links">Consulta</a></li>
