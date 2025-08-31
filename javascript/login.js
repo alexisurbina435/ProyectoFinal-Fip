@@ -24,6 +24,6 @@ loginForm.addEventListener("submit", (e) => {
     confirmButtonColor: '#ee5f0d'
   });
   localStorage.setItem("usuarioLog", JSON.stringify(validarUsuario));
-  window.location.href = "indexLog.html";
+  window.location.href = "index.html";
 })
 

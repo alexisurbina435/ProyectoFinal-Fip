@@ -4,7 +4,7 @@ async function cargarProductos() {
         const response = await fetch('../data/listaProductos.json');
         if (!response.ok) throw new Error("No se pudo cargar el archivo JSON");
         const data = await response.json();
-        if (window.location.pathname.includes("productos.html") || window.location.pathname.includes("productosLog.html")) {
+        if (window.location.pathname.includes("productos.html")) {
             llenarProductos(data);
         }
     } catch (error) {
@@ -199,7 +199,7 @@ function cargarCarrito() {
 
 // activar las funciones
 window.addEventListener("load", function () {
-    if (this.window.location.href.includes("carrito.html"), ("carritoLog.html")) {
+            if (this.window.location.href.includes("carrito.html")) {
         cargarCarrito();
         contadorIconoCarrito();
     }
@@ -308,10 +308,9 @@ function contadorIconoCarrito() {
 
 // verificar si el usuario esta logueado
 function checkLogin() {
-    const url = window.location.href;
-    const paginasLogueadas = ["productosLog.html", "indexLog.html"];
-
-    if (!paginasLogueadas.some(pagina => url.includes(pagina))) {
+    const usuario = JSON.parse(localStorage.getItem("usuarioLog")) || false;
+    
+    if (!usuario) {
         Swal.fire({
             icon: 'warning',
             title: 'Sesión requerida',

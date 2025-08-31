@@ -146,32 +146,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // Copia de funciones de carrito.js para compatibilidad si no están globales
-  function botonAgregarCarrito(producto) {
-    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    const index = carrito.findIndex(item => item.id === producto.id);
-    if (index !== -1) {
-      carrito[index].cantidad += 1;
-    } else {
-      producto.cantidad = 1;
-      carrito.push(producto);
-    }
-    localStorage.setItem('carrito', JSON.stringify(carrito));
-  }
 
-  function contadorIconoCarrito() {
-    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    const contador = document.querySelector('.cart-count');
-    if (contador) {
-      if (carrito.length !== 0) {
-        const cantidad = carrito.reduce((total, producto) => total + producto.cantidad, 0);
-        contador.style.visibility = 'visible';
-        contador.textContent = cantidad;
-      } else {
-        contador.style.visibility = 'hidden';
-      }
-    }
-  }
+
+
 
   // Navegación del carrusel
   leftArrow.addEventListener('click', () => {
@@ -187,5 +164,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     startIndex = (startIndex + 1) % productos.length;
     renderCarrusel(true);
   });
+
 });
+
+// Verificar si el usuario está logueado (global)
+function checkLogin() {
+  const usuario = JSON.parse(localStorage.getItem("usuarioLog")) || false;
+  
+  if (!usuario) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Sesión requerida',
+      text: 'Debes iniciar sesión para comprar',
+      confirmButtonColor: '#ee5f0d'
+    });
+    window.location.href = "login.html";
+    return false;
+  }
+  return true;
+}
 

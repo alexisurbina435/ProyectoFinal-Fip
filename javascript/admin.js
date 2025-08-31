@@ -20,7 +20,7 @@ function loadProfileData() {
     const profileData = {
         nombre: 'Administrador',
         correo: 'admin@superarse.com',
-        telefono: '+54 9 1234-5678'
+        telefono: '+54 9 1234-5678',
     };
     
     // Llenar el formulario con los datos

@@ -136,6 +136,6 @@ Formulario.addEventListener("submit", (e) => {
     //Cerrar modal y recargar pagina
     closeBtn.addEventListener("click", () => {
         favDialog.close();
-        setTimeout(() => { window.location.href = "indexLog.html"; }, 600);
+        setTimeout(() => { window.location.href = "index.html"; }, 600);
     });
 });
