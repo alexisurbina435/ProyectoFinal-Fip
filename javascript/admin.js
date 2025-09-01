@@ -1,16 +1,22 @@
 // Funcionalidad para paginas de administracion
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Verificar autenticación de admin primero
+    checkAdminAuth();
+    
     // Cargar datos del perfil en pagina perfil
-    if (window.location.pathname.includes('perfil.html')) {
+    if (window.location.pathname.includes('admin-perfil.html')) {
         loadProfileData();
         setupProfileForm();
     }
     
     // Configurar navegacion de opciones de administracion
-    if (window.location.pathname.includes('index.html')) {
+    if (window.location.pathname.includes('admin-index.html')) {
         setupAdminOptions();
     }
+    
+    // Asegurarse de que el logout funcione en páginas admin
+    setupLogoutHandler();
 });
 
 // Funcion para cargar datos del perfil
@@ -20,7 +26,7 @@ function loadProfileData() {
     const profileData = {
         nombre: 'Administrador',
         correo: 'admin@superarse.com',
-        telefono: '+54 9 1234-5678'
+        telefono: '+54 9 1234-5678',
     };
     
     // Llenar el formulario con los datos
@@ -119,16 +125,16 @@ function handleAdminOption(optionTitle) {
         // Redireccion
         switch(optionTitle) {
             case 'Administrar Clientes':
-                window.location.href = 'clientes.html';
+                window.location.href = 'admin-clientes.html';
                 break;
             case 'Administrar Rutinas':
-                window.location.href = 'rutinas.html';
+                window.location.href = 'admin-rutinas.html';
                 break;
             case 'Administrar Ejercicios':
-                window.location.href = 'ejercicios.html';
+                window.location.href = 'admin-ejercicios.html';
                 break;
             case 'Administrar Tienda':
-                window.location.href = 'tienda.html';
+                window.location.href = 'admin-tienda.html';
                 break;
         }
 }
@@ -193,20 +199,37 @@ function showNotification(message, type = 'info') {
 // Funcion para verificar si el usuario esta autenticado como administrador
 function checkAdminAuth() {
     // Verificar la autenticacion del administrador
-    // Por ahora asumimos que esta autenticado
     const isAdmin = localStorage.getItem('adminAuth') === 'true';
     
     if (!isAdmin) {
         // Redirigir al login si no esta autenticado
-        // window.location.href = '../login.html';
-        console.log('Verificar autenticación de administrador');
+        window.location.href = 'login.html';
+        console.log('Usuario no autorizado, redirigiendo al login');
     }
 }
 
-// Verificacion de autenticacion
-checkAdminAuth();
+// Funcion para configurar el manejador de logout en páginas admin
+function setupLogoutHandler() {
+    // Esperar un poco para que el header se inserte primero
+    setTimeout(() => {
+        const logoutBtn = document.getElementById('logout');
+        if (logoutBtn) {
+            // Remover event listeners existentes para evitar duplicados
+            logoutBtn.replaceWith(logoutBtn.cloneNode(true));
+            
+            // Obtener el nuevo botón
+            const newLogoutBtn = document.getElementById('logout');
+            if (newLogoutBtn) {
+                newLogoutBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    handleLogout();
+                });
+            }
+        }
+    }, 200);
+}
 
-// Funcion para confirmaciones usando SweetAlert2
+// Funcion para confirmar acciones usando SweetAlert2
 function confirmAction(title, text, confirmText = 'Confirmar', cancelText = 'Cancelar') {
     return Swal.fire({
         title: title,
