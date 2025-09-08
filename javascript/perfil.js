@@ -32,7 +32,7 @@ function loadUserData() {
     
     if (usuario) {
         // Cargar datos en los campos de solo lectura
-        document.getElementById('nombreActual').value = `${usuario.nombre || ''} ${usuario.apellido || ''}`.trim();
+        document.getElementById('nombreActual').value = `${usuario.nombre || ''}`.trim();
         document.getElementById('correoActual').value = usuario.email || '';
         document.getElementById('telefonoActual').value = usuario.telefono || '';
         document.getElementById('direccionActual').value = usuario.direccion || '';
