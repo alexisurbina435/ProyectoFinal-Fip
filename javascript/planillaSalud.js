@@ -67,33 +67,44 @@ Formulario.addEventListener("submit", (e) => {
     for (let campo of campos) {
         if (!campo.value.trim() || (campo.min && campo.value.length < campo.min)) {
             e.preventDefault();
-            alert(`Ingrese ${campo.min} caracteres o más para ${campo.label}.`);
-            return;
+            Swal.fire({
+                icon: 'warning',
+                title: 'Campo muy corto',
+                text: `Ingrese ${campo.min} caracteres o más para ${campo.label}.`,
+                confirmButtonColor: '#ee5f0d'
+            });
+            return false;
         }
         informacion.push(`\n${campo.label}: ${campo.value}`);
     }
 
-    //Validando selección de checkboxes
+    //Validando selección de radio buttons
     for (let checkbox of checkboxes) {
         if (!checkbox.si.checked && !checkbox.no.checked) {
             e.preventDefault();
-            alert(`Por favor, seleccione 'Sí' o 'No' en ${checkbox.label}.`);
-            return;
+            Swal.fire({
+                icon: 'warning',
+                title: 'Selección requerida',
+                text: `Por favor, seleccione 'Sí' o 'No' en ${checkbox.label}.`,
+                confirmButtonColor: '#ee5f0d'
+            });
+            return false;
         }
-        if (checkbox.si.checked && checkbox.no.checked) {
-            e.preventDefault();
-            alert(`Solo puede seleccionar una opción: 'Sí' o 'No' en ${checkbox.label}.`);
-            return;
-        }
+        // Con radio buttons no puede haber selección múltiple, así que eliminamos esa validación
         informacion.push(`\n${checkbox.label}: ${checkbox.si.checked ? "Sí" : "No"}`);
     }
 
     //Validando textarea si marca "Sí"
     if (condicionSi.checked && lesionInput.value.trim().length < 7) {
         e.preventDefault();
-        alert("Ingrese 7 caracteres o más para explicar su lesión.");
+        Swal.fire({
+            icon: 'warning',
+            title: 'Descripción muy corta',
+            text: 'Ingrese 7 caracteres o más para explicar su lesión.',
+            confirmButtonColor: '#ee5f0d'
+        });
         lesionInput.focus();
-        return;
+        return false;
     //Pushea la informacion del textarea si el usuario marco "Sí" y si puso "No" lo deja vacio
     }else{
         informacion.push(`\n${textareas[0].label}: ${textareas[0].value ? textareas[0].value : ""}  `);
@@ -101,9 +112,14 @@ Formulario.addEventListener("submit", (e) => {
 
     if (medicacionSi.checked && medicamentoInput.value.trim().length < 7) {
         e.preventDefault();
-        alert("Ingrese 7 caracteres o más para explicar qué medicamento toma.");
+        Swal.fire({
+            icon: 'warning',
+            title: 'Descripción muy corta',
+            text: 'Ingrese 7 caracteres o más para explicar qué medicamento toma.',
+            confirmButtonColor: '#ee5f0d'
+        });
         medicamentoInput.focus();
-        return;
+        return false;
     //Pushea la informacion del textarea si el usuario marco "Sí" y si puso "No" lo deja vacio
     }else{
         informacion.push(`\n${textareas[1].label}: ${textareas[1].value ? textareas[1].value : ""}   `);
@@ -120,6 +136,6 @@ Formulario.addEventListener("submit", (e) => {
     //Cerrar modal y recargar pagina
     closeBtn.addEventListener("click", () => {
         favDialog.close();
-        setTimeout(() => { window.location.href = "indexLog.html"; }, 600);
+        setTimeout(() => { window.location.href = "index.html"; }, 600);
     });
 });

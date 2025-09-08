@@ -15,31 +15,76 @@ registerForm.addEventListener("submit",  (e) =>{
 
     // const usuarioExistente = usuarios.find((user) => user.email === email);
     if(!email || !password || !password2 || !telefono || !nombreCompleto){
-        return alert("Por favor, complete todas las casillas");
+        e.preventDefault();
+        Swal.fire({
+            icon: 'warning',
+            title: 'Campos incompletos',
+            text: 'Por favor, complete todas las casillas',
+            confirmButtonColor: '#ee5f0d'
+        });
+        return;
     }
     if (!validacionNombre.test(nombreCompleto)) {
         e.preventDefault();
-        return alert("Nombre y apellido no válidos, no se permiten números ni caracteres especiales");
+        Swal.fire({
+            icon: 'error',
+            title: 'Nombre inválido',
+            text: 'Nombre y apellido no válidos, no se permiten números ni caracteres especiales',
+            confirmButtonColor: '#ee5f0d'
+        });
+        return;
     }
     if (!validacionEmail.test(email)) {
         e.preventDefault();
-        return alert("Correo électronico no válido ");
+        Swal.fire({
+            icon: 'error',
+            title: 'Email inválido',
+            text: 'Correo electrónico no válido',
+            confirmButtonColor: '#ee5f0d'
+        });
+        return;
     }
 
     const usuarioExistente = usuarios.find((user) => user.email === email);
     
     if (usuarioExistente) {
-        return alert("El email ya esta registrado");
+        e.preventDefault();
+        Swal.fire({
+            icon: 'error',
+            title: 'Email ya registrado',
+            text: 'El email ya está registrado',
+            confirmButtonColor: '#ee5f0d'
+        });
+        return;
     }
     if (password !== password2) {
-        return alert("Las contraseñas no coinciden");
+        e.preventDefault();
+        Swal.fire({
+            icon: 'error',
+            title: 'Contraseñas no coinciden',
+            text: 'Las contraseñas no coinciden',
+            confirmButtonColor: '#ee5f0d'
+        });
+        return;
     }
     if (password.length < 8) {
-        return alert("La contraseña debe tener al menos 8 caracteres");
+        e.preventDefault();
+        Swal.fire({
+            icon: 'error',
+            title: 'Contraseña muy corta',
+            text: 'La contraseña debe tener al menos 8 caracteres',
+            confirmButtonColor: '#ee5f0d'
+        });
+        return;
     }
     
     usuarios.push({name: nombreCompleto, email: email, phone: telefono, password: password, password2: password2});
     localStorage.setItem("usuarios", JSON.stringify(usuarios));
-    alert("Registro exitoso");
+    Swal.fire({
+        icon: 'success',
+        title: '¡Registro exitoso!',
+        text: 'Tu cuenta ha sido creada correctamente',
+        confirmButtonColor: '#ee5f0d'
+    });
     window.location.href = "login.html";
 });

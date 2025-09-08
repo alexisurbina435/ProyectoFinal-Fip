@@ -16,36 +16,79 @@ Formulario.addEventListener("submit", (e) => {
 
     let validacionNombre = /^[a-zA-ZéÉáÁíóúÍÓÚÑñ\s]*$/;
     let email = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{3,4}$/i;
-    if (nombreCompleto.value == "" || correo.value == "" || consulta.value == "") {
+    if (!nombreCompleto.value || !correo.value || !consulta.value) {
         e.preventDefault();
-        alert("Por favor, complete todas las casillas");
-    } else if (nombreCompleto.value.length < 6) {
-        e.preventDefault();
-        alert("Ingrese nombre y apellido con 6 caracteres o más ");
-    } else if (!validacionNombre.test(nombreCompleto.value)) {
-        e.preventDefault();
-        alert("Nombre y apellido no válidos, no se permiten números ni caracteres especiales");
-    } else if (!email.test(correo.value)) {
-        e.preventDefault();
-        alert("Correo electrónico no válido ");
+        Swal.fire({
+            icon: 'warning',
+            title: 'Campos incompletos',
+            text: 'Por favor, complete todas las casillas',
+            confirmButtonColor: '#ee5f0d'
+        });
+        return;
     }
-    else if (consulta.value.length < 10) {
-        e.preventDefault();
-        alert("Ingrese 10 caracteres o más para su consulta");
-    } else {
-        // alert("Formulario enviado");
-        e.preventDefault();
-        favDialog.showModal();
-        overlay.classList.toggle('overlay-block');
-        let blob = new Blob([informacion], { type: "text/plain;charset=utf-8" });
-        saveAs(blob, "contacto.txt");
 
+    if (nombreCompleto.value.length < 6) {
+        e.preventDefault();
+        Swal.fire({
+            icon: 'warning',
+            title: 'Nombre muy corto',
+            text: 'Ingrese nombre y apellido con 6 caracteres o más',
+            confirmButtonColor: '#ee5f0d'
+        });
+        return;
     }
+
+    if (!validacionNombre.test(nombreCompleto.value)) {
+        e.preventDefault();
+        Swal.fire({
+            icon: 'error',
+            title: 'Nombre inválido',
+            text: 'Nombre y apellido no válidos, no se permiten números ni caracteres especiales',
+            confirmButtonColor: '#ee5f0d'
+        });
+        return;
+    }
+
+    if (!email.test(correo.value)) {
+        e.preventDefault();
+        Swal.fire({
+            icon: 'error',
+            title: 'Email inválido',
+            text: 'Correo electrónico no válido',
+            confirmButtonColor: '#ee5f0d'
+        });
+        return;
+    }
+
+    if (consulta.value.length < 10) {
+        e.preventDefault();
+        Swal.fire({
+            icon: 'warning',
+            title: 'Consulta muy corta',
+            text: 'Ingrese 10 caracteres o más para su consulta',
+            confirmButtonColor: '#ee5f0d'
+        });
+        return;
+    }
+
+    // Swal.fire({
+    //     icon: 'success',
+    //     title: '¡Formulario enviado!',
+    //     text: 'Tu consulta ha sido enviada correctamente. Te responderemos en menos de 24 horas hábiles.',
+    //     confirmButtonColor: '#ee5f0d'
+    // });
+    // alert("Formulario enviado");
+    e.preventDefault();
+    favDialog.showModal();
+    overlay.classList.toggle('overlay-block');
+    let blob = new Blob([informacion], { type: "text/plain;charset=utf-8" });
+    saveAs(blob, "contacto.txt");
+
     closeBtn.addEventListener("click", () => {
-    favDialog.close();
-    setTimeout(() => {
-        window.location.reload();
-    }, 400); 
+        favDialog.close();
+        setTimeout(() => {
+            window.location.reload();
+        }, 400);
     });
-    
+
 })

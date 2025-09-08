@@ -14,6 +14,7 @@
     integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="icon" type="image/png" href="../images/logo.png">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -120,8 +121,8 @@
             <div class="check-contenedor">
               <div class="checkboxs">
                 <label for="name" class="form-label">¿PADECE ALGUNA CONDICIÓN MEDICA?</label>
-                <input type="checkbox" name="opcion" value="si" id="si-condicion">SI
-                <input type="checkbox" name="opcion" value="no" id="no-condicion">NO
+                <input type="radio" name="condicion" value="si" id="si-condicion">SI
+                <input type="radio" name="condicion" value="no" id="no-condicion">NO
               </div>
               <div class="input-contenedor">
                 <label for="name">SI ES AFIRMATIVO ESPECIFIQUE:</label>
@@ -135,8 +136,8 @@
             <div class="check-contenedor">
               <div class="checkboxs">
                 <label for="name" class="form-label">¿ESTA TOMANDO ALGUNA MEDICACIÓN?</label>
-                <input type="checkbox" name="opcion" value="si" id="si-medicacion">SI
-                <input type="checkbox" name="opcion" value="no" id="no-medicacion">NO
+                <input type="radio" name="medicacion" value="si" id="si-medicacion">SI
+                <input type="radio" name="medicacion" value="no" id="no-medicacion">NO
               </div>
               <div class="input-contenedor">
                 <label for="name">SI ES AFIRMATIVO ESPECIFIQUE:</label>
@@ -150,8 +151,8 @@
             <div class="check-contenedor">
               <div class="checkboxs">
                 <label for="name" class="form-label">¿TIENE EXPERIENCIA ENTRENANDO?</label>
-                <input type="checkbox" name="opcion" value="si" id="si-entreno">SI
-                <input type="checkbox" name="opcion" value="no" id="no-entreno">NO
+                <input type="radio" name="entreno" value="si" id="si-entreno">SI
+                <input type="radio" name="entreno" value="no" id="no-entreno">NO
               </div>
               <div class="input-contenedor">
                 <label for="name">OBJETIVOS:</label>

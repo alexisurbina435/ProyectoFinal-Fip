@@ -1,17 +1,25 @@
 // Traer el json
-fetch('../data/listaProductos.json')
-    .then(response => {
+async function cargarProductos() {
+    try {
+        const response = await fetch('../data/listaProductos.json');
         if (!response.ok) throw new Error("No se pudo cargar el archivo JSON");
-        return response.json();
-    })
-    .then(data => {
-        if (window.location.pathname.includes("productos.html"), ("productosLog.html")) {
+        const data = await response.json();
+        if (window.location.pathname.includes("productos.html")) {
             llenarProductos(data);
         }
-    })
-    .catch(error => {
+    } catch (error) {
         console.error("Error al cargar el JSON:", error);
-    });
+        Swal.fire({
+            icon: 'error',
+            title: 'Error al cargar productos',
+            text: 'No se pudieron cargar los productos. Por favor, recarga la página.',
+            confirmButtonColor: '#ee5f0d'
+        });
+    }
+}
+
+// Llamar a la función
+cargarProductos();
 
 window.addEventListener("DOMContentLoaded", contadorIconoCarrito);
 //Funcion para llenar los productos y botones funcionales
@@ -59,10 +67,20 @@ let llenarProductos = function (data) {
             if (!checkLogin()) return;
 
             if (stock.textContent.split(":")[1].trim() <= 0) {
-                alert("No hay stock disponible");
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Sin stock',
+                    text: 'No hay stock disponible',
+                    confirmButtonColor: '#ee5f0d'
+                });
             } else {
                 botonAgregarCarrito(producto);
-                alert("Producto agregado al carrito");
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Producto agregado!',
+                    text: 'Producto agregado al carrito',
+                    confirmButtonColor: '#ee5f0d'
+                });
                 contadorIconoCarrito();
             }
         });
@@ -89,7 +107,12 @@ function botonComprarAhora(botonComprar, stock, producto) {
         if (!checkLogin()) return;
         const stockDisponible = parseInt(stock.textContent.split(":")[1].trim());
         if (stockDisponible <= 0) {
-            alert("No hay stock disponible");
+            Swal.fire({
+                icon: 'warning',
+                title: 'Sin stock',
+                text: 'No hay stock disponible',
+                confirmButtonColor: '#ee5f0d'
+            });
         } else {
             localStorage.setItem("compraDirecta", JSON.stringify(producto));
             botonAgregarCarrito(producto);
@@ -176,7 +199,7 @@ function cargarCarrito() {
 
 // activar las funciones
 window.addEventListener("load", function () {
-    if (this.window.location.href.includes("carrito.html"), ("carritoLog.html")) {
+            if (this.window.location.href.includes("carrito.html")) {
         cargarCarrito();
         contadorIconoCarrito();
     }
@@ -254,7 +277,12 @@ function cambiarCantidad(i, j) {
 
     if (nuevaCantidad < 1) return;
     if (nuevaCantidad > producto.stock) {
-        alert("No hay más stock disponible.");
+        Swal.fire({
+            icon: 'warning',
+            title: 'Sin stock',
+            text: 'No hay más stock disponible.',
+            confirmButtonColor: '#ee5f0d'
+        });
         return;
     }
 
@@ -280,11 +308,15 @@ function contadorIconoCarrito() {
 
 // verificar si el usuario esta logueado
 function checkLogin() {
-    const url = window.location.href;
-    const paginasLogueadas = ["productosLog.html", "indexLog.html"];
-
-    if (!paginasLogueadas.some(pagina => url.includes(pagina))) {
-        alert("Debes iniciar sesión para comprar");
+    const usuario = JSON.parse(localStorage.getItem("usuarioLog")) || false;
+    
+    if (!usuario) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Sesión requerida',
+            text: 'Debes iniciar sesión para comprar',
+            confirmButtonColor: '#ee5f0d'
+        });
         window.location.href = "login.html";
         return false;
     }
@@ -334,7 +366,12 @@ function mostrarPopupProducto(producto) {
     overlay.querySelector('.comprarAhora').onclick = function () {
         if (!checkLogin()) return;
         if (producto.stock <= 0) {
-            alert('No hay stock disponible');
+            Swal.fire({
+                icon: 'warning',
+                title: 'Sin stock',
+                text: 'No hay stock disponible',
+                confirmButtonColor: '#ee5f0d'
+            });
         } else {
             localStorage.setItem('compraDirecta', JSON.stringify(producto));
             botonAgregarCarrito(producto);
@@ -345,10 +382,20 @@ function mostrarPopupProducto(producto) {
     overlay.querySelector('.agregarCarrito').onclick = function () {
         if (!checkLogin()) return;
         if (producto.stock <= 0) {
-            alert('No hay stock disponible');
+            Swal.fire({
+                icon: 'warning',
+                title: 'Sin stock',
+                text: 'No hay stock disponible',
+                confirmButtonColor: '#ee5f0d'
+            });
         } else {
             botonAgregarCarrito(producto);
-            alert('Producto agregado al carrito');
+            Swal.fire({
+                icon: 'success',
+                title: '¡Producto agregado!',
+                text: 'Producto agregado al carrito',
+                confirmButtonColor: '#ee5f0d'
+            });
             contadorIconoCarrito();
         }
     };
