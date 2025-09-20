@@ -1,0 +1,83 @@
+.element-card {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin: 10rem;
+  height: 40rem;
+}
+.contenedor {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  justify-items: center;
+  align-items: stretch;
+}
+.card-glosario {
+  font-size: 5rem;
+  flex: 0.2;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border-radius: 12px;
+  height: 100rem;
+  text-align: center;
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  color: #cd6b15;
+  transition: all 0.3s ease;
+}
+
+.cards {
+  flex: 0.2;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border-radius: 12px;
+  height: 100rem;
+  text-align: center;
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  color: #cb810b;
+  transition: all 0.3s ease;
+}
+.cards-grande {
+  font-size: 5rem;
+  flex: 0.5;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border-radius: 12px;
+  height: 100rem;
+  text-align: center;
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  color: #c47e22;
+  transition: all 0.3s ease;
+}
+
+.title {
+  font-size: 100px;
+  color: rgb(224, 215, 215);
+  margin: 2rem;
+}
+.imagen-detalle {
+  object-fit: cover;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 268px;
+}
