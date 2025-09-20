@@ -1,0 +1,117 @@
+.blog-container {
+  margin-top: 100px;
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 1rem;
+  color: var(--blanco);
+  background-color: black;
+  gap: 0.5rem;
+}
+.blog {
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  align-items: center;
+}
+.blog-logo {
+  width: 300px;
+}
+.blog-title {
+  width: auto;
+}
+.title {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 2rem;
+}
+
+.blog-text {
+  width: auto;
+  font-size: 1.5rem;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  text-align: center;
+}
+.main {
+  min-height: 100vh;
+  width: 100%;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin: 3rem 0;
+}
+
+.container-tarjet {
+  display: grid;
+  justify-content: center;
+  width: 70%;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10.2rem;
+}
+.card {
+  width: 40rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border-radius: 12px;
+  height: 50rem;
+  text-align: center;
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  color: #f5f5f5;
+  transition: all 0.3s ease;
+}
+
+.images {
+  width: 100%;
+  height: 70%;
+  object-fit: cover;
+  margin: 0 auto;
+  display: block;
+}
+.category {
+  font-style: unset;
+  font-size: medium;
+  background: #b9bac9;
+  color: #05062a;
+  padding: 4px 8px;
+  border-radius: 99px;
+  font-size: 18px;
+}
+
+.text-tarjet {
+  height: 30%;
+  text-align: center;
+  padding: 10px;
+  background-color: gainsboro;
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #4865a0;
+  margin-bottom: 20px;
+}
+.card h1 {
+  font-family: isolate;
+  font-size: 30px;
+  font-weight: bold;
+  color: #111827;
+  margin: 0;
+  text-align: start;
+  padding: 10px;
+}
+.card p {
+  font-size: 20px;
+  font-weight: bold;
+  color: #111827;
+  margin: 0;
+}
