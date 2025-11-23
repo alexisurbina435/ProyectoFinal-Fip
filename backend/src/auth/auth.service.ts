@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { Usuario } from 'src/usuario/entities/usuario.entity';
-import * as bcrypt from 'bcrypt';
+import bcrypt from 'node_modules/bcryptjs';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
@@ -19,10 +19,7 @@ export class AuthService {
   
 
   async login(email: string, passwordd: string): Promise<Usuario | any> {
-      const usuario = await this.usuarioRepository.findOne({ 
-        where: { email },
-        relations: ['plan']
-      });
+      const usuario = await this.usuarioRepository.findOne({ where: { email } });
       if (!usuario) {
         throw new BadRequestException('El usuario no existe');
       }
@@ -44,9 +41,14 @@ export class AuthService {
         id_plan: usuario.plan?.id_plan,
         estadoPago: usuario.estado_pago,
       };
-
-      // El JwtService ya está configurado con el secret en el módulo
-      const access_token = this.jwtService.sign(payload);
+  
+      const secret = this.configService.get<string>('JWT_SECRET');
+      const expiresIn = this.configService.get<number>('JWT_EXPIRES_IN');
+  
+      const access_token = this.jwtService.sign(payload, {
+        secret: secret,
+        expiresIn: expiresIn,
+      });
   
   
       return {

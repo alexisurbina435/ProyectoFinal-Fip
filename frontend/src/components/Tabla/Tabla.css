@@ -5,12 +5,38 @@
   border: 1px solid var(--naranja);
   overflow: hidden;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  width: 100%;
 }
 
 .admin-table {
   width: 100%;
   border-collapse: collapse;
   color: var(--blanco);
+}
+
+.table-scroll {
+  overflow-x: auto;
+  overflow-y: visible;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+.table-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.table-scroll::-webkit-scrollbar-thumb {
+  background: var(--naranja);
+  border-radius: 4px;
+}
+
+.table-scroll::-webkit-scrollbar-thumb:hover {
+  background: #c2510f;
 }
 
 .admin-table thead {
@@ -25,6 +51,30 @@
   color: var(--blanco);
   border-bottom: 2px solid var(--gris-osc);
   min-width: fit-content;
+  white-space: nowrap;
+}
+
+.data-table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--blanco);
+  background-color: var(--naranja);
+  border-bottom: 2px solid var(--gris-osc);
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.data-table th:last-child {
+  position: sticky;
+  right: 0;
+  background-color: var(--naranja);
+  z-index: 11;
+  min-width: 200px;
+  width: 200px;
 }
 
 .admin-table tbody tr {
@@ -48,6 +98,60 @@
 .admin-table td {
   padding: 1rem;
   font-size: 0.95rem;
+}
+
+.data-table td {
+  padding: 1rem;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+.data-table td[data-column="descripcion"] {
+  white-space: normal;
+  max-width: 250px;
+  word-wrap: break-word;
+}
+
+.data-table td:last-child {
+  position: sticky;
+  right: 0;
+  background-color: inherit;
+  z-index: 5;
+  min-width: 200px;
+  width: 200px;
+  white-space: normal;
+}
+
+.data-table tr:nth-child(even) td:last-child {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.data-table tr:hover td:last-child {
+  background-color: rgba(238, 95, 13, 0.1);
+}
+
+/* Estilos para preview de imagen */
+.table-image-preview {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.table-image-preview img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.table-image-preview img:hover {
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(238, 95, 13, 0.5);
+  z-index: 20;
+  position: relative;
 }
 
 
@@ -78,12 +182,15 @@
 
 .table-content {
   min-width: 100%;
+  width: max-content;
 }
 
 .data-table {
   width: 100%;
+  min-width: max-content;
   border-collapse: collapse;
   font-size: 0.875rem;
+  table-layout: auto;
 }
 
 
@@ -118,7 +225,9 @@
 .action-buttons-table {
   display: flex;
   gap: 0.5rem;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  min-width: 180px;
 }
 
 .btn-edit, .btn-delete, .btn-view {

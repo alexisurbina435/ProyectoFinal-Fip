@@ -24,7 +24,7 @@ export default function Planilla() {
 
     const enviarPlanilla = async (fichaSaludData) => {
         try {
-            const usuario = await usuarioService.getCurrentUser();
+            const usuario = await usuarioService.getUsuarioById();
             const ficha = {
                 ...fichaSaludData,
                 id_usuario: usuario.id_usuario,

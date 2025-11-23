@@ -10,7 +10,7 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const fetchUsuario = async () => {
       try {
-        const usuario = await usuarioService.getCurrentUser();
+        const usuario = await usuarioService.getUsuarioById();
         setUser(usuario);
       } catch (error) {
         console.error("Error cargando usuario:", error);

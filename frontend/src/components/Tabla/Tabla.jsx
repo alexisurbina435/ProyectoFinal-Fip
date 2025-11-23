@@ -92,7 +92,11 @@ const Tabla = ({
                       className={`table-row ${index % 2 === 0 ? 'even' : 'odd'}`}
                     >
                       {columns.map((column) => (
-                        <td key={column.key} className={column.clickable ? 'table-cell table-link' : 'table-cell'} >
+                        <td 
+                          key={column.key} 
+                          className={column.clickable ? 'table-cell table-link' : 'table-cell'}
+                          data-column={column.key}
+                        >
                           {renderCell(column, row)}
                         </td>
                       ))}

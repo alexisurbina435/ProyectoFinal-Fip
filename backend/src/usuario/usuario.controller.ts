@@ -27,14 +27,6 @@ export class UsuarioController {
     return usuario;
   }
 
-  @Get('me')
-  @UseGuards(AuthGuard)
-  async getCurrentUser(@Req() req: Request) {
-    const usuario = req['usuario'];
-
-    return this.UsuarioService.getUsuarioById(usuario.id_usuario);
-  }
-
   @Get(':id')
   @UseGuards(AuthGuard)
   async getUsuarioById(@Req() req: Request) {

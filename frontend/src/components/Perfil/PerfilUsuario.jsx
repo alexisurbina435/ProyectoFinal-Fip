@@ -26,12 +26,8 @@ const PerfilUsuario = () => {
 
     const [data, setData] = useState([]);
     const getUsuario = async () => {
-        try {
-            const data = await usuarioService.getCurrentUser();
-            setData(data);
-        } catch (error) {
-            console.error("Error cargando usuario:", error);
-        }
+        const data = await usuarioService.getUsuarioById();
+        setData(data);
     }
 
     useEffect(() => {

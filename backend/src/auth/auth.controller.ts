@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, HttpCode, HttpStatus, Res } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateAuthDto } from './dto/create-auth.dto';
+import { CreateUsuarioDto } from 'src/usuario/dto';
+import { Usuario } from 'src/usuario/entities/usuario.entity';
 import { response, type Response } from 'express';
 @Controller('auth')
 export class AuthController {
@@ -9,8 +10,8 @@ export class AuthController {
 
   @Post('login')
   @HttpCode(HttpStatus.OK)
-  async login(@Body() createAuthDto: CreateAuthDto, @Res({ passthrough: true }) response: Response) {
-    const { usuario, access_token } = await this.authService.login(createAuthDto.email, createAuthDto.password);
+  async login(@Body() createUsuarioDto: Usuario, @Res({ passthrough: true }) response: Response) {
+    const { usuario, access_token } = await this.authService.login(createUsuarioDto.email, createUsuarioDto.password);
     response.cookie('token', access_token, {
       httpOnly: true,
       secure: false, // solo por HTTPS

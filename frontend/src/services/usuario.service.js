@@ -7,12 +7,6 @@ class UsuarioService {
     return apiClient.get('/usuario');
   }
 
-  // Devuelve el usuario actual autenticado
-  async getCurrentUser() {
-    return apiClient.get('/usuario/me');
-  }
-
-
   // Devuelve un {Promise<Object>}
   async getUsuarioById(id) {
     return apiClient.get(`/usuario/${id}`);
