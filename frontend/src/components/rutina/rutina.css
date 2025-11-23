@@ -1,0 +1,19 @@
+.contenedor {
+  min-height: 45vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.fila {
+  display: flex;
+  gap: 1rem;
+}
+
+h1 {
+  color: white;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}

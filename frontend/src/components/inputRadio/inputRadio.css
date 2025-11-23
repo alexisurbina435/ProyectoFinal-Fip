@@ -1,0 +1,10 @@
+.checkboxs input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--naranja);
+    cursor: pointer;
+}
+
+.checkboxs input[type="radio"]:checked {
+    transform: scale(1.1);
+}

@@ -1,0 +1,74 @@
+body {
+  height: 100vh;
+}
+
+
+
+.titulo {
+  /* font-size: 3rem; */
+  font-weight: 900;
+  margin-top: 100px;
+}
+
+.contenido {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.error-plan {
+  color: var(--blanco);
+  font-size: 2rem;
+  font-weight: 900;
+}
+
+.botones-inscrip {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.btn-detalle-compra {
+  border-radius: 20px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 15rem;
+  height: 40px;
+  transition: all 0.4s ease-in-out;
+}
+
+.btn-detalle-compra {
+  background-color: var(--blanco);
+  border: var(--naranja) 1px solid;
+  color: var(--naranja);
+}
+
+.btn-detalle-compra:hover {
+  background-color: var(--black);
+  color: var(--blanco);
+  transition: all 0.4s ease-in-out;
+}
+.btn-continuar-inscripcion {
+  border-radius: 20px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 15rem;
+  height: 40px;
+  transition: all 0.4s ease-in-out;
+}
+
+.btn-continuar-inscripcion {
+  border: var(--naranja) 1px solid;
+  color: var(--blanco);
+  background-color: var(--naranja);
+}
+
+.btn-continuar-inscripcion:hover {
+  color: var(--gris);
+  transition: all 0.4s ease-in-out;
+}

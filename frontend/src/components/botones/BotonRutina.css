@@ -1,0 +1,31 @@
+.boton-rutina {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 250px;            
+  padding: 20px 28px;      
+  background-color: #1e1e1e;
+  color: #ff6a00;
+  border: 2px solid #ff6a00;
+  border-radius: 20px;    
+  font-weight: 600;
+  font-size: 2rem;       
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.boton-rutina:hover {
+  background-color: #ff6a00;
+  color: #000;
+  transform: scale(1.07);
+}
+
+.boton-nueva {
+  flex-direction: column;
+  justify-content: center;
+}
+
+.icono {
+  width: 40px;   
+  height: 30px;
+}

@@ -1,0 +1,147 @@
+.header {
+  display: flex;
+  position: fixed;
+  justify-content: center;
+  align-items: end;
+  width: 100%;
+  min-height: 6rem;
+  background-color: var(--gris-osc);
+  z-index: 1000;
+  top: 0;
+}
+
+.header::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 20px;
+  background-color: var(--naranja);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.header::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: var(--naranja);
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  right: 0;
+}
+
+.logo {
+  aspect-ratio: 46.11/50.00;
+  height: 60px;
+  width: 55px;
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  gap: 5.5rem;
+}
+
+.nav-list {
+  display: flex;
+  gap: 5rem;
+  margin: 0;
+}
+
+.nav-links {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  color: var(--blanco);
+  cursor: pointer;
+  transition: all 0.5s ease;
+  text-decoration: none;
+}
+
+.nav-links {
+  padding: 6px 10px;
+}
+
+.nav-links:hover {
+  color: var(--naranja);
+}
+
+ul .nav-inscribite {
+  background-color: var(--naranja);
+  border-radius: 20px;
+  padding: 0.5rem 0.5rem;
+  transition: all 0.6s ease;
+  white-space: nowrap;
+}
+
+/* le agregue un fondo y hover al inscribite ya */
+.nav-inscribite:hover {
+  background-color: var(--blanco);
+  transform: scale(1.08);
+  transition: all 0.5s ease;
+}
+
+.icons-container {
+  display: flex;
+  align-items: center;
+  height: 2.5rem;
+}
+
+.cart-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  position: relative;
+}
+
+.cart-button:hover {
+  transform: scale(1.2);
+  transition: transform 0.3s ease;
+}
+
+.cart-icon {
+  margin: 0;
+  padding: 0;
+  width: 48px;
+  height: 48px;
+}
+
+.cart-count {
+  position: absolute;
+  top: -0.2rem;
+  right: -0.2rem;
+  background-color: var(--naranja);
+  color: var(--blanco);
+  border-radius: 50%;
+  padding: 0.10rem 0.4rem;
+  font-size: 0.65rem;
+  font-weight: bold;
+  visibility: hidden;
+}
+
+.user-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2.5rem;
+  border-radius: 50px;
+  width: 42px;
+}
+
+@media (max-width: 1024px) {
+  .navigation{
+      gap: 1rem;
+  }
+}
+@media (max-width: 640px) {
+  .navigation{
+      gap: 1rem;
+      padding: 0 1rem;
+  }
+}

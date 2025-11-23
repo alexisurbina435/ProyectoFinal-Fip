@@ -1,0 +1,111 @@
+:root {
+  --gris: #23252B;
+  --gris-osc: #1A1A1A;
+  --naranja: #EE5F0D;
+  --blanco: #FFFFFF;
+  --negro: #000000;
+  --max-width: 1920px;
+  --spacing: 1rem;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--gris);
+}
+.main {
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--gris);
+  overflow: hidden;
+}
+
+
+/* inicio seccion remeras  */
+/* Banner-remeras */
+
+.descripcion-remera{
+display: flex;
+justify-content: center;
+}
+.banner-remeras {
+margin: 2rem 0 5rem 0;
+/* width: 100%; */
+width: 64rem;
+/* height: 30.5rem; */
+object-fit: contain;
+border-radius: 20px;
+}
+
+.entrena{
+  color: var(--blanco);
+}
+
+/* fin seccion remera  */
+
+/* span de error de los formularios  */
+.error {
+    /* color: #FF4c4c; */
+    /* color: #FF5722; */
+    /* color: #c62828; */
+    color: red;
+    font-size: 0.9rem;
+    /* text-align: left; */
+    /* margin-top: 0.2rem; */
+}
+
+/* fin de span de error para los formularios  */
+
+
+@media (max-width: 1024px) {
+  .content-banner img{
+      width: 100%;
+      min-height: 14rem;
+  }
+
+}
+@media (max-width: 760px) {
+  .content-banner img{
+      width: 100%;
+      min-height: 12rem;
+      
+  }
+  .footer-grid{
+      grid-template-columns: repeat(1, 1fr);
+  }
+  
+  .nav-links{
+  display: none;
+  }
+  
+  .desktop{
+      display: none;
+  }
+  
+  .descripcion-remera{
+      display: flex;
+      flex-direction: column;
+  }
+  .banner-remeras{
+      width: 100%;
+  }
+  .entrena{
+      font-size: 100%;    
+  }
+}
+
+
+@media (max-width: 640px) {
+  .navigation{
+      gap: 1rem;
+      padding: 0 1rem;
+  }
+  .icons-container{
+      gap: 0.8rem;
+  }
+}

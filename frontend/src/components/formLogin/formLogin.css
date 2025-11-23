@@ -1,0 +1,25 @@
+.remember-me {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    margin-bottom: 1rem;
+    height: 24px;
+    width: 137px;
+    align-self: self-start;
+    /* margin-left: 2rem; */
+}
+
+.remember-me span {
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.forgot-password {
+    color: #6366F1;
+    font-size: 1rem;
+    line-height: 20px;
+    text-decoration: none;
+    /* margin-bottom: 2rem; */
+    cursor: pointer;
+}

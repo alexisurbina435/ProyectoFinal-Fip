@@ -1,0 +1,74 @@
+ [
+    {
+      "id":1,
+    "img": "../../src/assets/images/00001.png",
+    "category": "Guía de tips",
+    "titulo": "Tips saludables",
+    "glosario": "Los tips del gym ",
+    "contenido":"No es solamente levantar peso, una buena tecnica hacer mejor la ejecucion"
+  },
+  {
+    "id":2,
+    "img":  "../../src/assets/images/00002.png",
+    "category": "Suplementos",
+    "titulo": "Suplementos deportivos",
+    "glosario": "Informacion de suplementos",
+    "contenido": "Te recomendamos las mejores marcas  de suplementos deportivos para mejorar en tus avances"
+  },
+  {
+    "id":3,
+    "img":  "../../src/assets/images/00003.png",
+    "category": "Objetivos",
+    "titulo": "Obejtivo",
+    "glosario": "metas personales",
+    "contenido": "Como mantener la constancia para logar mis objetivos"
+  },
+  {
+    "id":4,
+    "img":  "../../src/assets/images/00004.png",
+    "category": "alimentaicon",
+    "titulo": "Saludable",
+    "glosario": "Como debemos cudiarnos ",
+    "contenido": "Guia de alimentacion deportiva y recetas"
+  },
+  {
+    "id":5,
+    "img":  "../../src/assets/images/00005.png",
+    "category": "Rutinas",
+    "titulo": "Guia de entrenamientos",
+    "glosario": "Entrenamiento",
+    "contenido": "Paso a paso de como debes realiar cadad entrenamiento"
+  },
+  {
+    "id":6,
+    "img":  "../../src/assets/images/00006.png",
+    "category": "Videos",
+    "titulo": "Video entrenamiento",
+    "glosario": "Tutoriales y guia",
+    "contenido": "Videos de como ejercitarse dia a dia"
+  },
+  {
+    "id":7,
+    "img":  "../../src/assets/images/00007.png",
+    "category": "Consultas virtuales",
+    "titulo": "Consultas",
+    "glosario": "Consultas",
+    "contenido": "Lorem ipsum contenido completo del tema 1"
+  },
+  {
+    "id":8,
+    "img":  "../../src/assets/images/00008.png",
+    "category": "Progreso",
+    "titulo": "Progeso",
+    "glosario": "Como mantener el progeso",
+    "contenido": "lorem imsun...................."
+  },
+  {
+    "id":9,
+    "img":  "../../src/assets/images/00009.png",
+    "category": "Politica del gym",
+    "titulo": "administracion",
+    "glosario": "Dudas y consutlas sobre el gym",
+    "contenido": "lorem ipsun................"
+  }
+]

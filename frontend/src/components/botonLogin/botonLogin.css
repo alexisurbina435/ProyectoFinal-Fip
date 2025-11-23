@@ -1,0 +1,39 @@
+
+.btn {
+    width: 14rem;
+    height: 40px;
+    border-radius: 4px;
+    font-size: 16px;
+    line-height: 16px;
+    color: #F5F5F5;
+    cursor: pointer;
+    border: 1px solid;
+    transition: transform 0.5s ease;
+    margin: 0;
+}
+
+.btn-login {
+    background: #404040;
+    border-color: #737373;
+    margin-top: 1rem;
+}
+
+.btn-login:hover {
+    background: #737373;
+    transition: transform 0.5s ease;
+}
+
+.btn-register {
+    background: #EA580C;
+    border-color: #EA580C;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    margin-top: 1rem;
+}
+
+.btn-register:hover {
+    background: #C14A09;
+    transition: transform 0.5s ease;
+}

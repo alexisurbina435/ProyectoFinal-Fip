@@ -1,0 +1,114 @@
+.seccion-productos {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin: 3rem 0;
+  /* height: 120vh; */
+}
+.sub-productos {
+  color: var(--blanco);
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+.loading-prod{
+    color: var(--blanco);
+    font-size: 3rem;
+    text-align: center;
+    margin-top: 3rem;
+    font-weight: 900;
+}
+
+@media(max-width: 1024px) {
+    .cards-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+     .sub-productos {
+        font-size: 1rem;
+    }
+
+    .img-prod {
+        width: 8rem;
+    }
+
+    .card-producto {
+        width: 17rem;
+    }
+
+    .producto-nombre {
+        font-size: 1.3rem;
+        margin-top: 1rem;
+    }
+
+    .botones {
+        padding: 0;
+        white-space: nowrap;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .cards-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .seccion-productos {
+        height: 200vh;
+    }
+
+    .sub-productos {
+        font-size: 1rem;
+    }
+
+    .img-prod {
+        width: 8rem;
+    }
+
+    .card-producto {
+        width: 13rem;
+    }
+
+    .producto-nombre {
+        font-size: 1rem;
+        margin-top: 1rem;
+    }
+
+    .botones {
+        padding: 0;
+        white-space: nowrap;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem 0;
+    }
+
+    @media(max-width: 500px) {
+        .cards-container {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .seccion-productos {
+            height: 180vh;
+        }
+    }
+    
+    @media(max-width: 375px) {
+        .cards-container {
+            grid-template-columns: repeat(1, 1fr);
+        }
+        .seccion-productos {
+            height: 410vh;
+        }
+        .descripcion-pro{
+            height: 3.5rem;
+        }
+        
+    }
+}

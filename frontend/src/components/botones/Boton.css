@@ -1,0 +1,34 @@
+.botones {
+  display: flex;
+  gap: 0 0.6rem;
+}
+
+.comprarAhora {
+  background-color: var(--naranja);
+  color: var(--blanco);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.comprarAhora:hover {
+  background-color: #c14a09;
+}
+
+.agregarCarrito {
+  background-color: var(--gris-osc);
+  color: var(--blanco);
+  border: none;
+  padding: 0.5rem 0.5rem;
+  border-radius: 5px;
+  font-weight: 600;
+  transition: background 0.3s;
+  cursor: pointer;
+}
+
+.agregarCarrito:hover {
+  background-color: #9a9a9a;
+}

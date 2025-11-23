@@ -1,0 +1,152 @@
+/* Tabla de administración */
+.table-container {
+  background-color: var(--gris-osc);
+  border-radius: 10px;
+  border: 1px solid var(--naranja);
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--blanco);
+}
+
+.admin-table thead {
+  background-color: var(--naranja);
+}
+
+.admin-table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--blanco);
+  border-bottom: 2px solid var(--gris-osc);
+  min-width: fit-content;
+}
+
+.admin-table tbody tr {
+  border-bottom: 1px solid var(--gris);
+  transition: background-color 0.3s ease;
+}
+
+.admin-table tbody tr:hover {
+  background-color: rgba(238, 95, 13, 0.1);
+}
+
+
+.admin-table tbody tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.admin-table tbody tr:nth-child(even):hover {
+  background-color: rgba(238, 95, 13, 0.1);
+}
+
+.admin-table td {
+  padding: 1rem;
+  font-size: 0.95rem;
+}
+
+
+/* Links en la tabla */
+.table-link {
+  color: var(--naranja);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.table-link:hover {
+  color: var(--blanco);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+
+.sort-icon {
+  width: 0.875rem;
+  height: 0.875rem;
+  margin-left: 0.5rem;
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+}
+
+/* Tabla */
+
+.table-content {
+  min-width: 100%;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+
+.table-header-cell.sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s ease;
+}
+
+.table-header-cell.sortable:hover {
+  background-color: #c2510f;
+}
+
+/* Estados */
+.status-activo {
+  color: #28a745;
+  font-weight: 600;
+}
+
+.status-inactivo {
+  color: #dc3545;
+  font-weight: 600;
+}
+
+.status-pendiente {
+  color: #ffc107;
+  font-weight: 600;
+}
+
+
+/* Acciones */
+.action-buttons-table {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+}
+
+.btn-edit, .btn-delete, .btn-view {
+  padding: 0.5rem 0.8rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s 
+ease;
+  text-decoration: none;
+  display: inline-flex
+;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.btn-view {
+  background-color: #28a745;
+  color: var(--blanco);
+}
+
+.btn-edit {
+  background-color: #17a2b8;
+  color: var(--blanco);
+}
+
+.btn-delete {
+  background-color: #dc3545;
+  color: var(--blanco);
+}

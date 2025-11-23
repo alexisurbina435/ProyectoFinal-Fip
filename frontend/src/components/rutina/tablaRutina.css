@@ -1,0 +1,102 @@
+.tabla-contenedor {
+  background-color: #1b1b1b;
+  color: #f5f5f5;
+  width: 80%;
+  margin: 40px auto;
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid #ff6a00;
+  font-family: "Poppins", sans-serif;
+  box-shadow: 0 0 20px rgba(255, 106, 0, 0.1);
+}
+
+/* ENCABEZADO SUPERIOR */
+.tabla-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.tabla-header h2 {
+  background-color: #111;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 10px 10px 0 0;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+.tabla-opciones {
+  display: flex;
+  gap: 10px;
+}
+
+/* DROPDOWNS */
+.tabla-opciones select {
+  background-color: #ff6a00;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  outline: none;
+  box-shadow: 0 0 8px rgba(255, 106, 0, 0.3);
+}
+
+.tabla-opciones select:hover {
+  background-color: #ff8533;
+  transform: scale(1.05);
+}
+
+.tabla-opciones option {
+  background-color: #1b1b1b;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* TABLA PRINCIPAL */
+.tabla-rutina {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #242424;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.tabla-rutina th,
+.tabla-rutina td {
+  border: 1px solid #ff6a00;
+  text-align: center;
+  padding: 12px;
+  color: #f5f5f5;
+}
+
+.tabla-rutina th {
+  background-color: #111;
+  color: #ff6a00;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.9rem;
+}
+
+.tabla-rutina tr:hover {
+  background-color: #333;
+  transition: background 0.2s ease;
+}
+
+/* LINKS (Ver Imagen / Ver Video) */
+.link {
+  color: #ff6a00;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.link:hover {
+  color: #ff8533;
+}
