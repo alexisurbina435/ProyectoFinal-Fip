@@ -15,7 +15,7 @@ export class Dia {
   id_dia: number;
 
   @Column({ type: 'int' })
-  cant_dias: number;
+  numero_dia: number;
 
   // RELACIÓN → Muchos días pertenecen a una semana
   @ManyToOne(() => Semana, (semana) => semana.dias, { onDelete: 'CASCADE' })

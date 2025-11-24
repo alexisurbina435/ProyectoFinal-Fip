@@ -14,6 +14,11 @@ export class CreateDificultadDto {
   @Type(() => Number)
   @IsInt()
   @IsPositive()
+  series: number;
+
+  @Type(() => Number)
+  @IsInt()
+  @IsPositive()
   diaId: number;
 
   @Type(() => Number)

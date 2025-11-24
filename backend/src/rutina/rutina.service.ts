@@ -1,5 +1,4 @@
 import {
-  ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -20,13 +19,16 @@ export class RutinaService {
   ) {}
 
   async getAllRutinas(): Promise<Rutina[]> {
-    const rutina: Rutina[] = await this.rutinaRepository.find();
+    const rutina: Rutina[] = await this.rutinaRepository.find({
+      relations: ['usuario'],
+    });
     return rutina;
   }
 
   async getRutinaById(id: number) {
     const rutina = await this.rutinaRepository.findOne({
       where: { id_rutina: id },
+      relations: ['usuario', 'semanas', 'semanas.dias', 'semanas.dias.dificultades', 'semanas.dias.dificultades.ejercicio'],
     });
 
     return rutina;
@@ -41,7 +43,9 @@ export class RutinaService {
       throw new NotFoundException('Usuario no encontrado');
     }
     const rutina = this.rutinaRepository.create({
+      nombre: createRutinaDto.nombre,
       descripcion: createRutinaDto.descripcion,
+      nivel: createRutinaDto.nivel,
       categoria: createRutinaDto.categoria,
       usuario: usuario,
     });

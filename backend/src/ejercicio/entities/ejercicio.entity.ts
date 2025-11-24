@@ -12,6 +12,12 @@ export class Ejercicio {
   @Column({ type: 'varchar', length: 255 })
   detalle: string;
 
+  @Column({ type: 'varchar', length: 50, nullable: true })
+  tipo: string;
+
+  @Column({ type: 'varchar', length: 50, nullable: true })
+  grupo_muscular: string;
+
   @Column({ type: 'varchar', length: 255, nullable: true })
   img_url: string;
 

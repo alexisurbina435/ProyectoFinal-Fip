@@ -1,6 +1,23 @@
+import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { NivelRutina } from '../entities/rutina.entity';
+
 export class CreateRutinaDto {
-  dia: number;
+  @IsNotEmpty()
+  @IsString()
+  nombre: string;
+
+  @IsNotEmpty()
+  @IsString()
   descripcion: string;
-  categoria: string;
+
+  @IsNotEmpty()
+  @IsEnum(NivelRutina)
+  nivel: NivelRutina;
+
+  @IsOptional()
+  @IsString()
+  categoria?: string;
+
+  @IsNotEmpty()
   id_usuario: number;
 }

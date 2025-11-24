@@ -9,13 +9,30 @@ import {
 import { Usuario } from '../../usuario/entities/usuario.entity';
 import { Semana } from 'src/semana/entities/semana.entity';
 
+export enum NivelRutina {
+  PRINCIPIANTE = 'principiante',
+  INTERMEDIO = 'intermedio',
+  AVANZADO = 'avanzado',
+  PERSONALIZADO = 'personalizado',
+}
+
 @Entity('rutina')
 export class Rutina {
   @PrimaryGeneratedColumn()
   id_rutina: number;
 
+  @Column({ type: 'varchar', length: 100 })
+  nombre: string;
+
   @Column({ length: 255 })
   descripcion: string;
+
+  @Column({
+    type: 'enum',
+    enum: NivelRutina,
+    nullable: false,
+  })
+  nivel: NivelRutina;
 
   @Column({
     type: 'enum',

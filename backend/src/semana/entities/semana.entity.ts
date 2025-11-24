@@ -13,8 +13,8 @@ export class Semana {
   @PrimaryGeneratedColumn()
   id_semana: number;
 
-  @Column()
-  cant_semanas: number;
+  @Column({ type: 'int' })
+  numero_semana: number;
 
   @ManyToOne(() => Rutina, (rutina) => rutina.semanas, {
     onDelete: 'CASCADE',

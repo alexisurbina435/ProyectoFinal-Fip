@@ -48,7 +48,8 @@ export class UsuarioService {
 
   async getUsuarioById(id: number): Promise<Usuario> {
     const usuario = await this.usuarioRepository.findOne({
-      where: { id_usuario: id }, relations: ['ficha', 'suscripciones'],
+      where: { id_usuario: id }, 
+      relations: ['ficha', 'suscripciones', 'rutina_activa'],
     });
     if (!usuario) {
       throw new NotFoundException(`usuario con ${id} no existe`);

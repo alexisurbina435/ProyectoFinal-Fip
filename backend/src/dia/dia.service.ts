@@ -25,7 +25,7 @@ export class DiaService {
       throw new NotFoundException('Semana no encontrada');
     }
     const dia = await this.diaRepo.create({
-      cant_dias: createDiaDto.cant_dias,
+      numero_dia: createDiaDto.numero_dia,
       semana: semana,
     });
     return await this.diaRepo.save(dia);

@@ -14,6 +14,9 @@ export class Dificultad {
   @Column({ type: 'int' })
   repeticiones: number;
 
+  @Column({ type: 'int' })
+  series: number;
+
 
   // ELIMINAR EN CASCADA SI O NO?
   @ManyToOne(() => Dia, dia => dia.dificultades, { onDelete: 'CASCADE' })

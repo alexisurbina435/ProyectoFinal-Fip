@@ -23,7 +23,7 @@ export class DificultadService {
   ) {}
 
   async create(createDificultadDto: CreateDificultadDto): Promise<Dificultad> {
-    const { diaId, ejercicioId, peso, repeticiones } = createDificultadDto;
+    const { diaId, ejercicioId, peso, repeticiones, series } = createDificultadDto;
 
     const dia = await this.findDia(diaId);
     const ejercicio = await this.findEjercicio(ejercicioId);
@@ -31,6 +31,7 @@ export class DificultadService {
     const dificultad = this.dificultadRepository.create({
       peso,
       repeticiones,
+      series,
       dia,
       ejercicio,
     });
@@ -84,6 +85,10 @@ export class DificultadService {
 
     if (updateDificultadDto.repeticiones !== undefined) {
       dificultad.repeticiones = updateDificultadDto.repeticiones;
+    }
+
+    if (updateDificultadDto.series !== undefined) {
+      dificultad.series = updateDificultadDto.series;
     }
 
     try {

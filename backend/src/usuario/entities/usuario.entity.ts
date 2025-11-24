@@ -11,7 +11,6 @@ import { Rutina } from 'src/rutina/entities/rutina.entity';
 import { Venta } from 'src/venta/entities/venta.entity';
 import { Blog } from 'src/blog/entities/blog.entity';
 import { FichaSalud } from 'src/ficha-salud/entities/ficha-salud.entity';
-import { Plan } from 'src/plan/entities/plan.entity';
 import { Suscripcion } from 'src/suscripcion/entities/suscripcion.entity';
 
 export enum Rol {
@@ -69,6 +68,11 @@ export class Usuario {
     cascade: true,
   })
   rutinas: Rutina[];
+
+  // RELACIÓN → Un usuario tiene una rutina activa (nullable)
+  @ManyToOne(() => Rutina, { nullable: true })
+  @JoinColumn({ name: 'rutina_activa_id' })
+  rutina_activa?: Rutina;
 
   // Un usuario puede tener muchas ventas
   @OneToMany(() => Venta, (venta) => venta.usuario)
