@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { Usuario } from 'src/usuario/entities/usuario.entity';
-import bcrypt from 'node_modules/bcryptjs';
+import * as bcrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
@@ -36,10 +36,11 @@ export class AuthService {
         apellido: usuario.apellido,
         email: usuario.email,
         telefono: usuario.telefono,
-        rol: usuario.rol,
+        // saco rol del payload por que encontre un bug, cuando cambio rol de usuario a admin sigue siendo usuario 
+        // rol: usuario.rol,
         // tipoPlan: usuario.tipoPlan,
-        id_plan: usuario.plan?.id_plan,
-        estadoPago: usuario.estado_pago,
+        // id_plan: usuario.plan?.id_plan,
+        // estadoPago: usuario.estado_pago,
       };
   
       const secret = this.configService.get<string>('JWT_SECRET');

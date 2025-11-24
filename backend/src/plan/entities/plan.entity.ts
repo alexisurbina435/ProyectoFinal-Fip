@@ -1,4 +1,5 @@
-import { Usuario } from 'src/usuario/entities/usuario.entity';
+// import { Usuario } from 'src/usuario/entities/usuario.entity';
+import { Suscripcion } from 'src/suscripcion/entities/suscripcion.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('plan')
@@ -20,7 +21,10 @@ export class Plan {
   @Column({ name: 'descripcion', type: 'varchar', length: 45, nullable: true })
   descripcion: string | null;
 
-  @OneToMany(() => Usuario, (usuario) => usuario.plan)
-  usuarios: Usuario[];
+  // @OneToMany(() => Usuario, (usuario) => usuario.plan)
+  // usuarios: Usuario[];
+
+  @OneToMany(() => Suscripcion, (suscripcion) => suscripcion.plan)
+  suscripciones: Suscripcion[];
 
 }

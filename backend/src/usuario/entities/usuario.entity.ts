@@ -12,6 +12,7 @@ import { Venta } from 'src/venta/entities/venta.entity';
 import { Blog } from 'src/blog/entities/blog.entity';
 import { FichaSalud } from 'src/ficha-salud/entities/ficha-salud.entity';
 import { Plan } from 'src/plan/entities/plan.entity';
+import { Suscripcion } from 'src/suscripcion/entities/suscripcion.entity';
 
 export enum Rol {
   USUARIO = 'usuario',
@@ -53,9 +54,9 @@ export class Usuario {
   @Column({ type: 'boolean', default: false })
   estado_pago: boolean;
 
-  @ManyToOne(() => Plan, (plan) => plan.usuarios, { nullable: true })
-  @JoinColumn({ name: 'id_plan' }) // FK en la tabla usuario
-  plan?: Plan;
+  // @ManyToOne(() => Plan, (plan) => plan.usuarios, { nullable: true })
+  // @JoinColumn({ name: 'id_plan' }) // FK en la tabla usuario
+  // plan?: Plan;
 
 
   //Relación one to one con fichaSalud
@@ -76,4 +77,8 @@ export class Usuario {
   // Un usuario puede tener muchos blogs
   @OneToMany(() => Blog, (blog) => blog.usuario)
   blogs: Blog[];
+
+  @OneToMany(() => Suscripcion, (suscripcion) => suscripcion.usuario)
+  suscripciones: Suscripcion[];
+
 }

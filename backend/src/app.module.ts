@@ -17,10 +17,11 @@ import { VentaModule } from './venta/venta.module';
 import { SemanaModule } from './semana/semana.module';
 import { FichaSaludModule } from './ficha-salud/ficha-salud.module';
 import { ProductosModule } from './productos/productos.module';
-// import { MercadoPagoModule } from './mercadopago/mercadopago.module';
+import { MercadoPagoModule } from './mercadopago/mercadopago.module';
 
 import { JwtModule } from '@nestjs/jwt';
 import { AuthModule } from './auth/auth.module';
+import { SuscripcionModule } from './suscripcion/suscripcion.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -54,8 +55,9 @@ import { AuthModule } from './auth/auth.module';
     VentaModule,
     FichaSaludModule,
     ProductosModule,
-    // MercadoPagoModule,
+    MercadoPagoModule,
     AuthModule,
+    SuscripcionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

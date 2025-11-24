@@ -9,6 +9,7 @@ import {
   NotFoundException,
   UseGuards,
   Req,
+  Patch,
 } from '@nestjs/common';
 import { UsuarioService } from './usuario.service';
 import { UpdateUsuarioDto } from './dto/update.usuario.dto';
@@ -45,18 +46,7 @@ export class UsuarioController {
     return this.UsuarioService.findByEmail(email);
   }
 
-  // @Post('login')
-  // @HttpCode(HttpStatus.OK)
-  // async login(@Body() createUsuarioDto: Usuario, @Res({ passthrough: true }) response: Response) {
-  //   const { usuario, access_token } = await this.UsuarioService.login(createUsuarioDto.email, createUsuarioDto.password);
-  //   response.cookie('token', access_token, {
-  //     httpOnly: true,
-  //     secure: true, // solo por HTTPS
-  //     sameSite: 'strict',
-  //     maxAge: 3600 * 1000, // 1 hora
-  //   });
-  //   return { message: 'Login exitoso', usuario };
-  // }
+
 
   @Post('registro')
   async postUsuario(@Body() createUsuarioDto: Usuario): Promise<Usuario> {
@@ -79,6 +69,11 @@ export class UsuarioController {
     return rutina;
   }
 
+  @Patch(':id')
+  async editarUsuario(@Param('id') id_usuario,@Body() updateUsuarioDto: UpdateUsuarioDto,){
+    return this.UsuarioService.editarUsuario(id_usuario,updateUsuarioDto);
+  }
+  
   @Delete(':id')
   async deleteUsuario(@Param('id') id_usuario) {
     const result = await this.UsuarioService.deleteUsuario(id_usuario);
