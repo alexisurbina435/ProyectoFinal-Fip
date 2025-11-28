@@ -30,4 +30,8 @@ export class Suscripcion {
 
     @Column({ type: 'varchar', length: 20, default: 'ACTIVA' })
     estado: string;
+
+    @Column()
+    preapprovalId: string;
+
 }

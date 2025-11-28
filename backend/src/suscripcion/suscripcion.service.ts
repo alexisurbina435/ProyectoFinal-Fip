@@ -1,50 +1,91 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { MercadoPagoService } from 'src/mercadopago/mercadopago.service';
 import { CreateSuscripcionDto } from './dto/create-suscripcion.dto';
-import { UpdateSuscripcionDto } from './dto/update-suscripcion.dto';
+import { Suscripcion } from './entities/suscripcion.entity';
+import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Usuario } from 'src/usuario/entities/usuario.entity';
 import { Plan } from 'src/plan/entities/plan.entity';
-import { Repository } from 'typeorm';
-import { Suscripcion } from './entities/suscripcion.entity';
 
 @Injectable()
 export class SuscripcionService {
+  constructor(
+    private readonly mpService: MercadoPagoService,
+    @InjectRepository(Suscripcion)
+    private readonly suscripcionRepository: Repository<Suscripcion>,
+    @InjectRepository(Usuario)
+    private readonly usuarioRepo: Repository<Usuario>,
+    @InjectRepository(Plan)
+    private readonly planRepo: Repository<Plan>,
+  ) { }
 
-   constructor(
-      @InjectRepository(Usuario)
-      private usuarioRepository: Repository<Usuario>,
+  async crear(dto: CreateSuscripcionDto) {
+    const usuario = await this.usuarioRepo.findOne({ where: { id_usuario: dto.id_usuario } });
+    if (!usuario) throw new NotFoundException('Usuario no encontrado');
 
-      @InjectRepository(Suscripcion)
-      private suscripcionRepo: Repository<Suscripcion>,
-      
-      @InjectRepository(Plan)
-      private readonly planRepo: Repository<Plan>,
-  
-    ) { }
-  async create(dto: CreateSuscripcionDto): Promise<Suscripcion> {
-    const usuario = await this.usuarioRepository.findOneBy({ id_usuario: dto.id_usuario });
-    const plan = await this.planRepo.findOneBy({ id_plan: dto.id_plan });
+    const plan = await this.planRepo.findOne({ where: { id_plan: dto.id_plan } });
+    if (!plan) throw new NotFoundException('Plan no encontrado');
 
-    if (!usuario || !plan) throw new Error('Usuario o Plan no encontrado');
+    const mp = await this.mpService.crearSuscripcion(usuario.email, plan.precio, plan.nombre);
 
     const fechaInicio = new Date();
-    const fechaFin = new Date(fechaInicio);
+    const fechaFin = new Date();
     fechaFin.setMonth(fechaFin.getMonth() + dto.mesesContratados);
 
-    const suscripcion = this.suscripcionRepo.create({
+    const suscripcion = this.suscripcionRepository.create({
       usuario,
       plan,
       fechaInicio,
       fechaFin,
       mesesContratados: dto.mesesContratados,
-      montoPagado: plan.precio * dto.mesesContratados,  
-      estado: 'ACTIVA',
+      montoPagado: plan.precio * dto.mesesContratados,
+      estado: 'Activa',
+      preapprovalId: mp.id,
     });
 
-    return this.suscripcionRepo.save(suscripcion);
+    await this.suscripcionRepository.save(suscripcion);
+
+    //Marcamos estado_pago = true inmediatamente
+    usuario.estado_pago = true;//esto en verdad se usa el webhook que esta en mercadopagoController, pero ahora no funciona por que no tenemos dominio
+    await this.usuarioRepo.save(usuario);
+
+    return mp; // Devuelve init_point y id para pagar
   }
 
-  delete(id: number) {
-    return this.suscripcionRepo.delete(id);
+  async cancelar(preapprovalId: string) {
+    await this.mpService.cancelarSuscripcion(preapprovalId);
+    await this.suscripcionRepository.update({ preapprovalId }, { estado: 'CANCELADA' });
+  }
+
+  async actualizarEstado(preapprovalId: string, estado: string) {
+
+    const suscripcion = await this.suscripcionRepository.findOne({
+      where: { preapprovalId },
+      relations: ['usuario'],
+    });
+
+
+    if (!suscripcion) {
+      console.log('No se encontró la suscripción con preapprovalId:', preapprovalId);
+      return;
+    }
+
+    suscripcion.estado = estado.toUpperCase();
+    await this.suscripcionRepository.save(suscripcion);
+
+
+    const estadoActivo = ['authorized', 'approved', 'active'];
+    if (estadoActivo.includes(estado)) {
+      suscripcion.usuario.estado_pago = true;
+      await this.usuarioRepo.save(suscripcion.usuario);
+    }
+
+    console.log('Suscripcion encontrada:', suscripcion);
+    console.log('Usuario relacionado:', suscripcion?.usuario);
+    console.log('Estado recibido:', estado);
+    if (estado === 'cancelled') {
+      suscripcion.usuario.estado_pago = false;
+      await this.usuarioRepo.save(suscripcion.usuario);
+    }
   }
 }

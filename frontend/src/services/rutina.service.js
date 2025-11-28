@@ -26,6 +26,11 @@ class RutinaService {
   async deleteRutina(id) {
     return apiClient.delete(`/rutina/${id}`);
   }
+
+  // Devuelve un {Promise<Object>} - Crea rutina completa con semanas, días y ejercicios en una transacción
+  async createRutinaCompleta(rutinaCompletaData) {
+    return apiClient.post('/rutina/completa', rutinaCompletaData);
+  }
 }
 
 export default new RutinaService();

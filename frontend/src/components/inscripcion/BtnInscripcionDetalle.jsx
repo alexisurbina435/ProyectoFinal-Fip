@@ -1,24 +1,23 @@
-import "./inscripcionDetalle.css";
+// import "./inscripcionDetalle.css";
+// import SuscripcionButton from "../botonSuscripcion/SuscripcionButton";
 
-
-export default function btnInscripcion(){
+// export default function btnInscripcion({plan}){
     
 
-return(
-    <>   
+// return(
+//     <>   
 
-         <div className="botones-inscrip">
+//          <div className="botones-inscrip">
 
-        <button type="submit"
-        className="btn-detalle-compra">Detalle de Compra</button>
+//         <button type="submit"
+//         className="btn-detalle-compra">Detalle de Compra</button>
 
+//         <SuscripcionButton clase="btn-continuar-inscripcion" plan={plan}/>
         
-        <button type="submit"
-        className="btn-continuar-inscripcion">Continuar Inscripcion</button>
-        </div>
+//         </div>
 
-    </>
+//     </>
 
 
-)
-}
+// )
+// }

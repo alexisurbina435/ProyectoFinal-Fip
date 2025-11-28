@@ -3,8 +3,10 @@ import Footer from "../../components/footer/Footer"
 import TablaBackend from "../../components/tablaBackend/TablaBackend"
 import { useState, useEffect } from "react";
 import ContactoService from "../../services/contacto.service";
+import { useAuth } from "../../context/AuthProvider";
 const AdminContacto = () => {
 
+    const { user } = useAuth();
     const [consulta, setConsulta] = useState([]);
 
     const consultas = async (consulta) => {
@@ -20,6 +22,8 @@ const AdminContacto = () => {
 
     return (
         <>
+            {user.rol === "admin" ? (
+                <>
             <Header />
             <div className="admin-content">
                 <div className="container">
@@ -28,6 +32,13 @@ const AdminContacto = () => {
                 </div>
             </div>
             <Footer />
+                </>
+                ):(
+                    <>
+                    <h1>Acceso Denegado</h1>
+                    </>
+                )
+            }
         </>
     );
 };

@@ -132,7 +132,7 @@ export default function FormRegistro() {
                                         message: "El telefono debe tener al menos 6 caracteres"
                                     },
                                     pattern: {
-                                        value: /^(\+54 )?\d{3,4} \d{6}$/,
+                                        value: /^(\+54\s?)?\d{3,4}\s?\d{6}$/,
                                         message: "El telefono no es valido"
                                     }
                                 }

@@ -97,14 +97,6 @@ export class UsuarioService {
       throw new NotFoundException(`Usuario con id ${id} no encontrado`);
     }
 
-    //Si viene id_plan en el DTO, lo convertimos en relación
-    // if (updateUsuarioDto.id_plan) {
-    //   const plan = await this.planRepo.findOne({ where: { id_plan: updateUsuarioDto.id_plan } });
-    //   if (!plan) {
-    //     throw new NotFoundException(`Plan con id ${updateUsuarioDto.id_plan} no encontrado`);
-    //   }
-    //   usuario.plan = plan;
-    // }
 
     const { password, ...rest } = updateUsuarioDto;
     this.usuarioRepository.merge(usuario, rest);

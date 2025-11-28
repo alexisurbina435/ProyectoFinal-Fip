@@ -1,6 +1,6 @@
 import { Body, Controller, Get, InternalServerErrorException, NotFoundException, Param, Post, Put, Delete } from '@nestjs/common';
 import { RutinaService } from './rutina.service';
-import { CreateRutinaDto, UpdateRutinaDto } from './dto';
+import { CreateRutinaDto, UpdateRutinaDto, CreateRutinaCompletaDto } from './dto';
 
 
 @Controller('rutina')
@@ -34,7 +34,17 @@ export class RutinaController {
     }catch (ex) {
             throw new InternalServerErrorException(ex.message);
         }
-}
+    }
+
+    @Post('completa')
+    async postRutinaCompleta(@Body() createRutinaCompletaDto: CreateRutinaCompletaDto) {
+        try {
+            const rutina = await this.RutinaService.postRutinaCompleta(createRutinaCompletaDto);
+            return rutina;
+        } catch (ex) {
+            throw new InternalServerErrorException(ex.message);
+        }
+    }
 
 
     @Put(':id')

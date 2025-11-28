@@ -30,6 +30,10 @@ class UsuarioService {
     return apiClient.put(`/usuario/${id}`, usuarioData);
   }
 
+  async editarUsuario(id, usuarioData) {
+    return apiClient.patch(`/usuario/${id}`, usuarioData);
+  }
+
   // Devuelve {Promise<null>} (204 No Content)
   async deleteUsuario(id) {
     return apiClient.delete(`/usuario/${id}`);

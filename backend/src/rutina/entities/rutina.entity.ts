@@ -16,6 +16,12 @@ export enum NivelRutina {
   PERSONALIZADO = 'personalizado',
 }
 
+export enum TipoRutina {
+  CLIENTE = 'cliente',      // Rutina para un cliente específico
+  PLAN = 'plan',           // Rutina ligada a un tipo de plan
+  GENERAL = 'general',     // Rutina general (plantilla)
+}
+
 @Entity('rutina')
 export class Rutina {
   @PrimaryGeneratedColumn()
@@ -41,13 +47,21 @@ export class Rutina {
   })
   categoria: string;
 
-  // RELACIÓN → Muchas Rutinas pertenecen a un Usuario
+  @Column({
+    type: 'enum',
+    enum: TipoRutina,
+    default: TipoRutina.CLIENTE,
+    nullable: false,
+  })
+  tipo_rutina: TipoRutina;
+
+  // RELACIÓN → Muchas Rutinas pertenecen a un Usuario (opcional para rutinas generales)
   @ManyToOne(() => Usuario, (usuario) => usuario.rutinas, {
     onDelete: 'CASCADE',
-    nullable: false,
-  }) // nullable false hace que una rutina si o si debe estar asociadada a un usuario
+    nullable: true, // Ahora es opcional para permitir rutinas generales
+  })
   @JoinColumn({ name: 'usuarioIdUsuario' })
-  usuario: Usuario;
+  usuario?: Usuario;
 
   @OneToMany(() => Semana, (semana) => semana.rutina, { cascade: true })
   semanas: Semana[];

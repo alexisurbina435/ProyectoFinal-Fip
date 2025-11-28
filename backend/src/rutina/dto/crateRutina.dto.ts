@@ -1,5 +1,5 @@
-import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
-import { NivelRutina } from '../entities/rutina.entity';
+import { IsEnum, IsNotEmpty, IsOptional, IsString, IsInt, ValidateIf } from 'class-validator';
+import { NivelRutina, TipoRutina } from '../entities/rutina.entity';
 
 export class CreateRutinaDto {
   @IsNotEmpty()
@@ -19,5 +19,12 @@ export class CreateRutinaDto {
   categoria?: string;
 
   @IsNotEmpty()
-  id_usuario: number;
+  @IsEnum(TipoRutina)
+  tipo_rutina: TipoRutina;
+
+  // id_usuario es requerido solo si tipo_rutina es 'cliente'
+  @ValidateIf((o) => o.tipo_rutina === TipoRutina.CLIENTE)
+  @IsNotEmpty()
+  @IsInt()
+  id_usuario?: number;
 }

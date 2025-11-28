@@ -1,9 +1,12 @@
-import carritoIcon from "../../assets/carritoIcon.svg";
+import { useCarrito } from "../carrito/CarritoContext";
 
 export default function CartButton() {
+    const { cantidadTotal } = useCarrito();
+
     return (
         <button className="cart-button" aria-label="Shopping cart">
-            <a href="/carrito">
+            <a href="/carrito" className="relative inline-block">
+                {/* Tu ícono SVG */}
                 <svg width="48" height="48" viewBox="0 0 48 48" fill="none"
                     xmlns="http://www.w3.org/2000/svg" className="cart-icon">
                     <path
@@ -11,8 +14,14 @@ export default function CartButton() {
                         stroke="#EE5F0D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
                     />
                 </svg>
-                <span className="cart-count"></span>
+
+                {/* Badge con cantidad */}
+                {cantidadTotal > 0 && (
+                    <span className="cart-count">
+                        {cantidadTotal}
+                    </span>
+                )}
             </a>
         </button>
-    )
+    );
 }

@@ -4,6 +4,7 @@ import Tabla from "../../components/Tabla/Tabla"
 import AdminBar from "../../components/AdminBar/AdminBar"
 import rutinaService from "../../services/rutina.service.js";
 import TablaRutina from "../../components/rutina/TablaRutina";
+import ModalCrearRutina from "../../components/rutina/ModalCrearRutina";
 
 const AdminRutinas = () => {
   const [rutinas, setRutinas] = useState([]);
@@ -11,6 +12,7 @@ const AdminRutinas = () => {
   const [error, setError] = useState(null);
   const [selectedRutina, setSelectedRutina] = useState(null);
   const [isViewOpen, setIsViewOpen] = useState(false);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
   // Cargar rutinas al montar el componente
@@ -91,15 +93,17 @@ const AdminRutinas = () => {
   const placeholder = 'rutina';
 
   // Función para manejar agregar rutina
-  // TODO: Falta definir cómo se va a crear una rutina
   const handleAddClick = () => {
-    // TODO: Implementar modal o vista para crear rutina:
-    // - Seleccionar usuario o si es una rutina por defecto
-    // - Definir nombre, descripción, nivel
-    // - Asignar categoría (plan) si aplica
-    // - Crear semanas, días y ejercicios
-    console.log('Agregar ' + placeholder);
-    alert('Funcionalidad de crear rutina pendiente de implementar');
+    setIsCreateModalOpen(true);
+  };
+
+  // Función para manejar rutina creada
+  const handleRutinaCreada = (nuevaRutina) => {
+    // Recargar lista de rutinas
+    cargarRutinas();
+    // Opcional: abrir la vista de la nueva rutina
+    // setSelectedRutina(nuevaRutina);
+    // setIsViewOpen(true);
   };
 
   // Función para ver detalles de una rutina
@@ -246,6 +250,13 @@ const AdminRutinas = () => {
           </div>
         </div>
       )}
+
+      {/* Modal para crear rutina */}
+      <ModalCrearRutina
+        isOpen={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+        onRutinaCreada={handleRutinaCreada}
+      />
     </>
   );
 };

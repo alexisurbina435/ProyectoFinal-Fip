@@ -5,7 +5,7 @@ import AdminBar from "../../components/AdminBar/AdminBar"
 import usuarioService from "../../services/usuario.service";
 import PopUpEdit from "../../components/popUpEdit/PopUpEdit";
 import { getUsuarioFields, getPlanLabel } from "../../components/popUpEdit/fields/usuarioFields";
-
+import PlanillaPdf from "../../components/convertidorPdf/PlanillaPdf";
 const AdminClientes = () => {
   const [usuarios, setUsuarios] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -45,20 +45,24 @@ const AdminClientes = () => {
       email: usuario.email,
       telefono: usuario.telefono,
       plan: getPlanLabel(usuario.tipoPlan),
-      estado: usuario.estado_pago ? 'Activo' : 'Inactivo'
+      estado: usuario.estado_pago ? 'Activo' : 'Inactivo',
+      ficha: usuario?.ficha?.id_ficha
+        ? <PlanillaPdf ficha={usuario.ficha} />
+        : "Sin ficha",
+
     }));
   };
 
   // Filtrar datos segun el termino de busqueda
   const datosFiltrados = useMemo(() => {
     const datosTransformados = transformarDatos(usuarios);
-    
+
     if (!searchTerm.trim()) {
       return datosTransformados;
     }
 
     const termino = searchTerm.toLowerCase().trim();
-    
+
     return datosTransformados.filter(item => {
       // Buscar en todos los campos de la tabla
       return Object.values(item).some(value => {
@@ -70,28 +74,29 @@ const AdminClientes = () => {
 
   const data = datosFiltrados;
 
-    const columns = [
-        { key: 'id', label: 'ID', sortable: true},
-        { key: 'nombre', label: 'Nombre', sortable: true},
-        { key: 'apellido', label: 'Apellido', sortable: true},
-        { key: 'email', label: 'Email', sortable: true},
-        { key: 'telefono', label: 'Teléfono', sortable: false},
-        { key: 'plan', label: 'Plan', sortable: true, clickable: true },
-        { 
-            key: 'estado', 
-            label: 'Estado', 
-            sortable: true, 
-            render: (value) => {
-                let colorClass = '';
-                if (value === 'Activo') colorClass = 'status-activo';
-                else if (value === 'Inactivo') colorClass = 'status-inactivo';
-                else if (value === 'Pendiente') colorClass = 'status-pendiente';
-                
-                return <span className={`status-badge ${colorClass}`}>{value}</span>;
-            }
-        }
-    ];
-  
+  const columns = [
+    { key: 'id', label: 'ID', sortable: true },
+    { key: 'nombre', label: 'Nombre', sortable: true },
+    { key: 'apellido', label: 'Apellido', sortable: true },
+    { key: 'email', label: 'Email', sortable: true },
+    { key: 'telefono', label: 'Teléfono', sortable: false },
+    { key: 'plan', label: 'Plan', sortable: true, clickable: true },
+    { key: 'ficha', label: 'ficha', sortable: true },
+    {
+      key: 'estado',
+      label: 'Estado',
+      sortable: true,
+      render: (value) => {
+        let colorClass = '';
+        if (value === 'Activo') colorClass = 'status-activo';
+        else if (value === 'Inactivo') colorClass = 'status-inactivo';
+        else if (value === 'Pendiente') colorClass = 'status-pendiente';
+
+        return <span className={`status-badge ${colorClass}`}>{value}</span>;
+      }
+    }
+  ];
+
 
   const placeholder = 'cliente';
 
@@ -108,25 +113,25 @@ const AdminClientes = () => {
   // Funcion para limpiar datos antes de enviar al backend
   const limpiarDatosUsuario = (usuarioData, mode) => {
     const datosLimpios = { ...usuarioData };
-    
+
     // Eliminar campos que no deberian enviarse
     delete datosLimpios.id;
     delete datosLimpios.id_usuario;
     delete datosLimpios.ficha;
     delete datosLimpios.confirmPassword;
-    
+
     // En modo edit, eliminar password si esta vacio
     if (mode === 'edit' && (!datosLimpios.password || datosLimpios.password.trim() === '')) {
       delete datosLimpios.password;
     }
-    
+
     // Eliminar campos undefined o null
     Object.keys(datosLimpios).forEach(key => {
       if (datosLimpios[key] === undefined || datosLimpios[key] === null) {
         delete datosLimpios[key];
       }
     });
-    
+
     return datosLimpios;
   };
 
@@ -203,17 +208,17 @@ const AdminClientes = () => {
 
     try {
       await usuarioService.deleteUsuario(id);
-      
+
       // Recargar local despues de eliminar
-      setUsuarios(prevUsuarios => 
-        prevUsuarios.filter(usuario => 
+      setUsuarios(prevUsuarios =>
+        prevUsuarios.filter(usuario =>
           (usuario.id_usuario || usuario.id) !== id
         )
       );
-      
+
       // Recargar desde el servidor para asegurar consistencia
       await cargarUsuarios();
-      
+
       alert('Cliente eliminado exitosamente');
     } catch (err) {
       console.error("Error al eliminar usuario:", err);
@@ -237,19 +242,19 @@ const AdminClientes = () => {
             searchValue={searchTerm}
           />
           {error && (
-            <div className="error-message" style={{ 
-              padding: '10px', 
-              margin: '10px 0', 
-              backgroundColor: '#fee', 
-              color: '#c33', 
-              borderRadius: '4px' 
+            <div className="error-message" style={{
+              padding: '10px',
+              margin: '10px 0',
+              backgroundColor: '#fee',
+              color: '#c33',
+              borderRadius: '4px'
             }}>
               {error}
             </div>
           )}
-          <Tabla 
-            columns={columns} 
-            data={data} 
+          <Tabla
+            columns={columns}
+            data={data}
             loading={loading}
             onVer={handleVerDetalles}
             onEditar={handleEditar}
@@ -275,7 +280,7 @@ const AdminClientes = () => {
         mode="view"
         initialData={viewUsuario || {}}
         fields={camposUsuarioView}
-        onSubmit={() => {}} // No se usa en modo view
+        onSubmit={() => { }} // No se usa en modo view
         entityName="cliente"
         title="Detalles del Cliente"
       />

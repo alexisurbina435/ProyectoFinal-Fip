@@ -1,16 +1,20 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Semana } from './entities/semana.entity';
 import { SemanaDto } from './dto/semana.dto';
 import { CreateSemanaDto } from './dto/create.semana.dto';
 import { UpdateSemanaDto } from './dto/update.semana.dto';
+import { Rutina } from 'src/rutina/entities/rutina.entity';
 
 @Injectable()
 export class SemanaService {
   constructor(
     @InjectRepository(Semana)
     private SemanaRepository: Repository<Semana>,
+
+    @InjectRepository(Rutina)
+    private readonly rutinaRepository: Repository<Rutina>,
   ) {}
 
   async getAllSemana(): Promise<SemanaDto[]> {
@@ -27,7 +31,21 @@ export class SemanaService {
   }
 
   async postSemana(createSemanaDto: CreateSemanaDto): Promise<SemanaDto> {
-    const newSemana = this.SemanaRepository.create(createSemanaDto);
+    // Buscar la rutina para establecer la relación correctamente
+    const rutina = await this.rutinaRepository.findOne({
+      where: { id_rutina: createSemanaDto.id_rutina },
+    });
+
+    if (!rutina) {
+      throw new NotFoundException(`Rutina con id ${createSemanaDto.id_rutina} no encontrada`);
+    }
+
+    // Crear semana con la relación a rutina
+    const newSemana = this.SemanaRepository.create({
+      numero_semana: createSemanaDto.numero_semana,
+      rutina: rutina,
+    });
+
     const semana = await this.SemanaRepository.save(newSemana);
     return semana;
   }

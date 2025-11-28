@@ -1,0 +1,261 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  overflow: auto;
+}
+
+.modal-content {
+  background-color: var(--gris-osc, #1b1b1b);
+  border-radius: 10px;
+  padding: 30px;
+  max-width: 90%;
+  width: 800px;
+  max-height: 90vh;
+  overflow: auto;
+  border: 1px solid var(--naranja, #ff6a00);
+  position: relative;
+  color: var(--blanco, #fff);
+}
+
+.modal-crear-rutina {
+  width: 1000px;
+  max-width: 95%;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid var(--naranja, #ff6a00);
+}
+
+.modal-header h2 {
+  margin: 0;
+  color: var(--naranja, #ff6a00);
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  color: var(--blanco, #fff);
+  font-size: 28px;
+  cursor: pointer;
+  padding: 5px 10px;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+
+.modal-close:hover {
+  color: var(--naranja, #ff6a00);
+}
+
+.modal-step {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--blanco, #fff);
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #444;
+  border-radius: 6px;
+  background-color: #2a2a2a;
+  color: var(--blanco, #fff);
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--naranja, #ff6a00);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #444;
+}
+
+.btn-cancel,
+.btn-back {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.btn-cancel:hover,
+.btn-back:hover {
+  background-color: #5a6268;
+}
+
+.btn-next,
+.btn-save {
+  background-color: var(--naranja, #ff6a00);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.btn-next:hover,
+.btn-save:hover {
+  background-color: #ff8533;
+}
+
+.btn-next:disabled,
+.btn-save:disabled {
+  background-color: #666;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.semana-container,
+.dia-container {
+  transition: transform 0.2s;
+}
+
+.semana-container:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.semana-container h4,
+.semana-ejercicios h4,
+.dia-container strong,
+.dia-ejercicios strong {
+  color: #222;
+}
+
+.ejercicio-item {
+  transition: background-color 0.2s;
+}
+
+.ejercicio-item:hover {
+  background-color: #e9ecef !important;
+}
+
+.info-box {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Estilos para formulario de crear ejercicio */
+.form-crear-ejercicio {
+  color: #222 !important;
+}
+
+.form-crear-ejercicio h4 {
+  color: #222 !important;
+}
+
+.form-crear-ejercicio label {
+  color: #222 !important;
+}
+
+.form-crear-ejercicio input,
+.form-crear-ejercicio textarea {
+  background-color: #fff !important;
+  color: #222 !important;
+  border: 1px solid #ccc !important;
+}
+
+.form-crear-ejercicio input::placeholder,
+.form-crear-ejercicio textarea::placeholder {
+  color: #999 !important;
+}
+
+/* Estilos para labels dentro de ejercicio-item (series, repeticiones, peso) */
+.ejercicio-item label {
+  color: #222 !important;
+}
+
+.ejercicio-item input {
+  background-color: #fff !important;
+  color: #222 !important;
+  border: 1px solid #ccc !important;
+}
+
+.ejercicio-item span {
+  color: #222 !important;
+}
+
+/* Scrollbar personalizado */
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: #2a2a2a;
+  border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background: var(--naranja, #ff6a00);
+  border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background: #ff8533;
+}
+

@@ -9,5 +9,6 @@ import { SemanaService } from './semana.service';
   imports: [TypeOrmModule.forFeature([Semana, Rutina])],
   providers: [SemanaService],
   controllers: [SemanaController],
+  exports: [SemanaService], // Exportar para usar en RutinaService
 })
 export class SemanaModule {}

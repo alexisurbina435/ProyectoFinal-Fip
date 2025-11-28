@@ -33,14 +33,14 @@
     overflow: hidden;
 }
 
-.standar {
+.standard {
     background-image: url('../../src/assets/images/standar2.jpg');
     background-size: cover;
     background-position: center;
     overflow: hidden;
 }
 
-.basico {
+.basic {
     /* background-image: url('../../assets/basico.jpg'); */
     background-image: url('../../src/assets/images/basico2.jpg');
     background-size: cover;

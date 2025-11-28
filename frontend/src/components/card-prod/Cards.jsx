@@ -30,7 +30,7 @@ return (
         {productos.length === 0 ? <p className="loading-prod">Cargando...</p> : 
         <div className="cards-container" id="productosContainer">
         {productos.map((prod)=>(
-            <CardPro key={prod.id_producto} nombre={prod.nombre} precio={prod.precio} stock={prod.stock} descripcion={prod.descripcion} img={prod.imagen}></CardPro>
+            <CardPro key={prod.id_producto} id={prod.id_producto} nombre={prod.nombre} precio={prod.precio} stock={prod.stock} descripcion={prod.descripcion} img={prod.imagen}></CardPro>
         ))}
         </div>
         }

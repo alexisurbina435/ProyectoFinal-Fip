@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Layout from './components/Layout.jsx';
-import Index from './pages/index/index.jsx';
+import Index from './pages/index/Index.jsx';
 import Contacto from './pages/contacto/Contacto.jsx';
 import SeccionBlog from './pages/pageBlog/SeccionBlog.jsx';
 import Productos from './pages/productos/Productos.jsx';
@@ -10,7 +10,7 @@ import AdminClientes from './pages/admin/AdminClientes.jsx';
 import AdminRutinas from './pages/admin/AdminRutinas.jsx';
 import AdminEjercicios from './pages/admin/AdminEjercicios.jsx';
 import AdminTienda from './pages/admin/AdminTienda.jsx';
-import AdminPerfil from './pages/admin/AdminPerfil.jsx';
+
 import Inscribite from './pages/inscripcion/Inscribite.jsx';
 import CompraDirecta from './pages/compraDirecta/CompraDirecta.jsx';
 import Carrito from './pages/carrito/Carrito.jsx';
@@ -53,7 +53,6 @@ export default function App() {
         { path: '/administrar-rutinas', element: (<Layout><AdminRutinas /></Layout>), },
         { path: '/administrar-ejercicios', element: (<Layout><AdminEjercicios /></Layout>), },
         { path: '/administrar-tienda', element: (<Layout><AdminTienda /></Layout>), },
-        { path: '/administrar-perfil', element: (<Layout><AdminPerfil /></Layout>), },
         { path: '/adminContacto', element: (<Layout><AdminContacto /></Layout>), },
       ],
     },

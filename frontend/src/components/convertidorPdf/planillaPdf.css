@@ -1,0 +1,14 @@
+.pdf-maker{
+  padding: 0.5rem 0.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: var(--naranja);
+  color: var(--blanco);
+}
+
+.pdf-maker:hover{
+  background-color: #c14a09;
+}
