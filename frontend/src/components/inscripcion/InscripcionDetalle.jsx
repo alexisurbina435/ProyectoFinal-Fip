@@ -3,7 +3,7 @@ import CardInscripcion from "../card-inscripcion/CardInscripcion";
 import MetodoPago from "../metodoPago/MetodoPago";
 import { useLocation } from "react-router-dom";
 import "./inscripcionDetalle.css";
-
+import BtnInscripcionDetalle from "./BtnInscripcionDetalle"
 import SuscripcionButton from "../botonSuscripcion/SuscripcionButton";
 
 
@@ -21,7 +21,7 @@ export default function inscripcionDetalle() {
     <>
       <section className="contenido">
         <h1 className="titulo">Has elegido {plan}</h1>
-        <div class="contenedor-inscripcion">
+        <div className="contenedor-inscripcion">
           <CardInscripcion plan={plan} precio={precio} beneficio={beneficio} mostrarBotonInicial={false}
             clase={
               plan.toLowerCase().includes("basic") ? "basic" :
@@ -33,10 +33,9 @@ export default function inscripcionDetalle() {
 
       </section>
       <section className="finalizar-compra">
-        <div className="botones-inscrip">
+        <div className="botones">
 
-          <button type="submit"
-            className="btn-detalle-compra">Detalle de Compra</button>
+          <BtnInscripcionDetalle plan={plan} precio={precio} beneficio={beneficio}/>
 
           <SuscripcionButton clase="btn-continuar-inscripcion" plan={plan} />
 

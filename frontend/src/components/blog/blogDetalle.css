@@ -9,7 +9,8 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  width: 70%;
+  /* width: 70%; */
+  width: 40rem;
   justify-items: center;
   align-items: stretch;
   margin: 12px;
@@ -24,7 +25,8 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   white-space: normal;
   border-radius: 12px;
-  height: 100rem;
+  height: 100%;
+  width: 100%;
   text-align: center;
   justify-content: center;
   backdrop-filter: blur(6px);
@@ -49,7 +51,7 @@ h3 {
   height: 100rem;
   text-align: center;
   justify-content: center;
-
+  width: 100%;
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 
@@ -67,6 +69,7 @@ h3 {
   white-space: normal;
   border-radius: 12px;
   height: 100rem;
+  width: 100%;
   text-align: center;
   justify-content: center;
   backdrop-filter: blur(6px);
@@ -77,16 +80,31 @@ h3 {
   transition: all 0.3s ease;
 }
 
-.title {
-  font-size: 10vh;
-  color: #ee5f0d;
+.title-blog {
+  font-size: 3rem;
+  color: var(--naranja);
+  text-align: center;
   margin: 2rem;
 }
 .imagen-detalle {
   object-fit: cover;
-  max-width: 70vh;
+  max-width: 40rem;
   height: auto;
   display: block;
   margin: 1 auto;
   border-radius: 150px;
+}
+
+@media(max-width: 680px ){
+
+  .contenedor {
+    width: 100%;
+  }
+  .title-blog{
+    font-size: 2rem;
+  }
+  .imagen-detalle {
+    width: 100%;
+  }
+
 }

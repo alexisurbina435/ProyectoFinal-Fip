@@ -64,3 +64,9 @@
     color: var(--naranja);
     font-size: 1.7rem;
 }
+
+@media(max-width: 500px) {
+    .contacto{
+        width: 16rem;
+    }
+}

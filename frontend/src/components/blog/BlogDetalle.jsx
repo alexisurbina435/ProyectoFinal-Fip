@@ -13,7 +13,7 @@ export default function BlogDetalle() {
 
   return (
     <div className="element-card">
-      <h1 className="title">{titulo}</h1>
+      <h1 className="title-blog">{titulo}</h1>
 
       <img src={img} alt={titulo} className="imagen-detalle" />
 

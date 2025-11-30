@@ -12,6 +12,7 @@ import { Venta } from 'src/venta/entities/venta.entity';
 import { Blog } from 'src/blog/entities/blog.entity';
 import { FichaSalud } from 'src/ficha-salud/entities/ficha-salud.entity';
 import { Suscripcion } from 'src/suscripcion/entities/suscripcion.entity';
+import { Carrito } from 'src/carrito/entities/carrito.entity';
 
 export enum Rol {
   USUARIO = 'usuario',
@@ -35,10 +36,10 @@ export class Usuario {
   @Column({ type: 'varchar', length: 45 })
   apellido: string;
 
-  @Column({ type: 'varchar', length: 255, unique: true})
+  @Column({ type: 'varchar', length: 255, unique: true })
   email: string;
 
-  @Column({ type: 'varchar', length: 20})
+  @Column({ type: 'varchar', length: 20 })
   telefono: string;
 
   @Column({ type: 'varchar', length: 300 })
@@ -85,4 +86,6 @@ export class Usuario {
   @OneToMany(() => Suscripcion, (suscripcion) => suscripcion.usuario)
   suscripciones: Suscripcion[];
 
+  @OneToOne(() => Carrito, carrito => carrito.usuario)
+  carrito: Carrito;
 }

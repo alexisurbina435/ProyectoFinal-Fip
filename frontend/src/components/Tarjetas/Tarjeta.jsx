@@ -6,9 +6,9 @@ import Icons from "../iconos/Icons";
 function Tarjeta({ imag, alter }) {
     return (
         <div>
-            <li>
+            {/* <li> */}
                 <Icons src={imag} alt={alter} />
-            </li>
+            {/* </li> */}
             
         </div>
 

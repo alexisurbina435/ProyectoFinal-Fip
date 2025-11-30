@@ -1,0 +1,198 @@
+/*
+.modal-contenedorRegistro {
+ background: #fff;
+  padding: 10px;
+  border-radius: 12px;
+  width: 50%;
+  height: 55%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  align-items: center;
+}
+
+.modal-registro {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: white;
+  font-size: 18px;
+  cursor: pointer;
+}
+.modal-registrarse{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  background: #fff;
+  border-radius: 12px;
+  min-width: 350px;
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+.modal-registrarse-contacto{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  background: #fff;
+  border-radius: 12px;
+  min-width: 350px;
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+.datos-registro{
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
+  align-items: stretch;
+}
+
+.telefono-contacto{
+font-family:revert;
+    color: black;
+    font-size: 20px;
+}
+.nombre{
+
+width: 50%;
+
+}
+.nombre input{
+    width: 90%;
+    height: 30px;
+    justify-content: center;
+    border: none;
+    border-bottom: 2px solid var(--naranja);
+    outline: none;
+}
+.nombre input:focus{
+  border-bottom-color: #ba8762; /* color al hacer focus 
+}
+.apellido{
+
+width: 50%;
+}
+.apellido input{
+    width: 100%;
+    height: 30px;
+    justify-content: center;
+    border: none;
+    border-bottom: 2px solid var(--naranja);
+    outline: none;
+}
+.apellido input:focus{
+  border-bottom-color: #ba8762; /* color al hacer focus 
+}
+.email-registro{
+    width: 100%;
+    height: 30px;
+  
+  
+}
+.email-registro input{
+  width: 100%;
+    height: 50px;
+    justify-content: center;
+    border: none;
+    border-bottom: 2px solid var(--naranja);
+    outline: none;
+}
+.email-registro input:focus{
+  border-bottom-color: #ba8762; /* color al hacer focus 
+}
+
+.btn-registrar {  
+  width: 40%;
+  padding: 12px;
+  background: #ccc;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+}
+h2{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+p{
+color: var(--naranja);
+}
+.codigo-area{
+  width: 30%;
+}
+.codigo-area input{
+  width: 100%;
+    height: 30px;
+    justify-content: center;
+    border: none;
+    border-bottom: 2px solid var(--naranja);
+    outline: none;
+}
+.codigo-area input:focus{
+  border-bottom-color: #ba8762; /* color al hacer focus 
+}
+.numero-tel{
+  width: 50%;
+}
+.numero-tel input{
+  width: 100%;
+    height: 30px;
+    justify-content: center;
+    border: none;
+    border-bottom: 2px solid var(--naranja);
+    outline: none;
+}
+.numero-tel input:focus{
+  border-bottom-color: #ba8762; /* color al hacer focus 
+}
+.contraseña{
+  width: 50%;
+}
+.contraseña input{
+  width: 90%;
+    height: 30px;
+    justify-content: center;
+    border: none;
+    border-bottom: 2px solid var(--naranja);
+    outline: none;
+}
+.contraseña input:focus{
+  border-bottom-color: #ba8762; /* color al hacer focus 
+}
+.repetir-contraseña{
+  width: 50%;
+  
+}
+.repetir-contraseña input{
+  width: 100%;
+    height: 30px;
+    justify-content: center;
+    border: none;
+    border-bottom: 2px solid var(--naranja);
+    outline: none;
+    
+}
+.repetir-contraseña input:focus{
+  border-bottom-color: #ba8762; /* color al hacer focus 
+}
+*/

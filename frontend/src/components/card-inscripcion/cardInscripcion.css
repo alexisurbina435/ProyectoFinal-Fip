@@ -73,7 +73,7 @@
 @media (max-width: 1024px) {
     .contenedor-inscripcion {
         width: 340px;
-        height: 500px;
+        height: 470px;
     }
 
     .plan .descripcion{
@@ -90,4 +90,42 @@
         height: 2rem;
         font-size: 1rem;
     }
+}
+
+@media(max-width: 550px){
+    .contenedor-inscripcion {
+    /* ancho anterior 400px */
+        width: 300px;
+        height: 400px;
+    }
+
+     .plan .descripcion{
+        font-size: 2rem;
+    }
+    .plan .precio{
+        font-size: 1.7rem;
+    }
+    .beneficios {
+        font-size: 1.3rem;
+    }
+    
+}
+
+@media(max-width: 360px){
+    .contenedor-inscripcion {
+    /* ancho anterior 400px */
+        width: 280px;
+        height: 400px;
+    }
+
+     .plan .descripcion{
+        font-size: 2rem;
+    }
+    .plan .precio{
+        font-size: 1.7rem;
+    }
+    .beneficios {
+        font-size: 1.3rem;
+    }
+    
 }

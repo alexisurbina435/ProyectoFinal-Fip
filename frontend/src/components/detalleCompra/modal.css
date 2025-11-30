@@ -1,0 +1,105 @@
+.modal-overlay {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 99;
+  justify-content: flex-end;  /* empuja el modal hacia la derecha */
+  align-items: stretch;
+}
+p{
+    font-family: 'Courier New', Courier, monospace;
+    color: black;
+    font-size: 18px;
+    text-align: center;
+}
+
+.indicador-pago{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  width: 25rem;
+  height: 40px;
+  transition: all 0.4s ease-in-out;
+  border: var(--naranja) 1px solid;
+  color: var(--blanco);
+  background-color: var(--naranja);
+
+}
+
+.titulo-modal{
+    font-family:fangsong;
+    color: black;
+    font-size: 30px;
+
+}
+
+
+.plan-modal{
+    display: flex;
+    flex-direction: column;
+    width: 25rem;
+    height: 30px;
+    justify-content: center;
+    margin: 20px;
+    padding: 12px;
+    border: none;
+    border-bottom: 2px solid var(--naranja);
+    outline: none; 
+   
+}
+
+.precio-plan{
+    font-family: 'Courier New', Courier, monospace;
+    color: black;
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.modal-content-detalle-compra {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  width: 450px;          /* tamaño del panel */
+  height: 90vh;         /* ocupa toda la altura */
+  padding: 20px;
+  border-left: 1px solid #ddd;
+  position: fixed;
+  border-radius: 10px;
+
+  border: 1px solid var(--naranja, #ff6a00);
+  color: var(--blanco, #fff);
+
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: white;
+  font-size: 25px;
+  cursor: pointer;
+}
+.mostrar-beneficios ul li {
+  color: black;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.icono-check {
+  color: #2ecc71; /* Verde */
+  font-size: 1.3rem;
+}

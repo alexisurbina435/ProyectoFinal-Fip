@@ -1,4 +1,3 @@
-
 .checkboxes {
     width: 20rem;
 }
@@ -51,5 +50,9 @@
 @media(max-width: 760px) {
     .checkbox-group {
         white-space: wrap;
+    }
+
+    .checkboxes {
+        width: 18rem;
     }
 }

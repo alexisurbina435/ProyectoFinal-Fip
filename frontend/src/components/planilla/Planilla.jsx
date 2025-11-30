@@ -16,26 +16,31 @@ import Swal from 'sweetalert2';
 import { useNavigate } from "react-router-dom";
 export default function Planilla() {
 
-    const navigate = useNavigate ();
+    const navigate = useNavigate();
 
     const { register, handleSubmit, formState: { errors }, watch, reset } = useForm();
 
     const [data, setData] = useState([]);
     const [usuario, setUsuario] = useState([]);
-
+    const [isEditing, setIsEditing] = useState(false);
     const fetchPlanilla = async () => {
         try {
             const usuario = await usuarioService.getUsuarioById();
             // const planilla = await FichaSaludService.getFichaSaludById();
             setUsuario(usuario.ficha);
+
+            if (usuario?.ficha) {
+                reset(usuario?.ficha);
+                setIsEditing(false);
+            } else {
+                setIsEditing(true);
+            }
         } catch (error) {
             console.log(error);
+            setIsEditing(true);
         }
     }
-    useEffect(() => {
-        fetchPlanilla();
-        console.log(usuario);
-    }, [])
+
 
     const enviarPlanilla = async (fichaSaludData) => {
         try {
@@ -46,27 +51,57 @@ export default function Planilla() {
             }
             console.log(ficha);
 
-            const postPlanilla = await FichaSaludService.createFichaSalud(ficha);
+            if (usuario && usuario.ficha) {
+                const postPlanilla = await FichaSaludService.updateFichaSalud(usuario.ficha.id_ficha, ficha);
+                setData(postPlanilla);
+                Swal.fire({
+                    title: 'Formulario editado!',
+                    text: 'Tu planilla ha sido editada correctamente.',
+                    icon: 'success',
+                    confirmButtonText: 'Aceptar'
+                }).then(() => {
+                    reset();
+                    navigate('/perfil');
+                });
+            } else {
+                const postPlanilla = await FichaSaludService.createFichaSalud(ficha);
 
-            setData(postPlanilla);
-            Swal.fire({
-                title: 'Formulario completado!',
-                text: 'Tu planilla ha sido enviada correctamente.',
-                icon: 'success',
-                confirmButtonText: 'Aceptar'
-            }).then(() => {
-                reset();
-                navigate('/perfil');
-            });
+                setData(postPlanilla);
+
+                Swal.fire({
+                    title: 'Formulario completado!',
+                    text: 'Tu planilla ha sido enviada correctamente.',
+                    icon: 'success',
+                    confirmButtonText: 'Aceptar'
+                }).then(() => {
+                    reset();
+                    navigate('/perfil');
+                });
+            }
         } catch (error) {
             console.log(error);
         }
 
     }
 
+    useEffect(() => {
+        fetchPlanilla();
+        console.log(usuario);
+    }, [])
+
+    useEffect(() => {
+        if (usuario) {
+            reset({
+                condicion: usuario?.condicion,
+                medicacion: usuario?.medicacion,
+                expEntrenando: usuario?.expEntrenando,
+            });
+        }
+
+    }, [usuario, reset]);
+
     const onSubmit = handleSubmit(async (data) => {
         enviarPlanilla(data)
-        // favDialog.showModal();
     })
 
 
@@ -79,15 +114,14 @@ export default function Planilla() {
                 <div className="title">
                     <h2>Planilla de salud</h2>
                 </div>
-                <form action="" className="formulario" id="formulario" onSubmit={onSubmit}>
+                <form action="" className="formulario" id="formulario" >
                     <fieldset className="datos-personales">
                         <legend>Datos Personales</legend>
 
                         <div className="input-container">
                             <LabelPlanilla htmlFor="dni" children="DNI" />
                             <div className="inputs">
-                                {usuario?.dni ? <InputPlanilla type="number" min="0" id="dni" defaultValue={usuario.dni} disabled /> : 
-                                <InputPlanilla type="number" min="0" id="dni" placeholder="Dni" {...register("dni", {
+                                <InputPlanilla type="number" min="0" id="dni" placeholder="Dni" defaultValue={usuario?.dni} disabled={!isEditing} {...register("dni", {
                                     required: {
                                         value: true,
                                         message: "El DNI es obligatorio"
@@ -105,7 +139,7 @@ export default function Planilla() {
                                         message: "El DNI solo puede contener numeros"
                                     }
                                 })} />
-                                }
+
                             </div>
                             {errors.dni && <span className="error">{errors.dni.message}</span>}
                         </div>
@@ -113,8 +147,8 @@ export default function Planilla() {
                         <div className="input-container">
                             <LabelPlanilla htmlFor="fechaNacimiento" children="Fecha de nacimiento" />
                             <div className="inputs">
-                                {usuario?.fechaNacimiento ? <InputPlanilla type="date" id="fechaNacimiento" defaultValue={usuario.fechaNacimiento} disabled /> :
-                                <InputPlanilla type="date" id="fechaNacimiento" {...register("fechaNacimiento", {
+
+                                <InputPlanilla type="date" id="fechaNacimiento" defaultValue={usuario?.fechaNacimiento} disabled={!isEditing} {...register("fechaNacimiento", {
                                     required: {
                                         value: true,
                                         message: "La fecha de nacimiento es obligatoria"
@@ -122,12 +156,9 @@ export default function Planilla() {
                                         value: "1920-01-01",
                                         message: "La fecha de nacimiento debe ser posterior a 1920-01-01"
                                     },
-                                    // max: {
-                                    //     value: "2018-01-01",
-                                    //     message: "La fecha de nacimiento debe ser anterior a 2018-01-01"
-                                    // }
 
-                                })} />}
+                                })} />
+
                             </div>
                             {errors.fechaNacimiento && <span className="error">{errors.fechaNacimiento.message}</span>}
                         </div>
@@ -135,8 +166,8 @@ export default function Planilla() {
                         <div className="input-container">
                             <LabelPlanilla htmlFor="direccion" children="Dirección" />
                             <div className="inputs">
-                                {usuario?.direccion ? <InputPlanilla type="text" id="direccion" defaultValue={usuario.direccion} disabled /> :
-                                <InputPlanilla type="text" id="direccion" placeholder="Dirección" {...register("direccion",
+
+                                <InputPlanilla type="text" id="direccion" placeholder="Dirección" defaultValue={usuario?.direccion} disabled={!isEditing} {...register("direccion",
                                     {
                                         required: {
                                             value: true,
@@ -146,7 +177,8 @@ export default function Planilla() {
                                             value: 3,
                                             message: "La direccion debe tener al menos 3 caracteres"
                                         },
-                                    })} />}
+                                    })} />
+
                             </div>
                             {errors.direccion && <span className="error">{errors.direccion.message}</span>}
                         </div>
@@ -154,8 +186,8 @@ export default function Planilla() {
                         <div className="input-container">
                             <LabelPlanilla htmlFor="ciudad" children="Ciudad" />
                             <div className="inputs">
-                                {usuario?.ciudad ? <InputPlanilla type="text" id="ciudad" defaultValue={usuario.ciudad} disabled /> :
-                                <InputPlanilla type="text" id="ciudad" placeholder="Ciudad" {...register("ciudad",
+
+                                <InputPlanilla type="text" id="ciudad" placeholder="Ciudad" defaultValue={usuario?.ciudad} disabled={!isEditing} {...register("ciudad",
                                     {
                                         required: {
                                             value: true,
@@ -165,7 +197,8 @@ export default function Planilla() {
                                             value: 3,
                                             message: "La ciudad debe tener al menos 3 caracteres"
                                         },
-                                    })} />}
+                                    })} />
+
                             </div>
                             {errors.ciudad && <span className="error">{errors.ciudad.message}</span>}
                         </div>
@@ -173,8 +206,8 @@ export default function Planilla() {
                         <div className="input-container">
                             <LabelPlanilla htmlFor="provincia" children="Provincia" />
                             <div className="inputs">
-                                {usuario?.provincia ? <InputPlanilla type="text" id="provincia" defaultValue={usuario.provincia} disabled /> :
-                                <InputPlanilla type="text" id="provincia" placeholder="Provincia" {...register("provincia",
+
+                                <InputPlanilla type="text" id="provincia" placeholder="Provincia" defaultValue={usuario?.provincia} disabled={!isEditing} {...register("provincia",
                                     {
                                         required: {
                                             value: true,
@@ -184,7 +217,8 @@ export default function Planilla() {
                                             value: 3,
                                             message: "La provincia debe tener al menos 3 caracteres"
                                         },
-                                    })} />}
+                                    })} />
+
                             </div>
                             {errors.provincia && <span className="error">{errors.provincia.message}</span>}
                         </div>
@@ -192,8 +226,8 @@ export default function Planilla() {
                         <div className="input-container">
                             <LabelPlanilla htmlFor="codigoPostal" children="Código Postal" />
                             <div className="inputs">
-                                {usuario?.codigoPostal ? <InputPlanilla type="number" id="codigoPostal" defaultValue={usuario.codigoPostal} disabled /> :
-                                <InputPlanilla type="number" min="0" id="codigoPostal" placeholder="Codigo Postal" {...register("codigoPostal",
+
+                                <InputPlanilla type="number" min="0" id="codigoPostal" placeholder="Codigo Postal" defaultValue={usuario?.codigoPostal} disabled={!isEditing} {...register("codigoPostal",
                                     {
                                         required: {
                                             value: true,
@@ -207,7 +241,8 @@ export default function Planilla() {
                                             value: 6,
                                             message: "El código postal debe tener maximo 6 caracteres"
                                         },
-                                    })} />}
+                                    })} />
+
                             </div>
                             {errors.codigoPostal && <span className="error">{errors.codigoPostal.message}</span>}
                         </div>
@@ -215,8 +250,8 @@ export default function Planilla() {
                         <div className="input-container">
                             <LabelPlanilla htmlFor="pais" children="País" />
                             <div className="inputs">
-                                {usuario?.pais ? <InputPlanilla type="text" id="pais" defaultValue={usuario.pais} disabled /> :
-                                <InputPlanilla type="text" id="pais" placeholder="País" {...register("pais",
+
+                                <InputPlanilla type="text" id="pais" placeholder="País" defaultValue={usuario?.pais} disabled={!isEditing} {...register("pais",
                                     {
                                         required: {
                                             value: true,
@@ -226,29 +261,32 @@ export default function Planilla() {
                                             value: 3,
                                             message: "El pais debe tener al menos 3 caracteres"
                                         },
-                                    })} />}
+                                    })} />
+
                             </div>
                             {errors.pais && <span className="error">{errors.pais.message}</span>}
                         </div>
 
                         <div className="input-container">
                             <label htmlFor="sexo">Sexo</label>
-                            {usuario?.sexo ? <select id="sexo" className="form-input" disabled><option value={usuario.sexo}>{usuario.sexo}</option></select> :
-                            <select id="sexo" className="form-input" {...register("sexo")}>
+
+                            <select id="sexo" className="form-input" defaultValue={usuario?.sexo} disabled={!isEditing} {...register("sexo")}>
                                 <option value="masculino">Masculino</option>
                                 <option value="femenino">Femenino</option>
                                 <option value="otro">Sin especificar</option>
-                            </select>}
+                            </select>
+
                         </div>
 
                         <div className="input-container">
                             <label htmlFor="clase">Tipo de clases</label>
-                            {usuario?.clase ? <select id="clase" className="form-input" disabled><option value={usuario.clase}>{usuario.clase}</option></select> :
-                            <select id="clase" className="form-input" {...register("clase")}>
+
+                            <select id="clase" className="form-input" defaultValue={usuario?.clase} disabled={!isEditing} {...register("clase")}>
                                 <option value="presencial">Presencial</option>
                                 <option value="online">Online</option>
                                 <option value="mixto">Mixto</option>
-                            </select>}
+                            </select>
+
                         </div>
 
 
@@ -260,30 +298,27 @@ export default function Planilla() {
                             <div className='contenedor-checkboxs'>
                                 <div className="checkboxs">
                                     <LabelRadio htmlFor="condicion" children="¿PADECE ALGUNA CONDICIÓN MEDICA?" />
-                                    {usuario?.condicion ? <InputRadio value="si" id="si-condicion" checked={usuario.condicion === "si"} />:
-                                    <InputRadio value="si" id="si-condicion" {...register("condicion",
+
+                                    <InputRadio value="si" id="si-condicion" disabled={!isEditing}  {...register("condicion",
                                         {
                                             required: "Debe seleccionar una opción",
-                                            setValueAs: (v) => v === "si"
-
                                         }
-                                    )} />}SI
-                                    {usuario?.condicion ? <InputRadio value="no" id="no-condicion" checked={usuario.condicion === "no"} />:
-                                    <InputRadio value="no" id="no-condicion"  {...register("condicion",
+                                    )} />
+                                    SI
+
+                                    <InputRadio value="no" id="no-condicion" disabled={!isEditing}  {...register("condicion",
                                         {
                                             required: "Debe seleccionar una opción",
-                                            setValueAs: (v) => v === "si"
-
                                         }
-                                    )} />}NO
+                                    )} />NO
                                 </div>
                                 {errors.condicion && <span className="error">{errors.condicion.message}</span>}
                             </div>
                             <div className="input-contenedor">
                                 <LabelPlanilla htmlFor="lesion" children="SI ES AFIRMATIVO ESPECIFIQUE:" />
                                 <div className="textarea-form">
-                                    {usuario?.lesion ? <Textarea id="lesion" defaultValue={usuario.lesion} disabled />:
-                                    <Textarea id="lesion" placeholder="Especifique la condicion" disabled={watch("condicion") === "no"} {...register("lesion",
+
+                                    <Textarea id="lesion" placeholder="Especifique la condicion" defaultValue={usuario?.lesion}  {...register("lesion",
                                         {
                                             validate: () => {
                                                 if (watch("condicion") === "si" && watch("lesion") === "") {
@@ -291,13 +326,16 @@ export default function Planilla() {
                                                 }
                                                 if (watch("condicion") === "si" && watch("lesion").length < 10) {
                                                     return "Debe tener al menos 10 caracteres"
-
+                                                }
+                                                if (watch("condicion") === "no" && watch("lesion").length > 0) {
+                                                    return "El campo debe estar vacio"
                                                 }
                                             },
 
 
                                         }
-                                    )} />}
+                                    )} />
+                                    {/* } */}
                                 </div>
                                 {errors.lesion && <span className="error">{errors.lesion.message}</span>}
                             </div>
@@ -307,28 +345,28 @@ export default function Planilla() {
                             <div className='contenedor-checkboxs'>
                                 <div className="checkboxs">
                                     <LabelRadio htmlFor="medicacion" children="¿ESTA TOMANDO ALGUNA MEDICACIÓN?" />
-                                    {usuario?.medicacion ? <InputRadio value="si" id="si-medicacion" checked={usuario.medicacion === "si"} /> :
-                                    <InputRadio value="si" id="si-medicacion" {...register("medicacion",
+
+                                    <InputRadio value="si" id="si-medicacion" disabled={!isEditing}  {...register("medicacion",
                                         {
                                             required: "Debe seleccionar una opción",
-                                            setValueAs: (v) => v === "si"
+
                                         }
-                                    )} />}SI
-                                    {usuario?.medicacion ? <InputRadio value="no" id="no-medicacion" checked={usuario.medicacion === "no"} /> :
-                                    <InputRadio value="no" id="no-medicacion" {...register("medicacion",
+                                    )} />SI
+
+                                    <InputRadio value="no" id="no-medicacion" disabled={!isEditing}  {...register("medicacion",
                                         {
                                             required: "Debe seleccionar una opción",
-                                            setValueAs: (v) => v === "si"
+
                                         }
-                                    )} />}NO
+                                    )} />NO
                                 </div>
                                 {errors.medicacion && <span className="error">{errors.medicacion.message}</span>}
                             </div>
                             <div className="input-contenedor">
                                 <LabelPlanilla htmlFor="medicamento" children="SI ES AFIRMATIVO ESPECIFIQUE:" />
                                 <div className="textarea-form">
-                                    {usuario?.medicamento ? <Textarea id="medicamento" defaultValue={usuario.medicamento} disabled />:
-                                    <Textarea id="medicamento" placeholder="Especifique la condicion: " disabled={watch("medicacion") === "no"} {...register("medicamento",
+
+                                    <Textarea id="medicamento" placeholder="Especifique la condicion: " defaultValue={usuario?.medicamento} {...register("medicamento",
                                         {
                                             validate: () => {
                                                 if (watch("medicacion") === "si" && watch("medicamento") === "") {
@@ -336,11 +374,14 @@ export default function Planilla() {
                                                 }
                                                 if (watch("medicacion") === "si" && watch("medicamento").length < 10) {
                                                     return "Debe tener al menos 10 caracteres"
-
+                                                }
+                                                if (watch("medicacion") === "no" && watch("medicamento").length > 0) {
+                                                    return "El campo debe estar vacio"
                                                 }
                                             },
                                         }
-                                    )} />}
+                                    )} />
+
                                 </div>
                                 {errors.medicamento && <span className="error">{errors.medicamento.message}</span>}
                             </div>
@@ -350,28 +391,28 @@ export default function Planilla() {
                             <div className='contenedor-checkboxs'>
                                 <div className="checkboxs">
                                     <LabelRadio htmlFor="experiencia" children="¿TIENE EXPERIENCIA ENTRENANDO?" />
-                                    {usuario?.expEntrenando ? <InputRadio value="si" id="si-entreno" checked={usuario.expEntrenando === "si"} /> :
-                                    <InputRadio value="si" id="si-entreno" {...register("expEntrenando",
+
+                                    <InputRadio value="si" id="si-entreno" disabled={!isEditing} {...register("expEntrenando",
                                         {
                                             required: "Debe seleccionar una opción",
-                                            setValueAs: (v) => v === "si"
+
                                         }
-                                    )} />}SI
-                                    {usuario?.expEntrenando ? <InputRadio value="no" id="no-entreno" checked={usuario.expEntrenando === "no"} /> :
-                                    <InputRadio value="no" id="no-entreno" {...register("expEntrenando",
+                                    )} />SI
+                                   
+                                    <InputRadio value="no" id="no-entreno" disabled={!isEditing} {...register("expEntrenando",
                                         {
                                             required: "Debe seleccionar una opción",
-                                            setValueAs: (v) => v === "si"
+
                                         }
-                                    )} />}NO
+                                    )} />NO
                                 </div>
                                 {errors.expEntrenando && <span className="error">{errors.expEntrenando.message}</span>}
                             </div>
                             <div className="input-contenedor">
                                 <LabelPlanilla htmlFor="objetivo" children="OBJETIVOS:" />
                                 <div className="textarea-form">
-                                    {usuario?.objetivos ? <Textarea id="objetivo" defaultValue={usuario.objetivos} disabled />:
-                                    <Textarea id="objetivo" placeholder="Objetivos" {...register("objetivos",
+
+                                    <Textarea id="objetivo" placeholder="Objetivos" defaultValue={usuario?.objetivos} disabled={!isEditing} {...register("objetivos",
                                         {
                                             required: {
                                                 value: true,
@@ -382,16 +423,27 @@ export default function Planilla() {
                                                 message: "Debe tener al menos 10 caracteres"
                                             }
                                         }
-                                    )} />}
+                                    )} />
+
                                 </div>
                                 {errors.objetivos && <span className="error">{errors.objetivos.message}</span>}
                             </div>
                         </div>
 
                     </fieldset>
-                    <BotonForm type="submit" id="showPopup"  >Enviar</BotonForm>
+
+                    <BotonForm type="button" onClick={() => {
+                            if (!isEditing) {
+                                setIsEditing(true);
+                            } else {
+                                handleSubmit(onSubmit)();
+                            }
+                        }}>
+                        {isEditing ? "Enviar" : "Editar Datos"}
+                    </BotonForm>
+
+
                 </form>
-                {/* <Modal mensaje="Planilla enviada" /> */}
             </div>
         </>
     )

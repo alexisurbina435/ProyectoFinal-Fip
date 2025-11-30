@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import ContactoService from "../../services/contacto.service";
 import Swal from 'sweetalert2';
+import "../Tabla/Tabla.css";
 const TablaBackend = ({
   columns,
   data,
@@ -127,13 +128,14 @@ return (
                     className={`table-row ${index % 2 === 0 ? 'even' : 'odd'}`}
                   >
                     {columns.map((column) => (
-                      <td key={column} className={column.clickable ? 'table-cell table-link' : 'table-cell'} >
+                      <td key={column} className={column.clickable ? 'table-cell table-link' : 'table-cell'}
+                      data-column={column} >
                         {renderCell(column, row)}
                       </td>
                     ))}
                     {/* Acciones */}
                     <td>
-                      <div className="action-buttons-table-contacto">
+                      <div className="action-buttons-table">
                         <button
                           className="btn-view"
                           onClick={() =>

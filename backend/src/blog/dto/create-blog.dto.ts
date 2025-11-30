@@ -31,5 +31,5 @@ export class CreateBlogDto {
   @Type(() => Number)
   @IsInt()
   @IsPositive()
-  usuarioId: number;
+  id_usuario: number;
 }

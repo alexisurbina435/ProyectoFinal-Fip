@@ -1,20 +1,22 @@
-
-.form-container{
+.form-container {
     background: #c7c6c3;
 }
-.conten-fondo{
+
+.conten-fondo {
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: var(--gris);
     margin-top: 5.6rem;
 }
-.conten-fondo img{
+
+.conten-fondo img {
     width: 60%;
-    object-fit: contain;
+    object-fit: cover;
+    min-height: 10rem;
 }
 
-.title{
+.title {
     /* padding: 1.5rem 0; */
     font-size: 2rem;
     margin-bottom: 1rem;
@@ -32,11 +34,13 @@
     justify-self: center;
     align-items: center;
 }
+
 /* contenedor del label e input  */
-.input-container{
+.input-container {
     width: 12.7rem;
     height: 5rem;
 }
+
 /* cierre del contenedor del label e input  */
 
 .datos-personales {
@@ -95,9 +99,11 @@ legend::after {
     font-weight: 600;
     border: none;
 }
-.contenedor-checkboxs{
+
+.contenedor-checkboxs {
     height: 6rem;
 }
+
 .checkboxs {
     display: flex;
     align-items: center;
@@ -123,37 +129,50 @@ legend::after {
 
 @media (max-width: 760px) {
 
-    .title{
+    .title {
         font-size: 1.8em;
     }
 
-    .informacion, .datos-personales{
-        grid-template-columns: repeat(2,1fr);
+    .informacion,
+    .datos-personales {
+        grid-template-columns: repeat(2, 1fr);
     }
 
-    .datos-personales{
+    .datos-personales {
         gap: 1rem 11rem;
     }
-    .informacion{
+
+    .informacion {
         gap: 0 0.5rem;
     }
-    legend{
+
+    legend {
         font-size: 1.3em;
     }
-    #sexo{
+
+    #sexo {
         margin-bottom: 2rem;
     }
-    .conten-fondo img{
-         min-width: 120%;
+
+    .conten-fondo img {
+        min-width: 120%;
     }
 }
 
 
 @media (max-width: 650px) {
-    .informacion{
-        grid-template-columns: repeat(1,1fr);
+    .informacion {
+        grid-template-columns: repeat(1, 1fr);
     }
-    .datos-personales{
+
+    .datos-personales {
         gap: 1rem 2rem;
+    }
+}
+
+@media(max-width: 500px) {
+
+    .datos-personales {
+        grid-template-columns: repeat(1, 1fr);
     }
 }

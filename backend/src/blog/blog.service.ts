@@ -38,7 +38,7 @@ export class BlogService {
   }
 
   async createBlog(createBlogDto: CreateBlogDto): Promise<Blog> {
-    const usuario = await this.findUsuario(createBlogDto.usuarioId);
+    const usuario = await this.findUsuario(createBlogDto.id_usuario);
 
     const blog = this.blogRepository.create({
       imagen: createBlogDto.imagen,
@@ -59,8 +59,8 @@ export class BlogService {
   async updateBlog(id: number, updateBlogDto: UpdateBlogDto): Promise<Blog> {
     const blog = await this.getBlogById(id);
 
-    if (updateBlogDto.usuarioId !== undefined) {
-      blog.usuario = await this.findUsuario(updateBlogDto.usuarioId);
+    if (updateBlogDto.id_usuario !== undefined) {
+      blog.usuario = await this.findUsuario(updateBlogDto.id_usuario);
     }
 
     if (updateBlogDto.imagen !== undefined) {

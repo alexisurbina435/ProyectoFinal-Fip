@@ -6,7 +6,7 @@
   width: 100%;
   min-height: 6rem;
   background-color: var(--gris-osc);
-  z-index: 1000;
+  z-index: 99;
   top: 0;
 }
 

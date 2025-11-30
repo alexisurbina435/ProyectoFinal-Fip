@@ -296,6 +296,11 @@
     font-size: 0.65rem;
     padding: 0.15rem 0.3rem;
   }
+
+  .texto-container h3 {
+    font-size: 1.4rem;
+    margin-left: 10%;
+  }
 }
 
 

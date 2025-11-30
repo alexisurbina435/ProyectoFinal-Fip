@@ -4,9 +4,10 @@ import { Link } from "react-router-dom";
 import TablaRutina from "../rutina/TablaRutina";
 import Rutina from "../rutina/Rutina";
 import Planilla from "../planilla/Planilla";
+import Swal from "sweetalert2";
+import suscripcionService from "../../services/suscripcion.service";
 // hook personalizado para useForm 
 import { UseFormPerfil } from "../../hooks/useFormPerfil";
-
 const sections = [
     { id: "nombre", title: "Modificar Nombre" },
     { id: "correo", title: "Modificar Correo" },
@@ -23,10 +24,43 @@ const beneficios = [
 ];
 
 const PerfilUsuario = () => {
-    
+
     const {
         data, sectionActiva, setSectionActiva, formNombre, formEmail, formTelefono, formPassword,
         editarNombre, editarEmail, editarTelefono, onSubmitEmail, onSubmitNombre, onSubmitTelefono, onsubmitPassword } = UseFormPerfil();
+
+    const cancelarSuscripcion = async (preapprovalId) => {
+        Swal.fire({
+            title: 'Cancelar Suscripcion',
+            text: "¿Estás seguro de cancealr la suscripcion?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, cancelar',
+            cancelButtonText: 'Cancelar'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    await suscripcionService.cancelar(preapprovalId);
+                    Swal.fire(
+                        'Cancelado!',
+                        'La suscripcion ha sido canceladad.',
+                        'success'
+                    ).then(() => {
+
+                        window.location.reload();
+                    });
+                } catch (error) {
+                    Swal.fire(
+                        'Error!',
+                        'No se pudo cancelar la suscripcion.',
+                        'error'
+                    );
+                }
+            }
+        });
+    };
     console.log(data);
     return (
 
@@ -289,9 +323,9 @@ const PerfilUsuario = () => {
                     <div className="plan-info">
                         <div className="plan-card">
                             <div className="plan-header">
-                                {data.estado_pago === true ? (
+                                {data.estado_pago === true && data?.suscripciones && data.suscripciones.length > 0 && data.suscripciones[0]?.plan ? (
                                     <>
-                                        <h3 id="planNombre">Plan {data?.suscripciones?.[0]?.plan?.nombre}</h3>
+                                        <h3 id="planNombre">Plan {data.suscripciones[0].plan?.nombre || 'N/A'}</h3>
                                         <span className="plan-status" id="planStatus">Activo</span>
                                     </>
                                 ) : (
@@ -302,23 +336,23 @@ const PerfilUsuario = () => {
                                 )}
                             </div>
                             <div className="plan-details">
-                                {data.estado_pago === true ? (
+                                {data.estado_pago === true && data?.suscripciones && data.suscripciones.length > 0 && data.suscripciones[0]?.plan ? (
                                     <>
-                                        <p><strong>Precio:</strong> <span id="planPrecio">${data?.suscripciones?.[0].plan?.precio}</span></p>
-                                        <p><strong>Fecha de inicio:</strong> <span id="planFechaInicio">{new Date(data?.suscripciones?.[0].fechaInicio).toLocaleDateString()}</span></p>
-                                        <p><strong>Próximo pago:</strong> <span id="planProximoPago">{new Date(data?.suscripciones?.[0].fechaFin).toLocaleDateString()}</span></p>
-                                        <p><strong>Estado:</strong> <span id="planEstado">{data?.suscripciones?.[0].estado}</span></p>
-                                        <p><strong>Total pagado:</strong> <span id="planPrecio">${data?.suscripciones?.[0].montoPagado}</span></p>
+                                        <p><strong>Precio:</strong> <span id="planPrecio">${data.suscripciones[0].plan?.precio || 'N/A'}</span></p>
+                                        <p><strong>Fecha de inicio:</strong> <span id="planFechaInicio">{data.suscripciones[0].fechaInicio ? new Date(data.suscripciones[0].fechaInicio).toLocaleDateString() : 'N/A'}</span></p>
+                                        <p><strong>Próximo pago:</strong> <span id="planProximoPago">{data.suscripciones[0].fechaFin ? new Date(data.suscripciones[0].fechaFin).toLocaleDateString() : 'N/A'}</span></p>
+                                        <p><strong>Estado:</strong> <span id="planEstado">{data.suscripciones[0].estado || 'N/A'}</span></p>
+                                        <p><strong>Total pagado:</strong> <span id="planPrecio">${data.suscripciones[0].montoPagado || '0'}</span></p>
                                     </>
                                 ) : (<p><strong>Plan:</strong> <span id="planPrecio">Gratis</span></p>)}
                             </div>
                             <div className="plan-benefits">
                                 <h4>Beneficios de tu plan:</h4>
                                 <ul className="lista-beneficios">
-                                    {data.estado_pago === true ? (
+                                    {data.estado_pago === true && data?.suscripciones && data.suscripciones.length > 0 && data.suscripciones[0]?.plan ? (
                                         <>
                                             {beneficios
-                                                .find((bene) => bene.id === data?.suscripciones?.[0].plan?.nombre)
+                                                .find((bene) => bene.id === data.suscripciones[0].plan?.nombre)
                                                 ?.beneficios.map((item, index) => (
                                                     <li key={index}>{item}</li>
                                                 ))}
@@ -328,8 +362,8 @@ const PerfilUsuario = () => {
 
                             </div>
                             <div className="plan-actions">
-                                <button className="btn-save">Cambiar Plan</button>
-                                <button className="btn-cancel">Cancelar Suscripción</button>
+                                <Link className="btn-save" to="/inscribite">Cambiar plan</Link>
+                                <button className="btn-cancel" onClick={() => cancelarSuscripcion(data?.suscripciones?.[0].preapprovalId)}>Cancelar Suscripción</button>
                             </div>
                         </div>
                     </div>
@@ -342,14 +376,13 @@ const PerfilUsuario = () => {
                         <form id="profileFormPlanilla">
                             <div className="form-group">
                                 <label htmlFor="planilla">Mi planilla de salud</label>
-                                 <Link className="btn-save btn-link" to="/planillaSalud">Planilla</Link>
+                                <Link className="btn-save btn-link" to="/planillaSalud">Planilla</Link>
                             </div>
                         </form>
                     </div>
                 </div>
 
                 <div className={`profile-section ${sectionActiva === "rutina" ? "profile-active" : ""}`}>
-                    <Rutina />
                     <TablaRutina />
                 </div>
 

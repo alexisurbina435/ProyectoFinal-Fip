@@ -5,21 +5,33 @@ class ApiClient {
     this.baseURL = 'http://localhost:3000/api';
   }
 
- // Maneja la respuesta de la API
+  // Maneja la respuesta de la API
   async handleResponse(response) {
+    // Si no es OK, manejar error
     if (!response.ok) {
-      const error = await response.json().catch(() => ({
-        message: `Error ${response.status}: ${response.statusText}`,
-      }));
+      let error = null;
+
+      try {
+        error = await response.json();
+      } catch {
+        error = { message: `Error ${response.status}: ${response.statusText}` };
+      }
+
       throw new Error(error.message || `Error ${response.status}`);
     }
-    
-    // Si la respuesta es 204 (No Content), retornar null
+
+    // Si la respuesta no tiene contenido (204 o body vacío)
     if (response.status === 204) {
       return null;
     }
-    
-    return response.json();
+
+    // Intentar parsear JSON
+    try {
+      return await response.json();
+    } catch {
+      // Si no se puede parsear, devolver null sin romper
+      return null;
+    }
   }
 
   // Realiza una petición GET

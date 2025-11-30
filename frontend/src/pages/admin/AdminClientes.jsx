@@ -49,7 +49,9 @@ const AdminClientes = () => {
       ficha: usuario?.ficha?.id_ficha
         ? <PlanillaPdf ficha={usuario.ficha} />
         : "Sin ficha",
-
+      aceptarEmails: usuario.aceptarEmails ? "Si" : "No",
+      aceptarWpp: usuario.aceptarWpp ? "Si" : "No",
+      aceptarTerminos: usuario.aceptarTerminos ? "Si" : "No",
     }));
   };
 
@@ -82,6 +84,9 @@ const AdminClientes = () => {
     { key: 'telefono', label: 'Teléfono', sortable: false },
     { key: 'plan', label: 'Plan', sortable: true, clickable: true },
     { key: 'ficha', label: 'ficha', sortable: true },
+    { key: 'aceptarEmails', label: 'Aceptar Emails', sortable: true },
+    { key: 'aceptarWpp', label: 'Aceptar Wpp', sortable: true },
+    { key: 'aceptarTerminos', label: 'Aceptar Terminos', sortable: true },
     {
       key: 'estado',
       label: 'Estado',

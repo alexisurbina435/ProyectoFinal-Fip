@@ -188,24 +188,30 @@ export default function FormRegistro() {
                     <div className="checkboxes">
                         <div className="checkbox-group">
                             <label>
-                                <input type="checkbox" id="accept-emails" />
+                                <input type="checkbox" id="accept-emails" {...register("aceptarEmails")}/>
                                 Acepto recibir comunicaciones de Superarse Gym por email
                             </label>
                         </div>
 
                         <div className="checkbox-group">
                             <label>
-                                <input type="checkbox" id="accept-whatsapp" />
+                                <input type="checkbox" id="accept-whatsapp"  {...register("aceptarWpp")}/>
                                 Acepto recibir comunicaciones de Superarse Gym por WhatsApp
                             </label>
                         </div>
 
                         <div className="checkbox-group">
                             <label>
-                                <input type="checkbox" id="accept-terms" />
+                                <input type="checkbox" id="accept-terms" {...register("aceptarTerminos",{
+                                    required: {
+                                        value: true,
+                                        message: "Por favor acepte los terminos y condiciones"
+                                    }
+                                })} />
                                 Acepto los <a href="#" target="_blank">Términos de Uso</a>, <a href="#" target="_blank">Términos de
                                     Venta</a> y la <a href="#" target="_blank">Política de Privacidad</a> de Superarse Gym
                             </label>
+                            {errors.aceptarTerminos && <span className="error">{errors.aceptarTerminos.message}</span>}
                         </div>
                     </div>
 

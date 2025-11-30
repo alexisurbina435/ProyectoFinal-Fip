@@ -8,56 +8,76 @@ export function CarritoProvider({ children }) {
   const [firstLoad, setFirstLoad] = useState(true);
 
   useEffect(() => {
+    console.log(firstLoad);
     if (firstLoad) {
       const saved = JSON.parse(localStorage.getItem("carrito"));
-      setCarrito(saved ?? []);   
+      setCarrito(saved || []);
+      console.log(carrito);
       setFirstLoad(false);
       return;
     }
+    console.log(carrito);
+
 
     localStorage.setItem("carrito", JSON.stringify(carrito));
-  }, [carrito, firstLoad]);   
+  }, [carrito, firstLoad]);
 
-  const agregarAlCarrito = (producto) => {
+  const cargarCarrito = (items) => {
+    setCarrito(items ?? []);
+  };
+
+  const agregarAlCarrito = async (producto) => {
     setCarrito((prev) => {
-      const index = prev.findIndex((p) => p.id === producto.id);
+      const index = prev.findIndex((p) => (p.id_producto || p.id) === producto.id);
 
       if (index !== -1) {
-        const nuevo = prev.map((p, i) =>
+        return prev.map((p, i) =>
           i === index ? { ...p, cantidad: p.cantidad + 1 } : p
         );
-        return nuevo;   
       }
 
       return [...prev, { ...producto, cantidad: 1 }];
     });
-  };
 
-  const cambiarCantidad = (id, delta) => {
+    const usuario = JSON.parse(localStorage.getItem("usuario"));
+
+    if (usuario) {
+      await carritoService.agregarItem(usuario.id_usuario, producto.id);
+    }
+  };
+  const cambiarCantidad = async (id, delta) => {
+    let nuevaCantidad = null;
+
     setCarrito((prev) =>
       prev.map((p) => {
-        if (p.id !== id) return p;
+        const pid = p.id_producto || p.id;
+
+        if (pid !== id) return p;
 
         const nueva = p.cantidad + delta;
-
         if (nueva < 1) return p;
-        if (nueva > p.stock) {
-          Swal.fire({
-            icon: "warning",
-            title: "Sin stock",
-            text: "No hay más stock disponible",
-            confirmButtonColor: "#ee5f0d",
-          });
-          return p;
-        }
+
+        nuevaCantidad = nueva;
 
         return { ...p, cantidad: nueva };
       })
     );
+
+    if (nuevaCantidad !== null) {
+      const usuario = JSON.parse(localStorage.getItem("usuario"));
+
+      if (usuario) {
+        await carritoService.actualizarCantidad(
+          usuario.id_usuario,
+          id,
+          nuevaCantidad
+        );
+      }
+    }
   };
 
   const eliminarProducto = (id) => {
-    setCarrito((prev) => prev.filter((p) => p.id !== id));
+    setCarrito((prev) => prev.filter((p) => (p.id_producto || p.id) !== id));
   };
 
   const totalCarrito = carrito.reduce(
@@ -76,6 +96,7 @@ export function CarritoProvider({ children }) {
         eliminarProducto,
         totalCarrito,
         cantidadTotal,
+        cargarCarrito,
       }}
     >
       {children}

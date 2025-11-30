@@ -109,6 +109,12 @@
     .footer-grid{
         grid-template-columns: repeat(1, 1fr);
     }
-    
+}
+
+@media(max-width: 350px){
+
+    .brand-logo {
+    width: 300px;
+}
 }
 

@@ -20,6 +20,12 @@
 }
 
 .content-banner img {
-  width: 70%;
   height: 100%;
+  object-fit: cover;
+}
+
+@media(max-width: 768px) {
+  .content-banner img{
+      min-height: 10rem;    
+  }
 }

@@ -65,7 +65,7 @@
   padding: 0.8rem 1rem;
   color: var(--blanco);
   font-size: 1rem;
-  min-width: 250px;
+  min-width: 140px;
 }
 
 .search-input::placeholder {
@@ -87,4 +87,18 @@
 
 .search-btn:hover {
   background-color: #d14a0b;
+}
+
+@media(max-width: 500px) {
+  .action-bar{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+@media(max-width: 400px) {
+  .search-input {
+     width: 90px;
+  }
 }

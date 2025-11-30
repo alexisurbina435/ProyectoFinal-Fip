@@ -110,7 +110,7 @@
   grid-template-columns: 300px 1fr;
   gap: 2rem;
   margin: 9rem 0 3rem 0;
-   width: 80%;
+   width: 90%;
 }
 
 /* Columna izquierda - Navegación */
@@ -310,12 +310,15 @@
   }
   
   .profile-container {
-    grid-template-columns: 1fr;
+    display: flex;
+    /* grid-template-columns: 1fr; */
+    flex-direction: column;
     gap: 1.5rem;
+    width: 100%;
   }
   
   .profile-sidebar {
-    order: 2;
+    order: 1;
   }
   
   .profile-content {
@@ -376,4 +379,7 @@
   .plan-card {
     padding: 1.5rem;
   }
+}
+
+@media (max-width: 360px) {
 }

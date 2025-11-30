@@ -112,6 +112,12 @@
   word-wrap: break-word;
 }
 
+.data-table td[data-column="consulta"] {
+  white-space: normal;
+  max-width: 250px;
+  word-wrap: break-word;
+}
+
 .data-table td:last-child {
   position: sticky;
   right: 0;
@@ -191,6 +197,7 @@
   border-collapse: collapse;
   font-size: 0.875rem;
   table-layout: auto;
+  overflow: hidden;
 }
 
 
@@ -225,7 +232,7 @@
 .action-buttons-table {
   display: flex;
   gap: 0.5rem;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   justify-content: flex-start;
   min-width: 180px;
 }

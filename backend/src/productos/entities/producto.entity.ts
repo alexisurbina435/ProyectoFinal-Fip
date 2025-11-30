@@ -1,5 +1,6 @@
 import { DetalleVenta } from 'src/detalle_venta/entities/detalleVenta.entity';
 import { Venta } from 'src/venta/entities/venta.entity';
+import { CarritoItem } from 'src/carrito/entities/carrito-items.entity';
 import {
   Column,
   CreateDateColumn,
@@ -37,4 +38,7 @@ export class Producto {
   // Relacion con tabla intermedia => detalleVenta
   @OneToMany(() => DetalleVenta, (detalleVenta) => detalleVenta.producto)
   detalles: DetalleVenta[];
+    
+  @OneToMany(() => CarritoItem, (item) => item.producto)
+  carritoItems: CarritoItem[];
 }

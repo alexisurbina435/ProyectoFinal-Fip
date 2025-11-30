@@ -18,6 +18,7 @@ import { SemanaModule } from './semana/semana.module';
 import { FichaSaludModule } from './ficha-salud/ficha-salud.module';
 import { ProductosModule } from './productos/productos.module';
 import { MercadoPagoModule } from './mercadopago/mercadopago.module';
+import { CarritoModule } from './carrito/carrito.module';
 
 import { JwtModule } from '@nestjs/jwt';
 import { AuthModule } from './auth/auth.module';
@@ -58,6 +59,7 @@ import { SuscripcionModule } from './suscripcion/suscripcion.module';
     MercadoPagoModule,
     AuthModule,
     SuscripcionModule,
+    CarritoModule,
   ],
   controllers: [AppController],
   providers: [AppService],
