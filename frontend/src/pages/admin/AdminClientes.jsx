@@ -38,21 +38,46 @@ const AdminClientes = () => {
 
   // Transformar datos del backend al formato de la tabla
   const transformarDatos = (usuarios) => {
-    return usuarios.map(usuario => ({
-      id: usuario.id_usuario || usuario.id,
-      nombre: usuario.nombre,
-      apellido: usuario.apellido,
-      email: usuario.email,
-      telefono: usuario.telefono,
-      plan: getPlanLabel(usuario.tipoPlan),
-      estado: usuario.estado_pago ? 'Activo' : 'Inactivo',
-      ficha: usuario?.ficha?.id_ficha
-        ? <PlanillaPdf ficha={usuario.ficha} />
-        : "Sin ficha",
-      aceptarEmails: usuario.aceptarEmails ? "Si" : "No",
-      aceptarWpp: usuario.aceptarWpp ? "Si" : "No",
-      aceptarTerminos: usuario.aceptarTerminos ? "Si" : "No",
-    }));
+    return usuarios.map(usuario => {
+      // Obtener el plan desde suscripciones
+      let planValue = null;
+      
+      if (usuario?.suscripciones && Array.isArray(usuario.suscripciones) && usuario.suscripciones.length > 0) {
+        // Buscar suscripción activa o tomar la primera
+        const suscripcionActiva = usuario.suscripciones.find(s => 
+          s && s.estado && String(s.estado).toUpperCase() === 'ACTIVA'
+        );
+        const suscripcion = suscripcionActiva || usuario.suscripciones[0];
+        
+        // Verificar si la suscripción tiene plan
+        if (suscripcion && suscripcion.plan && suscripcion.plan.nombre) {
+          // Mapear valores del backend al formato del frontend
+          const planNombre = String(suscripcion.plan.nombre).toLowerCase().trim();
+          const planMapping = {
+            'basic': 'Basic',
+            'standard': 'Medium',
+            'premium': 'Premium'
+          };
+          planValue = planMapping[planNombre] || suscripcion.plan.nombre;
+        }
+      }
+
+      return {
+        id: usuario.id_usuario || usuario.id,
+        nombre: usuario.nombre,
+        apellido: usuario.apellido,
+        email: usuario.email,
+        telefono: usuario.telefono,
+        plan: getPlanLabel(planValue),
+        estado: usuario.estado_pago ? 'Activo' : 'Inactivo',
+        ficha: usuario?.ficha?.id_ficha
+          ? <PlanillaPdf ficha={usuario.ficha} />
+          : "Sin ficha",
+        aceptarEmails: usuario.aceptarEmails ? "Si" : "No",
+        aceptarWpp: usuario.aceptarWpp ? "Si" : "No",
+        aceptarTerminos: usuario.aceptarTerminos ? "Si" : "No",
+      };
+    });
   };
 
   // Filtrar datos segun el termino de busqueda

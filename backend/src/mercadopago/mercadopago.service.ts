@@ -1,20 +1,19 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { MercadoPagoConfig, PreApproval, Preference } from 'mercadopago';
-
 @Injectable()
 export class MercadoPagoService {
     private readonly preference;
     private readonly preapproval;
-
-    constructor() {
-        const token = process.env.MP_ACCESS_TOKEN;
+    constructor(private readonly configService: ConfigService) {
+        const accessToken = this.configService.get<string>('MP_ACCESS_TOKEN');
+        const token = accessToken;
         if (!token) {
             throw new Error(
                 'Environment variable MP_ACCESS_TOKEN is required for Mercado Pago configuration'
             );
         }
 
-        // Configuramos el cliente con el token del vendedor (collector)
         const client = new MercadoPagoConfig({
             accessToken: token,
         });
@@ -23,7 +22,7 @@ export class MercadoPagoService {
         this.preapproval = new PreApproval(client);
     }
 
-    // Crear una preferencia de pago normal (opcional, para productos)
+    // Crear una preferencia de pago normal para productos
     async crearPreferencia() {
         try {
             const result = await this.preference.create({
@@ -69,7 +68,7 @@ export class MercadoPagoService {
                     end_date: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString()
 
                 },
-                back_url: 'https://google.com',
+                back_url: 'https://gymsuperarse.web.app/planillaSalud',
                 payer_email: email,
             };
 

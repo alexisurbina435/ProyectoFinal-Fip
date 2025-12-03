@@ -3,7 +3,7 @@ import { PagosController } from './pagos.controller';
 import { PagosService } from './pagos.service';
 import { Pago } from './entities/pago.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Venta } from 'src/venta/entities/venta.entity';
+import { Venta } from '../venta/entities/venta.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Pago, Venta])],

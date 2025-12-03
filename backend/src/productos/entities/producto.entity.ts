@@ -1,6 +1,5 @@
-import { DetalleVenta } from 'src/detalle_venta/entities/detalleVenta.entity';
-import { Venta } from 'src/venta/entities/venta.entity';
-import { CarritoItem } from 'src/carrito/entities/carrito-items.entity';
+import { DetalleVenta } from '../../detalle_venta/entities/detalleVenta.entity';
+import { CarritoItem } from '../../carrito/entities/carrito-items.entity';
 import {
   Column,
   CreateDateColumn,

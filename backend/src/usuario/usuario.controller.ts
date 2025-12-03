@@ -15,7 +15,7 @@ import { UsuarioService } from './usuario.service';
 import { UpdateUsuarioDto } from './dto/update.usuario.dto';
 import { Usuario } from './entities/usuario.entity';
 
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from '../auth/auth.guard';
 
 
 @Controller('usuario')

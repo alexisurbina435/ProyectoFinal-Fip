@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ConflictException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -12,7 +13,7 @@ import { UpdateUsuarioDto } from './dto/update.usuario.dto';
 import * as bcrypt from 'bcrypt';
 // import { JwtService } from '@nestjs/jwt';
 // import { ConfigService } from '@nestjs/config';
-// import { Plan } from 'src/plan/entities/plan.entity';
+// import { Plan } from '../plan/entities/plan.entity';
 
 
 
@@ -25,7 +26,7 @@ export class UsuarioService {
     // private readonly configService: ConfigService,
     // @InjectRepository(Plan)
     // private readonly planRepo: Repository<Plan>,
-    
+
   ) { }
   // testeo 
   async findOne(email: string): Promise<Usuario> {
@@ -42,14 +43,16 @@ export class UsuarioService {
   }
   // fin testeo 
   async getAllUsuario(): Promise<Usuario[]> {
-    const usuario: Usuario[] = await this.usuarioRepository.find({ relations: ['ficha', 'suscripciones'] });
+    const usuario: Usuario[] = await this.usuarioRepository.find({ 
+      relations: ['ficha', 'suscripciones', 'suscripciones.plan'] 
+    });
     return usuario;
   }
 
   async getUsuarioById(id: number): Promise<Usuario> {
     const usuario = await this.usuarioRepository.findOne({
       where: { id_usuario: id }, 
-      relations: ['ficha', 'suscripciones', 'rutina_activa'],
+      relations: ['ficha', 'suscripciones', 'suscripciones.plan', 'rutina_activa', 'rutina_activa.semanas', 'rutina_activa.semanas.dias', 'rutina_activa.semanas.dias.dificultades', 'rutina_activa.semanas.dias.dificultades.ejercicio'],
     });
     if (!usuario) {
       throw new NotFoundException(`usuario con ${id} no existe`);
@@ -59,6 +62,15 @@ export class UsuarioService {
 
   async postUsuario(CreateUsuarioDto: CreateUsuarioDto): Promise<Usuario> {
     try {
+
+      const emailExiste = await this.usuarioRepository.findOne({
+        where: { email: CreateUsuarioDto.email },
+      });
+
+      if (emailExiste) {
+        throw new ConflictException('El email ya está registrado');
+      }
+
       const hashedPassword = await bcrypt.hash(CreateUsuarioDto.password, 10);
       const newUsuario = this.usuarioRepository.create({
         ...CreateUsuarioDto,
@@ -69,8 +81,12 @@ export class UsuarioService {
       const usuario = await this.usuarioRepository.save(newUsuario);
       return usuario;
     } catch (ex) {
-      throw new InternalServerErrorException(ex.message);
+      if (ex instanceof ConflictException) {
+        throw ex;
+      }
+      throw new BadRequestException(ex.message);
     }
+
   }
 
   async putUsuario(

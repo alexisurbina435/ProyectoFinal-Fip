@@ -1,6 +1,6 @@
-import { Body, Controller, HttpCode, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, Post, Headers } from '@nestjs/common';
 import { MercadoPagoService } from './mercadopago.service';
-import { SuscripcionService } from 'src/suscripcion/suscripcion.service';
+import { SuscripcionService } from '../suscripcion/suscripcion.service';
 
 @Controller('mercadopago')
 export class MercadoPagoController {
@@ -12,21 +12,22 @@ export class MercadoPagoController {
   async crearPreferencia() {
     return this.mpService.crearPreferencia();
   }
- 
+
   // esto lo usa mercadopago cuando tengamos el dominio de la pag 
   @Post('webhook')
   @HttpCode(200)
   async webhook(@Body() body: any) {
-    console.log('Webhook recibido:', body);
+    console.log('Webhook recibido:', JSON.stringify(body, null, 2));
 
-    if (body.type === 'preapproval') {
+    if (body.type === 'preapproval' || body.type === 'subscription_preapproval') {
       const preapprovalId = body.data.id;
-      const status = body.data.status; //authorized, cancelled, etc.
-
-      // Actualizamos la suscripción y el estado_pago del usuario
+      const status = body.data.status;
       await this.suscripcionService.actualizarEstado(preapprovalId, status);
     }
 
     return { received: true };
   }
+
+
 }
+

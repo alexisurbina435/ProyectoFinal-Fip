@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
-import { Ejercicio } from "src/ejercicio/entities/ejercicio.entity";
-import { Dia } from "src/dia/entities/dia.entity";
+import { Ejercicio } from "../../ejercicio/entities/ejercicio.entity";
+import { Dia } from "../../dia/entities/dia.entity";
 
 @Entity('dificultad')
 export class Dificultad {

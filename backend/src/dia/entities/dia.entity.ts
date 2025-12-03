@@ -6,7 +6,7 @@ import {
   OneToMany,
   JoinColumn,
 } from 'typeorm';
-import { Semana } from 'src/semana/entities/semana.entity';
+import { Semana } from '../../semana/entities/semana.entity';
 import { Dificultad } from '../../dificultad/entities/dificultad.entity';
 
 @Entity('dia')

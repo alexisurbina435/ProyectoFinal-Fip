@@ -3,8 +3,8 @@ import { ContactoService } from './contacto.service';
 import { CreateContactoDto } from './dto/create-contacto.dto';
 import { UpdateContactoDto } from './dto/update-contacto.dto';
 import { Contacto } from './entities/contacto.entity';
-import { AuthGuard } from 'src/auth/auth.guard';
-import { UsuarioService } from 'src/usuario/usuario.service';
+import { AuthGuard } from '../auth/auth.guard';
+import { UsuarioService } from '../usuario/usuario.service';
 
 @Controller('contacto')
 export class ContactoController {
@@ -43,15 +43,23 @@ export class ContactoController {
       );
     }
   }
-
+  @UseGuards(AuthGuard)
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Contacto> {
+  async findOne(@Param('id') id: string ,@Req() req: Request): Promise<Contacto> {
+    const usuario = req['usuario'];
+    const usuarioDto = await this.usuarioService.getUsuarioById(usuario.id_usuario);
+    if(!usuario || usuarioDto.rol !== 'admin'){
+      throw new HttpException(
+        'No tienes permiso para ver las consultas',
+        HttpStatus.FORBIDDEN,
+      );
+    }
     try {
       return this.contactoService.findOne(+id);
     } catch (error) {
       throw new HttpException(
         'Error al obtener la consulta',
-        HttpStatus.INTERNAL_SERVER_ERROR,
+        HttpStatus.NOT_FOUND,
       );
     }
   }
@@ -63,7 +71,7 @@ export class ContactoController {
     } catch (error) {
       throw new HttpException(
         'Error al actualizar la consulta',
-        HttpStatus.INTERNAL_SERVER_ERROR,
+        HttpStatus.NOT_FOUND,
       );
     }
   }
@@ -75,7 +83,7 @@ export class ContactoController {
     }catch (error) {
       throw new HttpException(
         'Error al eliminar la consulta',
-        HttpStatus.INTERNAL_SERVER_ERROR,
+        HttpStatus.NOT_FOUND,
       );
     }
   }

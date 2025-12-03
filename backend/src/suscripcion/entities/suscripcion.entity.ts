@@ -1,5 +1,5 @@
-import { Plan } from 'src/plan/entities/plan.entity';
-import { Usuario } from 'src/usuario/entities/usuario.entity';
+import { Plan } from '../../plan/entities/plan.entity';
+import { Usuario } from '../../usuario/entities/usuario.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, JoinColumn, } from 'typeorm';
 
 
@@ -8,11 +8,11 @@ export class Suscripcion {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(() => Usuario, (usuario) => usuario.suscripciones, { eager: true })
+    @ManyToOne(() => Usuario, (usuario) => usuario.suscripciones, { eager: true, onDelete: 'SET NULL' })
     @JoinColumn({ name: 'id_usuario' })
     usuario: Usuario;
 
-    @ManyToOne(() => Plan, (plan) => plan.suscripciones, { eager: true })
+    @ManyToOne(() => Plan, (plan) => plan.suscripciones, { eager: true, onDelete: 'SET NULL' })
     @JoinColumn({ name: 'id_plan' })
     plan: Plan;
 
@@ -28,7 +28,7 @@ export class Suscripcion {
     @Column({ type: 'decimal', precision: 10, scale: 2 })
     montoPagado: number;
 
-    @Column({ type: 'varchar', length: 20, default: 'ACTIVA' })
+    @Column({ type: 'varchar', length: 20, default: 'PENDIENTE' })
     estado: string;
 
     @Column()

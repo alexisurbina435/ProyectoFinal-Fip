@@ -52,12 +52,12 @@ export default function FormLogin() {
             }
 
             // --- SI HAY PRODUCTOS EN LOCALSTORAGE → SINCRONIZARLOS
-            if (carritoLocal.length > 0) {
-                carritoBackend = await carritoService.sincronizarCarrito(
-                    userId,
-                    carritoLocal
-                );
-            }
+            // if (carritoLocal.length > 0) {
+            //     carritoBackend = await carritoService.sincronizarCarrito(
+            //         userId,
+            //         carritoLocal
+            //     );
+            // }
 
             let items = carritoBackend.items;
 
@@ -85,8 +85,15 @@ export default function FormLogin() {
             // Limpiar carrito local (ya está en backend)
             localStorage.removeItem("carrito");
 
-            navigate('/');
-            window.location.reload();
+         Swal.fire({
+                title: 'Inicio de sesión exitoso',
+                text: "Bienvenido",
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+            }).then(() => {
+                navigate('/');
+                window.location.reload();
+            });
 
         } catch (error) {
             Swal.fire({

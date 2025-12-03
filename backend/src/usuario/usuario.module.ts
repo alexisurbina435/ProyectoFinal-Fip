@@ -4,7 +4,7 @@ import { UsuarioService } from './usuario.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Usuario } from './entities/usuario.entity';
 // import { JwtModule } from '@nestjs/jwt';
-import { AuthModule } from 'src/auth/auth.module';
+import { AuthModule } from '../auth/auth.module';
 // import { Plan } from 'src/plan/entities/plan.entity';
 
 @Module({

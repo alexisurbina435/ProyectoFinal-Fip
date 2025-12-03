@@ -5,8 +5,8 @@ import {
   ManyToOne,
   OneToMany,
 } from 'typeorm';
-import { Rutina } from 'src/rutina/entities/rutina.entity';
-import { Dia } from 'src/dia/entities/dia.entity';
+import { Rutina } from '../../rutina/entities/rutina.entity';
+import { Dia } from '../../dia/entities/dia.entity';
 
 @Entity('semana')
 export class Semana {

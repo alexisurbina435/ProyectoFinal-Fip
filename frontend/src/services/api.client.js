@@ -2,7 +2,7 @@
 
 class ApiClient {
   constructor() {
-    this.baseURL = 'http://localhost:3000/api';
+    this.baseURL = 'https://proyectofinal-backend-7797.onrender.com';
   }
 
   // Maneja la respuesta de la API

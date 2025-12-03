@@ -43,7 +43,7 @@ export default function App() {
     { path: '/success', element: (<Layout><h1>Pago aprobado</h1></Layout>) },
     { path: '/failure', element: (<Layout><h1>Pago fallido</h1></Layout>) },
     { path: '/pending', element: (<Layout><h1>Pago pendiente</h1></Layout>) },
-
+  
     {
       // si el usuario no existe o no es admin no deja entrar a paginas admin 
       element: <ProtectedRoute user={user} condition={(usuario) => usuario && (usuario.rol === 'admin')} />,

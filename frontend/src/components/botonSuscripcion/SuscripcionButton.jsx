@@ -6,18 +6,18 @@ import planService from "../../services/plan.service.js";
 import Swal from "sweetalert2";
 function SuscripcionButton({ clase, plan }) {
   const handleClick = async () => {
-    const usuario = await usuarioService.getUsuarioById(id);
+    const usuario = await usuarioService.getUsuarioById();
 
     let planData;
     if (plan.toLowerCase().includes("premium")) {
-      planData = await planService.getPlanById(1);
+      planData = await planService.getPlanById(3);
     } else if (plan.toLowerCase().includes("standard")) {
       planData = await planService.getPlanById(2);
     } else if (plan.toLowerCase().includes("basic")) {
-      planData = await planService.getPlanById(3);
+      planData = await planService.getPlanById(1);
     }
 
-    const suscripcionActiva = usuario.suscripciones?.find(s => s.estado === "Activa");
+    const suscripcionActiva = usuario.suscripciones?.find(s => s.estado === "ACTIVA");
 
     if (suscripcionActiva) {
       Swal.fire({

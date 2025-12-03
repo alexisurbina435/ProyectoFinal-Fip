@@ -3,8 +3,8 @@ import { DificultadService } from './dificultad.service';
 import { DificultadController } from './dificultad.controller';
 import { Dificultad } from './entities/dificultad.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Dia } from 'src/dia/entities/dia.entity';
-import { Ejercicio } from 'src/ejercicio/entities/ejercicio.entity';
+import { Dia } from '../dia/entities/dia.entity';
+import { Ejercicio } from '../ejercicio/entities/ejercicio.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Dificultad, Dia, Ejercicio])],

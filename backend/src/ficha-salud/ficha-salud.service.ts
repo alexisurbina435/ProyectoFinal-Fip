@@ -4,7 +4,7 @@ import { UpdateFichaSaludDto } from './dto/update-ficha-salud.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { FichaSalud } from './entities/ficha-salud.entity';
-import { Usuario } from 'src/usuario/entities/usuario.entity';
+import { Usuario } from '../usuario/entities/usuario.entity';
 
 @Injectable()
 export class FichaSaludService {

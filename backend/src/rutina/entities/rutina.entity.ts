@@ -7,7 +7,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { Usuario } from '../../usuario/entities/usuario.entity';
-import { Semana } from 'src/semana/entities/semana.entity';
+import { Semana } from '../../semana/entities/semana.entity';
 
 export enum NivelRutina {
   PRINCIPIANTE = 'principiante',

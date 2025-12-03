@@ -5,7 +5,7 @@ import { Semana } from './entities/semana.entity';
 import { SemanaDto } from './dto/semana.dto';
 import { CreateSemanaDto } from './dto/create.semana.dto';
 import { UpdateSemanaDto } from './dto/update.semana.dto';
-import { Rutina } from 'src/rutina/entities/rutina.entity';
+import { Rutina } from '../rutina/entities/rutina.entity';
 
 @Injectable()
 export class SemanaService {

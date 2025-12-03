@@ -8,8 +8,8 @@ import { UpdateDificultadDto } from './dto/update-dificultad.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Dificultad } from './entities/dificultad.entity';
-import { Dia } from 'src/dia/entities/dia.entity';
-import { Ejercicio } from 'src/ejercicio/entities/ejercicio.entity';
+import { Dia } from '../dia/entities/dia.entity';
+import { Ejercicio } from '../ejercicio/entities/ejercicio.entity';
 
 @Injectable()
 export class DificultadService {

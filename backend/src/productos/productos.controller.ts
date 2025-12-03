@@ -13,7 +13,7 @@ export class ProductosController {
     try {
       return await this.productosService.create(createProductoDto);
     } catch (error) {
-      throw new HttpException('Error al crear el producto', HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException('Error al crear el producto', HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -31,7 +31,7 @@ export class ProductosController {
     try {
       return await this.productosService.findOne(+id);
     } catch (error) {
-      throw new HttpException(`Error al obtener el producto con el id ${id}`, HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(`Error al obtener el producto con el id ${id}`, HttpStatus.NOT_FOUND);
     }
   }
 
@@ -40,7 +40,7 @@ export class ProductosController {
     try {
       return await this.productosService.update(+id, updateProductoDto);
     } catch (error) {
-      throw new HttpException(`Error al actualizar el producto con el id ${id}`, HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(`Error al actualizar el producto con el id ${id}`, HttpStatus.NOT_FOUND);
     }
   }
 
@@ -49,7 +49,7 @@ export class ProductosController {
     try {
       return await this.productosService.remove(+id);
     } catch (error) {
-      throw new HttpException(`Error al eliminar el producto con el id ${id}`, HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(`Error al eliminar el producto con el id ${id}`, HttpStatus.NOT_FOUND);
     }
   }
 }

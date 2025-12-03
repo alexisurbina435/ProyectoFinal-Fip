@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
-import { Column, Entity, PrimaryGeneratedColumn,OneToOne,ManyToOne } from "typeorm";
-import { DetalleVenta } from "src/detalle_venta/entities/detalleVenta.entity";
-import { Venta } from "src/venta/entities/venta.entity";
+import { Column, Entity, PrimaryGeneratedColumn,ManyToOne } from "typeorm";
+import { Venta } from "../../venta/entities/venta.entity";
 
 export enum MediosDePago {
   TARJETA_CREDITO = 'TARJETA_CREDITO',

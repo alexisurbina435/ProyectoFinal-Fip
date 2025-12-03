@@ -4,7 +4,7 @@ import { UpdateDiaDto } from './dto/update-dia.dto';
 import { Dia } from './entities/dia.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Semana } from 'src/semana/entities/semana.entity';
+import { Semana } from '../semana/entities/semana.entity';
 
 @Injectable()
 export class DiaService {

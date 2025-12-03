@@ -1,13 +1,13 @@
 import { Entity, PrimaryGeneratedColumn, OneToMany, ManyToOne, CreateDateColumn, Column, OneToOne, JoinColumn } from 'typeorm';
 import { CarritoItem } from './carrito-items.entity';
-import { Usuario } from 'src/usuario/entities/usuario.entity';
+import { Usuario } from '../../usuario/entities/usuario.entity';
 
 @Entity('carritos')
 export class Carrito {
   @PrimaryGeneratedColumn()
   id_carrito: number;
 
-  @OneToOne(() => Usuario, usuario => usuario.carrito)
+  @OneToOne(() => Usuario, usuario => usuario.carrito, { onDelete: 'CASCADE' })
   @JoinColumn({ name: "usuario_id" })
   usuario: Usuario;
 

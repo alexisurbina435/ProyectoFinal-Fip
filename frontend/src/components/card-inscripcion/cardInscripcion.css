@@ -27,14 +27,14 @@
 }
 
 .premium {
-    background-image: url('../../src/assets/images/premium2.jpg');
+    background-image: url('../../assets/images/premium2.jpg');
     background-size: cover;
     background-position: center;
     overflow: hidden;
 }
 
 .standard {
-    background-image: url('../../src/assets/images/standar2.jpg');
+    background-image: url('../../assets/images/standar2.jpg');
     background-size: cover;
     background-position: center;
     overflow: hidden;
@@ -42,7 +42,7 @@
 
 .basic {
     /* background-image: url('../../assets/basico.jpg'); */
-    background-image: url('../../src/assets/images/basico2.jpg');
+    background-image: url('../../assets/images/basico2.jpg');
     background-size: cover;
     background-position: center;
     overflow: hidden;

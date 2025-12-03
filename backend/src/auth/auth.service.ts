@@ -1,7 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
-import { Usuario } from 'src/usuario/entities/usuario.entity';
+import { Usuario } from '../usuario/entities/usuario.entity';
 import * as bcrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -20,16 +18,18 @@ export class AuthService {
 
   async login(email: string, passwordd: string): Promise<Usuario | any> {
       const usuario = await this.usuarioRepository.findOne({ where: { email } });
+      console.log('Usuario encontrado:', usuario);
       if (!usuario) {
         throw new BadRequestException('El usuario no existe');
       }
       const passwordValida = await bcrypt.compare(passwordd, usuario.password);
+      console.log('Password válida:', passwordValida);
       if (!passwordValida) {
         throw new BadRequestException('La contraseña es incorrecta');
       }
       // quito la contraseña al logear 
       const { password: _, ...publicUser } = usuario;
-  
+      console.log('Usuario público:', publicUser);
       const payload = {
         id_usuario: usuario.id_usuario,
         nombre: usuario.nombre,

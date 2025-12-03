@@ -9,11 +9,11 @@ import { Rutina, TipoRutina } from './entities/rutina.entity';
 import { Repository, DataSource } from 'typeorm';
 import { CreateRutinaDto, UpdateRutinaDto } from './dto';
 import { CreateRutinaCompletaDto } from './dto/create-rutina-completa.dto';
-import { Usuario } from 'src/usuario/entities/usuario.entity';
-import { Semana } from 'src/semana/entities/semana.entity';
-import { Dia } from 'src/dia/entities/dia.entity';
-import { Dificultad } from 'src/dificultad/entities/dificultad.entity';
-import { Ejercicio } from 'src/ejercicio/entities/ejercicio.entity';
+import { Usuario } from '../usuario/entities/usuario.entity';
+import { Semana } from '../semana/entities/semana.entity';
+import { Dia } from '../dia/entities/dia.entity';
+import { Dificultad } from '../dificultad/entities/dificultad.entity';
+import { Ejercicio } from '../ejercicio/entities/ejercicio.entity';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -261,6 +261,14 @@ export class RutinaService {
             await queryRunner.manager.save(Dificultad, dificultad);
           }
         }
+      }
+
+      // 4. Si es una rutina de tipo CLIENTE, asignarla como rutina activa del usuario
+      if (createRutinaCompletaDto.tipo_rutina === TipoRutina.CLIENTE && usuario) {
+        await queryRunner.manager.update(Usuario, 
+          { id_usuario: usuario.id_usuario },
+          { rutina_activa: rutinaGuardada }
+        );
       }
 
       // Si todo salió bien, hacer commit

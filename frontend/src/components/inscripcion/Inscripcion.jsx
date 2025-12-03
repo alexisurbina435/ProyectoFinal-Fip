@@ -38,7 +38,7 @@ export default function Inscripcion() {
               key={plan.id_plan}
               clase={plan.nombre.toLowerCase()}
               plan={`Plan ${plan.nombre}`}
-              precio={`${plan.precio}`}
+              precio={`$${plan.precio}`}
               beneficio={beneficiosPlan} 
             />
           );

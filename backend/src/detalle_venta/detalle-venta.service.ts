@@ -4,8 +4,8 @@ import { UpdateDetalleVentaDto } from './dto/update.detalleVenta.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DetalleVenta } from './entities/detalleVenta.entity';
 import { Repository } from 'typeorm';
-import { Venta } from 'src/venta/entities/venta.entity';
-import { Producto } from 'src/productos/entities/producto.entity';
+import { Venta } from '../venta/entities/venta.entity';
+import { Producto } from '../productos/entities/producto.entity';
 
 @Injectable()
 export class DetalleVentaService {

@@ -169,6 +169,8 @@
   border-radius: 15px;
   padding: 2rem;
   min-height: 600px;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .profile-section {
@@ -295,7 +297,7 @@
   margin-top: 2rem;
 }
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 1028px) {
   .perfil-content {
     padding-top: 7rem;
   }
@@ -378,6 +380,50 @@
   
   .plan-card {
     padding: 1.5rem;
+  }
+}
+
+/* Estilos específicos para la sección de rutina */
+.profile-section[class*="rutina"] {
+  width: 100%;
+  overflow: hidden;
+}
+
+.profile-section[class*="rutina"] .tabla-contenedor {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 1rem;
+  overflow-x: auto;
+  overflow-y: visible;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1028px) {
+  .profile-section[class*="rutina"] .tabla-contenedor {
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-section[class*="rutina"] .tabla-contenedor {
+    padding: 0.5rem;
+  }
+}
+
+/* Ajuste para pantallas medianas - eliminar espacio vacío a 1420px */
+@media (max-width: 1420px) {
+  .profile-container {
+    width: 100%;
+    gap: 1.5rem;
+  }
+
+  .profile-content {
+    padding: 1.5rem;
+  }
+
+  .profile-section[class*="rutina"] .tabla-contenedor {
+    padding: 0.75rem;
   }
 }
 

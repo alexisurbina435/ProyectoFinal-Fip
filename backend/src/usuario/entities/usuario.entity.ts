@@ -7,12 +7,12 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { Rutina } from 'src/rutina/entities/rutina.entity';
-import { Venta } from 'src/venta/entities/venta.entity';
-import { Blog } from 'src/blog/entities/blog.entity';
-import { FichaSalud } from 'src/ficha-salud/entities/ficha-salud.entity';
-import { Suscripcion } from 'src/suscripcion/entities/suscripcion.entity';
-import { Carrito } from 'src/carrito/entities/carrito.entity';
+import { Rutina } from '../../rutina/entities/rutina.entity';
+import { Venta } from '../../venta/entities/venta.entity';
+import { Blog } from '../../blog/entities/blog.entity';
+import { FichaSalud } from '../../ficha-salud/entities/ficha-salud.entity';
+import { Suscripcion } from '../../suscripcion/entities/suscripcion.entity';
+import { Carrito } from '../../carrito/entities/carrito.entity';
 
 export enum Rol {
   USUARIO = 'usuario',
@@ -48,16 +48,17 @@ export class Usuario {
   @Column({ type: 'enum', enum: Rol, default: Rol.USUARIO })
   rol: Rol;
 
-  // @Column({ type: 'enum', enum: tipoPlan, nullable: true })
-  // tipoPlan: tipoPlan;
-
   @Column({ type: 'boolean', default: false })
   estado_pago: boolean;
 
-  // @ManyToOne(() => Plan, (plan) => plan.usuarios, { nullable: true })
-  // @JoinColumn({ name: 'id_plan' }) // FK en la tabla usuario
-  // plan?: Plan;
+  @Column({type: 'boolean', default: false })
+  aceptarEmails: boolean;
 
+  @Column({type: 'boolean', default: false })
+  aceptarWpp: boolean;
+
+  @Column()
+  aceptarTerminos: boolean;
 
   //Relación one to one con fichaSalud
   // la ficha es opcional, por que depende de que se inscriba a un plan el usuario

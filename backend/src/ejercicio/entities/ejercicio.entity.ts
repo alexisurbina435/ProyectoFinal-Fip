@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { Dificultad } from 'src/dificultad/entities/dificultad.entity';
+import { Dificultad } from '../../dificultad/entities/dificultad.entity';
 
 @Entity('ejercicio')
 export class Ejercicio {

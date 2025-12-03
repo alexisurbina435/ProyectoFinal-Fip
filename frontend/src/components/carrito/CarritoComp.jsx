@@ -1,6 +1,7 @@
 import "./Carrito.css";
 import { Link } from "react-router-dom";
 import { useCarrito } from "./CarritoContext";
+import BotonContinuar from "../botones/BotonContinuarCompra";
 
 const CarritoComponent = () => {
   const {
@@ -109,9 +110,7 @@ const CarritoComponent = () => {
             </div>
           </div>
 
-          <Link to="/compraDirecta">
-            <button className="continuar-compra">Continuar Compra</button>
-          </Link>
+          <BotonContinuar/>
 
         </div>
       </section>

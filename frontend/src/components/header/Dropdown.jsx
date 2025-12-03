@@ -17,6 +17,8 @@ const Dropdown = ({ options }) => {
     if (option === "Cerrar sesión") {
       try {
         await authService.logout();
+        localStorage.removeItem("usuario");
+        localStorage.removeItem("carrito");
         setUser(null)
       } catch (error) {
         console.log(error);

@@ -31,7 +31,7 @@ export class VentaController {
     try{
       return this.ventaService.findOne(+id);
     }catch(error){
-      throw new HttpException('Error al obtener la venta', HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException('Error al obtener la venta', HttpStatus.BAD_REQUEST);
     }
   }
 

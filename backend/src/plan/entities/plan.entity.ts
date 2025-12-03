@@ -1,5 +1,5 @@
-// import { Usuario } from 'src/usuario/entities/usuario.entity';
-import { Suscripcion } from 'src/suscripcion/entities/suscripcion.entity';
+
+import { Suscripcion } from '../../suscripcion/entities/suscripcion.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('plan')

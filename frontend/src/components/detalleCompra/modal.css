@@ -10,12 +10,12 @@
   justify-content: flex-end;  /* empuja el modal hacia la derecha */
   align-items: stretch;
 }
-p{
+/* p{
     font-family: 'Courier New', Courier, monospace;
     color: black;
     font-size: 18px;
     text-align: center;
-}
+} */
 
 .indicador-pago{
   display: flex;

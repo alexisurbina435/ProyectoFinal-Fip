@@ -33,7 +33,7 @@ export default function inscripcionDetalle() {
 
       </section>
       <section className="finalizar-compra">
-        <div className="botones">
+        <div className="botones-incrip">
 
           <BtnInscripcionDetalle plan={plan} precio={precio} beneficio={beneficio}/>
 

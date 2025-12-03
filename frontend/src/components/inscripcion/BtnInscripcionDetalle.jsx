@@ -3,7 +3,7 @@ import Modal from "../detalleCompra/Modal";
 import { useState } from "react";
 import {FaCheck} from "react-icons/fa";
 import "../compraDirecta/compraDirecta.css";
-import ButtonMercadoPago from "../botonMercadoPago/ButtonMercadoPago";
+import SuscripcionButton from "../botonSuscripcion/SuscripcionButton";
 
 
 export default function btnInscripcion({plan,precio,beneficio}){
@@ -28,9 +28,8 @@ export default function btnInscripcion({plan,precio,beneficio}){
             <div className="TipoPlan">seleccionaste el {plan}</div>
             </div>
             </div>
-            <p>{beneficio.map((b,i)=>(<li key={i}>{b}</li>))}</p>
             <div className="precio-plan">
-            <div className="precio">el valor total es de ${precio}</div>
+            <div className="precio">el valor total es de {precio}</div>
             </div>
             <div className="mostrar-beneficios">beneficions adicionales 
                  <ul>
@@ -41,22 +40,9 @@ export default function btnInscripcion({plan,precio,beneficio}){
                  </ul>   
             </div>
     
-            
-                  <div className="pago-content">
-                    <h3>Elegí método de pago:</h3>
-                    <select className="form-select mb-3">
-                      <option value="">Seleccioná una opción</option>
-                      <option value="efectivo">Efectivo</option>
-                      <option value="tarjeta">Tarjeta crédito/débito</option>
-                      <option value="transferencia">Transferencia bancaria</option>
-                    </select>
-            
-                  </div>
-    
-                <div className="indicador-pago">confirma tu pago en el boton de abajo</div>
 
+                    <SuscripcionButton clase="btn-continuar-inscripcion" plan={plan} />
 
-                    <ButtonMercadoPago />
         </Modal>
         </>
 )

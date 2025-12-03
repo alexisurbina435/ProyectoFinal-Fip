@@ -6,10 +6,10 @@ import {
   CreateDateColumn,
   JoinColumn,
 } from 'typeorm';
-//import { Plan } from 'src/plan/entities/plan.entity';
-import { Usuario } from 'src/usuario/entities/usuario.entity';
-import { DetalleVenta } from 'src/detalle_venta/entities/detalleVenta.entity';
-import { Pago } from 'src/pagos/entities/pago.entity';
+//import { Plan } from '../plan/entities/plan.entity';
+import { Usuario } from '../../usuario/entities/usuario.entity';
+import { DetalleVenta } from '../../detalle_venta/entities/detalleVenta.entity';
+import { Pago } from '../../pagos/entities/pago.entity';
 
 @Entity('venta')
 export class Venta {
