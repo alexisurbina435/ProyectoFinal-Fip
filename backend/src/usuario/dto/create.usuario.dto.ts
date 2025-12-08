@@ -75,5 +75,8 @@ export class CreateUsuarioDto {
   @IsNotEmpty({message: 'El aceptar Terminos es requerido'})
   aceptarTerminos: boolean;
   
+  @IsOptional()
+  @IsInt()
+  rutina_activa_id?: number;
 
 }

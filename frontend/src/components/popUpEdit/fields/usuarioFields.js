@@ -1,6 +1,6 @@
 const planOptions = [
   { value: 'Basic', label: 'Plan Basico' },
-  { value: 'Medium', label: 'Plan Medium' },
+  { value: 'Standard', label: 'Plan Standard' },
   { value: 'Premium', label: 'Plan Premium' }
 ];
 
@@ -9,12 +9,15 @@ export const getPlanLabel = (tipoPlan) => {
   return found ? found.label : (tipoPlan || 'Sin plan');
 };
 
-const phoneRegex = /^(\+54\s\d\s)?\d{3,4}[-\s]?\d{4}$/;
+// Regex alineado con el backend: /^(\+54\s?)?\d{3,4}\s?\d{6}$/
+// Ejemplos válidos: +54 1234 567890, 1234 567890, 1234567890
+const phoneRegex = /^(\+54\s?)?\d{3,4}\s?\d{6}$/;
 
 export const getUsuarioFields = ({ mode = 'create' } = {}) => {
   const isCreateMode = mode === 'create';
+  const isEditMode = mode === 'edit';
 
-  return [
+  const fields = [
     {
       name: 'nombre',
       label: 'Nombre',
@@ -57,7 +60,8 @@ export const getUsuarioFields = ({ mode = 'create' } = {}) => {
         }
       }
     },
-    {
+    // DNI solo en modo create
+    ...(isCreateMode ? [{
       name: 'dni',
       label: 'DNI',
       type: 'number',
@@ -75,7 +79,7 @@ export const getUsuarioFields = ({ mode = 'create' } = {}) => {
           message: 'El DNI debe tener máximo 8 dígitos'
         }
       }
-    },
+    }] : []),
     {
       name: 'email',
       label: 'Email',
@@ -95,38 +99,37 @@ export const getUsuarioFields = ({ mode = 'create' } = {}) => {
       name: 'telefono',
       label: 'Teléfono',
       type: 'text',
-      placeholder: '+54 9 1234-5678',
+      placeholder: '2284 265448 o +54 2284 265448',
       required: true,
       icon: 'fa-solid fa-phone',
       validation: {
         required: 'El teléfono es requerido',
         pattern: {
           value: phoneRegex,
-          message: 'El teléfono no es válido. Ej: +54 9 1234-5678'
+          message: 'El teléfono no es válido. Ej: 2284 265448 o +54 2284 265448'
         }
       }
     },
-    {
+    // Password solo en modo create
+    ...(isCreateMode ? [{
       name: 'password',
       label: 'Contraseña',
       type: 'password',
       placeholder: 'Ingrese la contraseña',
-      required: isCreateMode,
+      required: true,
       icon: 'fa-solid fa-lock',
-      validation: isCreateMode
-        ? {
-            required: 'La contraseña es requerida',
-            minLength: {
-              value: 6,
-              message: 'La contraseña debe tener al menos 6 caracteres'
-            },
-            maxLength: {
-              value: 14,
-              message: 'La contraseña debe tener menos de 14 caracteres'
-            }
-          }
-        : {}
-    },
+      validation: {
+        required: 'La contraseña es requerida',
+        minLength: {
+          value: 6,
+          message: 'La contraseña debe tener al menos 6 caracteres'
+        },
+        maxLength: {
+          value: 14,
+          message: 'La contraseña debe tener menos de 14 caracteres'
+        }
+      }
+    }] : []),
     {
       name: 'rol',
       label: 'Rol',
@@ -155,6 +158,8 @@ export const getUsuarioFields = ({ mode = 'create' } = {}) => {
       validation: {}
     }
   ];
+
+  return fields;
 };
 
 export { planOptions };

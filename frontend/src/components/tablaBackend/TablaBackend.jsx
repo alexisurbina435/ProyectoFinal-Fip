@@ -1,13 +1,17 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import ContactoService from "../../services/contacto.service";
 import Swal from 'sweetalert2';
 import "../Tabla/Tabla.css";
+
 const TablaBackend = ({
   columns,
   data,
+  itemsPerPage = 10, // cantidad de items por pagina
+  loading = false // estado de carga
 }) => {
 
   const [consulta, setConsulta] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
   const eliminarConsulta = async (id) => {
   Swal.fire({
     title: 'Eliminar contacto',
@@ -68,6 +72,17 @@ const sortedData = useMemo(() => {
   });
 }, [data, sortConfig]);
 
+// Paginación
+const totalPages = Math.ceil(sortedData.length / itemsPerPage);
+const startIndex = (currentPage - 1) * itemsPerPage;
+const endIndex = startIndex + itemsPerPage;
+const paginatedData = sortedData.slice(startIndex, endIndex);
+
+// Resetear a página 1 cuando cambian los datos
+useEffect(() => {
+  setCurrentPage(1);
+}, [data]);
+
 const renderCell = (column, row) => {
   const value = row[column];
   if (column.render) {
@@ -112,17 +127,23 @@ return (
             </thead>
 
             <tbody className="table-body">
-              {!data.length ? (
+              {loading ? (
                 <tr>
-                  <td colSpan={columns.length} className="loading-cell">
+                  <td colSpan={columns.length + 1} className="loading-cell">
                     <div className="loading-spinner">
                       <div className="spinner"></div>
                       <span>Cargando...</span>
                     </div>
                   </td>
                 </tr>
+              ) : !data.length ? (
+                <tr>
+                  <td colSpan={columns.length + 1} className="loading-cell" style={{ textAlign: 'center', padding: '2rem' }}>
+                    <span style={{ fontSize: '1.1rem', color: '#666' }}>No hay consultas</span>
+                  </td>
+                </tr>
               ) : (
-                sortedData.map((row, index) => (
+                paginatedData.map((row, index) => (
                   <tr
                     key={row.id}
                     className={`table-row ${index % 2 === 0 ? 'even' : 'odd'}`}
@@ -158,6 +179,59 @@ return (
         </div>
       </div>
     </div>
+
+    {/* Paginación */}
+    {sortedData.length > itemsPerPage && (
+      <div className="pagination-container" style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginTop: '20px',
+        padding: '10px 0',
+        borderTop: '1px solid rgba(255, 255, 255, 0.1)'
+      }}>
+        <div style={{ color: '#fff', fontSize: '14px' }}>
+          Mostrando {startIndex + 1} - {Math.min(endIndex, sortedData.length)} de {sortedData.length} resultados
+        </div>
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+          <button
+            onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+            disabled={currentPage === 1}
+            style={{
+              padding: '8px 16px',
+              backgroundColor: currentPage === 1 ? '#444' : 'var(--naranja)',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
+              fontSize: '14px',
+              opacity: currentPage === 1 ? 0.5 : 1
+            }}
+          >
+            Anterior
+          </button>
+          <span style={{ color: '#fff', fontSize: '14px' }}>
+            Página {currentPage} de {totalPages}
+          </span>
+          <button
+            onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+            disabled={currentPage === totalPages}
+            style={{
+              padding: '8px 16px',
+              backgroundColor: currentPage === totalPages ? '#444' : 'var(--naranja)',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: currentPage === totalPages ? 'not-allowed' : 'pointer',
+              fontSize: '14px',
+              opacity: currentPage === totalPages ? 0.5 : 1
+            }}
+          >
+            Siguiente
+          </button>
+        </div>
+      </div>
+    )}
   </div>
 );
 };

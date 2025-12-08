@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -20,7 +19,6 @@ import { ProductosModule } from './productos/productos.module';
 import { MercadoPagoModule } from './mercadopago/mercadopago.module';
 import { CarritoModule } from './carrito/carrito.module';
 
-import { JwtModule } from '@nestjs/jwt';
 import { AuthModule } from './auth/auth.module';
 import { SuscripcionModule } from './suscripcion/suscripcion.module';
 @Module({
@@ -32,11 +30,11 @@ import { SuscripcionModule } from './suscripcion/suscripcion.module';
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
         type: 'mysql',
-        host: configService.get('MYSQL_ADDON_HOST'),
-        port: configService.get('MYSQL_ADDON_PORT'),
-        username: configService.get('MYSQL_ADDON_USER'),
-        password: configService.get('MYSQL_ADDON_PASSWORD'),
-        database: configService.get('MYSQL_ADDON_DB'),
+        host: configService.get('MYSQL_ADDON_HOST') || configService.get('DB_HOST'),
+        port: configService.get('MYSQL_ADDON_PORT') || configService.get('DB_PORT'),
+        username: configService.get('MYSQL_ADDON_USER') || configService.get('DB_USERNAME'),
+        password: configService.get('MYSQL_ADDON_PASSWORD') || configService.get('DB_PASSWORD'),
+        database: configService.get('MYSQL_ADDON_DB') || configService.get('DB_DATABASE'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
         //  synchronize:false, // la dejamos en false cuando tenemos las tablas creadas y no queremos que nos cambie o modifique las tablas.(solo consultas a la base de dato)
         synchronize: configService.get('NODE_ENV') === 'development', // cuando queremos modificar o cargar tablas usamos este.

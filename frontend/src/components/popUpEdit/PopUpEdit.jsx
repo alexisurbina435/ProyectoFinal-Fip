@@ -24,7 +24,8 @@ const PopUpEdit = ({
   fields = [],
   onSubmit,
   title,
-  entityName = 'entidad'
+  entityName = 'entidad',
+  customContent = null
 }) => {
   const { register, handleSubmit, formState: { errors }, reset, watch } = useForm({
     defaultValues: initialData
@@ -155,6 +156,9 @@ const PopUpEdit = ({
                 );
               })}
             </div>
+
+            {/* Contenido personalizado (se renderiza después de los campos) */}
+            {customContent && customContent}
 
             <div className="popup-form-actions">
               {isViewMode ? (

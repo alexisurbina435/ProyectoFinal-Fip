@@ -28,6 +28,16 @@ export class UsuarioController {
     return usuario;
   }
 
+  @Get('admin/:id')
+  async getUsuarioByIdForAdmin(@Param('id') id: number) {
+    return this.UsuarioService.getUsuarioById(id);
+  }
+
+  @Get('email/:email')
+  async findByEmail(@Param('email') email: string) {
+    return this.UsuarioService.findByEmail(email);
+  }
+
   @Get(':id')
   @UseGuards(AuthGuard)
   async getUsuarioById(@Req() req: Request) {
@@ -37,13 +47,6 @@ export class UsuarioController {
     console.log("Usuario desde token:", usuario);
 
     return this.UsuarioService.getUsuarioById(usuario.id_usuario);
-  }
-
-
-
-  @Get('email/:email')
-  async findByEmail(@Param('email') email: string) {
-    return this.UsuarioService.findByEmail(email);
   }
 
 

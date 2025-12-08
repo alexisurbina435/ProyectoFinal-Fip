@@ -5,6 +5,7 @@ import AdminBar from "../../components/AdminBar/AdminBar"
 import productoService from "../../services/producto.service.js";
 import PopUpEdit from "../../components/popUpEdit/PopUpEdit";
 import { getProductoFields } from "../../components/popUpEdit/fields/productoFields";
+import "./admin.css";
 
 const AdminTienda = () => {
   const [productos, setProductos] = useState([]);
@@ -86,7 +87,7 @@ const AdminTienda = () => {
       clickable: true,
       width: '120px',
       render: (value, row) => {
-        if (!value) return <span style={{ color: '#999', fontSize: '0.85rem' }}>Sin imagen</span>;
+        if (!value) return <span className="tienda-sin-imagen">Sin imagen</span>;
         
         return (
           <div className="table-image-preview">
@@ -102,12 +103,7 @@ const AdminTienda = () => {
               title="Click para ver imagen completa"
             />
             <span 
-              style={{ 
-                display: 'none', 
-                color: '#999', 
-                fontSize: '0.85rem',
-                cursor: 'pointer'
-              }}
+              className="tienda-imagen-error"
               onClick={() => window.open(value, '_blank')}
             >
               Ver imagen
@@ -284,13 +280,7 @@ const AdminTienda = () => {
             searchValue={searchTerm}
           />
           {error && (
-            <div className="error-message" style={{ 
-              padding: '10px', 
-              margin: '10px 0', 
-              backgroundColor: '#fee', 
-              color: '#c33', 
-              borderRadius: '4px' 
-            }}>
+            <div className="admin-error-message">
               {error}
             </div>
           )}

@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import rutinaService from "../../services/rutina.service";
 import ejercicioService from "../../services/ejercicio.service";
 import usuarioService from "../../services/usuario.service";
 import "./ModalCrearRutina.css";
 
-const ModalCrearRutina = ({ isOpen, onClose, onRutinaCreada }) => {
+const ModalCrearRutina = ({ isOpen, onClose, onRutinaCreada, initialUsuarioId = null }) => {
   const [step, setStep] = useState(1); // 1: Info básica, 2: Semanas/Días, 3: Ejercicios
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -14,7 +15,7 @@ const ModalCrearRutina = ({ isOpen, onClose, onRutinaCreada }) => {
   const [descripcion, setDescripcion] = useState("");
   const [nivel, setNivel] = useState("principiante");
   const [tipoRutina, setTipoRutina] = useState("cliente"); // "cliente", "general", "plan"
-  const [idUsuario, setIdUsuario] = useState(null);
+  const [idUsuario, setIdUsuario] = useState(initialUsuarioId);
   const [categoria, setCategoria] = useState(null);
   
   // Listas para selección
@@ -41,11 +42,43 @@ const ModalCrearRutina = ({ isOpen, onClose, onRutinaCreada }) => {
   useEffect(() => {
     if (isOpen) {
       cargarDatosIniciales();
+      // Si hay un usuario inicial, establecerlo
+      if (initialUsuarioId) {
+        setIdUsuario(initialUsuarioId);
+        setTipoRutina("cliente");
+      }
     } else {
       // Resetear formulario al cerrar
       resetearFormulario();
     }
-  }, [isOpen]);
+  }, [isOpen, initialUsuarioId]);
+
+  // Función helper para obtener el plan de un usuario
+  const obtenerPlanUsuario = (usuario) => {
+    if (!usuario?.suscripciones || !Array.isArray(usuario.suscripciones) || usuario.suscripciones.length === 0) {
+      return 'Sin plan';
+    }
+    
+    // Buscar suscripción activa o tomar la primera
+    const suscripcionActiva = usuario.suscripciones.find(s => 
+      s && s.estado && String(s.estado).toUpperCase() === 'ACTIVA'
+    );
+    const suscripcion = suscripcionActiva || usuario.suscripciones[0];
+    
+    // Verificar si la suscripción tiene plan
+    if (suscripcion && suscripcion.plan && suscripcion.plan.nombre) {
+      // Mapear valores del backend al formato del frontend
+      const planNombre = String(suscripcion.plan.nombre).toLowerCase().trim();
+          const planMapping = {
+            'basic': 'Basic',
+            'standard': 'Standard',
+            'premium': 'Premium'
+          };
+      return planMapping[planNombre] || suscripcion.plan.nombre;
+    }
+    
+    return 'Sin plan';
+  };
 
   const cargarDatosIniciales = async () => {
     try {
@@ -70,7 +103,7 @@ const ModalCrearRutina = ({ isOpen, onClose, onRutinaCreada }) => {
     setDescripcion("");
     setNivel("principiante");
     setTipoRutina("cliente");
-    setIdUsuario(null);
+    setIdUsuario(initialUsuarioId || null);
     setCategoria(null);
     setSemanas([{ numero_semana: 1, dias: [{ numero_dia: 1, ejercicios: [] }] }]);
     setError(null);
@@ -79,6 +112,10 @@ const ModalCrearRutina = ({ isOpen, onClose, onRutinaCreada }) => {
 
   // Manejar tipo de rutina
   const handleTipoRutinaChange = (tipo) => {
+    // Si hay un usuario inicial, no permitir cambiar el tipo de rutina
+    if (initialUsuarioId) {
+      return;
+    }
     setTipoRutina(tipo);
     if (tipo === "general") {
       // Para rutinas generales, usar el primer usuario o un usuario sistema
@@ -284,7 +321,7 @@ const ModalCrearRutina = ({ isOpen, onClose, onRutinaCreada }) => {
 
   if (!isOpen) return null;
 
-  return (
+  const modalContent = (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content modal-crear-rutina" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
@@ -343,11 +380,20 @@ const ModalCrearRutina = ({ isOpen, onClose, onRutinaCreada }) => {
 
             <div className="form-group">
               <label>Tipo de Rutina *</label>
-              <select value={tipoRutina} onChange={(e) => handleTipoRutinaChange(e.target.value)}>
+              <select 
+                value={tipoRutina} 
+                onChange={(e) => handleTipoRutinaChange(e.target.value)}
+                disabled={!!initialUsuarioId}
+              >
                 <option value="cliente">Para Cliente Específico</option>
                 <option value="general">Rutina General (Uso General)</option>
                 <option value="plan">Rutina Ligada a Plan</option>
               </select>
+              {initialUsuarioId && (
+                <p style={{ fontSize: '0.85rem', color: '#999', marginTop: '5px', fontStyle: 'italic' }}>
+                  El tipo de rutina está fijado en "Para Cliente Específico" porque se está creando desde el panel de edición de cliente
+                </p>
+              )}
             </div>
 
             {tipoRutina === "cliente" && (
@@ -356,14 +402,23 @@ const ModalCrearRutina = ({ isOpen, onClose, onRutinaCreada }) => {
                 <select 
                   value={idUsuario || ""} 
                   onChange={(e) => setIdUsuario(parseInt(e.target.value))}
+                  disabled={!!initialUsuarioId}
                 >
                   <option value="">Selecciona un cliente</option>
-                  {usuarios.map(usuario => (
-                    <option key={usuario.id_usuario} value={usuario.id_usuario}>
-                      {usuario.nombre} {usuario.apellido} ({usuario.email})
-                    </option>
-                  ))}
+                  {usuarios.map(usuario => {
+                    const planUsuario = obtenerPlanUsuario(usuario);
+                    return (
+                      <option key={usuario.id_usuario} value={usuario.id_usuario}>
+                        {usuario.nombre} {usuario.apellido} - {planUsuario}
+                      </option>
+                    );
+                  })}
                 </select>
+                {initialUsuarioId && (
+                  <p style={{ fontSize: '0.85rem', color: '#666', marginTop: '5px' }}>
+                    La rutina se asignará automáticamente al cliente que estás editando
+                  </p>
+                )}
               </div>
             )}
 
@@ -704,6 +759,8 @@ const ModalCrearRutina = ({ isOpen, onClose, onRutinaCreada }) => {
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 };
 
 export default ModalCrearRutina;

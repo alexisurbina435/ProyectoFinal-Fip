@@ -12,6 +12,11 @@ class UsuarioService {
     return apiClient.get(`/usuario/${id}`);
   }
 
+  // Devuelve un {Promise<Object>} - Para uso en admin panel
+  async getUsuarioByIdForAdmin(id) {
+    return apiClient.get(`/usuario/admin/${id}`);
+  }
+
   async getUserByEmail(email){
     return apiClient.get(`/usuario/email/${email}`);
   }

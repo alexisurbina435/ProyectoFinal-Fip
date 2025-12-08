@@ -2,7 +2,6 @@ import {
   BadRequestException,
   ConflictException,
   Injectable,
-  InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
 import { Usuario } from './entities/usuario.entity';
@@ -10,6 +9,7 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUsuarioDto } from './dto/create.usuario.dto';
 import { UpdateUsuarioDto } from './dto/update.usuario.dto';
+import { Rutina } from '../rutina/entities/rutina.entity';
 import * as bcrypt from 'bcrypt';
 // import { JwtService } from '@nestjs/jwt';
 // import { ConfigService } from '@nestjs/config';
@@ -22,6 +22,8 @@ export class UsuarioService {
   constructor(
     @InjectRepository(Usuario)
     private usuarioRepository: Repository<Usuario>,
+    @InjectRepository(Rutina)
+    private rutinaRepository: Repository<Rutina>,
     // private readonly jwtService: JwtService,
     // private readonly configService: ConfigService,
     // @InjectRepository(Plan)
@@ -44,7 +46,7 @@ export class UsuarioService {
   // fin testeo 
   async getAllUsuario(): Promise<Usuario[]> {
     const usuario: Usuario[] = await this.usuarioRepository.find({ 
-      relations: ['ficha', 'suscripciones', 'suscripciones.plan'] 
+      relations: ['ficha', 'suscripciones', 'suscripciones.plan', 'rutina_activa'] 
     });
     return usuario;
   }
@@ -93,14 +95,52 @@ export class UsuarioService {
     id: number,
     updateUsuarioDto: UpdateUsuarioDto,
   ): Promise<Usuario> {
-    const rutina = this.usuarioRepository.create(updateUsuarioDto);
-    const result = await this.usuarioRepository.update(
-      { id_usuario: id },
-      rutina,
-    );
-    if (!result.affected) {
+    const usuario = await this.usuarioRepository.findOne({
+      where: { id_usuario: id },
+    });
+
+    if (!usuario) {
+      throw new NotFoundException(`Usuario con id ${id} no encontrado`);
     }
-    return await this.getUsuarioById(id);
+
+    const { password, rutina_activa_id, ...rest } = updateUsuarioDto;
+    
+    // Si se necesita desvincular la rutina, hacerlo primero con QueryBuilder
+    if (rutina_activa_id === null) {
+      await this.usuarioRepository
+        .createQueryBuilder()
+        .update(Usuario)
+        .set({ rutina_activa: null as any })
+        .where('id_usuario = :id', { id })
+        .execute();
+    }
+    
+    this.usuarioRepository.merge(usuario, rest);
+
+    // Manejar rutina_activa_id si está presente (solo para asignar nueva rutina)
+    if (rutina_activa_id !== undefined && rutina_activa_id !== null) {
+      // Asignar nueva rutina activa
+      const rutina = await this.rutinaRepository.findOne({
+        where: { id_rutina: rutina_activa_id },
+      });
+      if (!rutina) {
+        throw new NotFoundException(`Rutina con id ${rutina_activa_id} no encontrada`);
+      }
+      usuario.rutina_activa = rutina;
+    }
+
+    if (password) {
+      usuario.password = await bcrypt.hash(password, 10);
+    }
+
+    const usuarioGuardado = await this.usuarioRepository.save(usuario);
+    
+    // Si se desvinculó la rutina, recargar para obtener el estado actualizado
+    if (rutina_activa_id === null) {
+      return await this.getUsuarioById(id);
+    }
+
+    return usuarioGuardado;
   }
 
   async editarUsuario(id: number, updateUsuarioDto: UpdateUsuarioDto): Promise<Usuario> {
@@ -113,15 +153,44 @@ export class UsuarioService {
       throw new NotFoundException(`Usuario con id ${id} no encontrado`);
     }
 
-
-    const { password, ...rest } = updateUsuarioDto;
+    const { password, rutina_activa_id, ...rest } = updateUsuarioDto;
+    
+    // Si se necesita desvincular la rutina, hacerlo primero con QueryBuilder
+    if (rutina_activa_id === null) {
+      await this.usuarioRepository
+        .createQueryBuilder()
+        .update(Usuario)
+        .set({ rutina_activa: null as any })
+        .where('id_usuario = :id', { id })
+        .execute();
+    }
+    
     this.usuarioRepository.merge(usuario, rest);
+
+    // Manejar rutina_activa_id si está presente (solo para asignar nueva rutina)
+    if (rutina_activa_id !== undefined && rutina_activa_id !== null) {
+      // Asignar nueva rutina activa
+      const rutina = await this.rutinaRepository.findOne({
+        where: { id_rutina: rutina_activa_id },
+      });
+      if (!rutina) {
+        throw new NotFoundException(`Rutina con id ${rutina_activa_id} no encontrada`);
+      }
+      usuario.rutina_activa = rutina;
+    }
 
     if (password) {
       usuario.password = await bcrypt.hash(password, 10);
     }
 
-    return await this.usuarioRepository.save(usuario);
+    const usuarioGuardado = await this.usuarioRepository.save(usuario);
+    
+    // Si se desvinculó la rutina, recargar para obtener el estado actualizado
+    if (rutina_activa_id === null) {
+      return await this.getUsuarioById(id);
+    }
+
+    return usuarioGuardado;
 
   }
 

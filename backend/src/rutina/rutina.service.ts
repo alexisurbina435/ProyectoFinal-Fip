@@ -61,6 +61,9 @@ export class RutinaService {
         password: hashedPassword,
         rol: 'admin' as any,
         estado_pago: false,
+        aceptarEmails: false,
+        aceptarWpp: false,
+        aceptarTerminos: true, // Requerido por la base de datos
       });
       usuarioSistema = await this.usuarioRepository.save(usuarioSistema);
     }
@@ -100,14 +103,14 @@ export class RutinaService {
       }
       usuario = usuarioEncontrado;
     } else if (createRutinaDto.tipo_rutina === TipoRutina.PLAN) {
-      // Para rutinas de plan, usar usuario sistema
-      usuario = await this.obtenerUsuarioSistema();
+      // Para rutinas de plan, no vincular a un usuario específico (pueden estar disponibles para múltiples clientes)
+      usuario = undefined;
       if (!createRutinaDto.categoria) {
         throw new BadRequestException('categoria es requerida para rutinas de tipo plan');
       }
     } else if (createRutinaDto.tipo_rutina === TipoRutina.GENERAL) {
-      // Para rutinas generales, usar usuario sistema
-      usuario = await this.obtenerUsuarioSistema();
+      // Para rutinas generales, no vincular a un usuario específico (pueden estar disponibles para múltiples clientes)
+      usuario = undefined;
     }
 
     const rutina = this.rutinaRepository.create({
@@ -152,12 +155,14 @@ export class RutinaService {
         }
         usuario = usuarioEncontrado;
       } else if (tipoRutina === TipoRutina.PLAN) {
-        usuario = await this.obtenerUsuarioSistema();
+        // Para rutinas de plan, no vincular a un usuario específico
+        usuario = undefined;
         if (!updateRutinaDto.categoria && !rutinaExistente.categoria) {
           throw new BadRequestException('categoria es requerida para rutinas de tipo plan');
         }
       } else if (tipoRutina === TipoRutina.GENERAL) {
-        usuario = await this.obtenerUsuarioSistema();
+        // Para rutinas generales, no vincular a un usuario específico
+        usuario = undefined;
       }
 
       // Actualizar con el usuario correcto
@@ -205,12 +210,14 @@ export class RutinaService {
         }
         usuario = usuarioEncontrado;
       } else if (createRutinaCompletaDto.tipo_rutina === TipoRutina.PLAN) {
-        usuario = await this.obtenerUsuarioSistema();
+        // Para rutinas de plan, no vincular a un usuario específico
+        usuario = undefined;
         if (!createRutinaCompletaDto.categoria) {
           throw new BadRequestException('categoria es requerida para rutinas de tipo plan');
         }
       } else if (createRutinaCompletaDto.tipo_rutina === TipoRutina.GENERAL) {
-        usuario = await this.obtenerUsuarioSistema();
+        // Para rutinas generales, no vincular a un usuario específico
+        usuario = undefined;
       }
 
       // 2. Crear la rutina base

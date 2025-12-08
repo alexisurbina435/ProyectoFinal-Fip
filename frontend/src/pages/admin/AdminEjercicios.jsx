@@ -5,6 +5,7 @@ import AdminBar from "../../components/AdminBar/AdminBar"
 import ejercicioService from "../../services/ejercicio.service";
 import PopUpEdit from "../../components/popUpEdit/PopUpEdit";
 import { getEjercicioFields } from "../../components/popUpEdit/fields/ejercicioFields";
+import "./admin.css";
 
 const AdminEjercicios = () => {
   const [ejercicios, setEjercicios] = useState([]);
@@ -212,13 +213,7 @@ const AdminEjercicios = () => {
             searchValue={searchTerm}
           />
           {error && (
-            <div className="error-message" style={{ 
-              padding: '10px', 
-              margin: '10px 0', 
-              backgroundColor: '#fee', 
-              color: '#c33', 
-              borderRadius: '4px' 
-            }}>
+            <div className="admin-error-message">
               {error}
             </div>
           )}
