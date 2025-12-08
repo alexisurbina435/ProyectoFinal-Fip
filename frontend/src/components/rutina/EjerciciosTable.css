@@ -1,0 +1,47 @@
+.tabla-empty {
+  text-align: center;
+  color: #999;
+}
+
+.tabla-input-number {
+  width: 60px;
+  background: #2a2a2a;
+  border: 1px solid #ff6a00;
+  color: #fff;
+  padding: 4px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.tabla-link {
+  color: #ff6a00;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.tabla-link:hover {
+  color: #ff8533;
+}
+
+.tabla-link-disabled {
+  color: #666;
+  cursor: default;
+}
+
+.tabla-btn-eliminar {
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.2s ease;
+}
+
+.tabla-btn-eliminar:hover {
+  background: #c82333;
+  transform: translateY(-1px);
+}
+

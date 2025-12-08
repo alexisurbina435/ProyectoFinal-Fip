@@ -1,0 +1,102 @@
+.rutina-info-header {
+  position: relative;
+}
+
+.rutina-info-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.rutina-info-field {
+  margin-bottom: 15px;
+}
+
+.rutina-info-label {
+  display: block;
+  color: #ff6a00;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.rutina-info-input {
+  background: #2a2a2a;
+  border: 1px solid #ff6a00;
+  color: #fff;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+  width: 100%;
+  max-width: 500px;
+}
+
+.rutina-info-input-name {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.rutina-info-textarea {
+  background: #2a2a2a;
+  border: 1px solid #ff6a00;
+  color: #ccc;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  width: 100%;
+  max-width: 500px;
+  min-height: 80px;
+  resize: vertical;
+}
+
+.rutina-info-text {
+  margin: 0;
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+.rutina-info-text-name {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.rutina-info-text-italic {
+  font-style: italic;
+}
+
+.rutina-info-metadata {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.rutina-info-metadata-item {
+  flex: 0 0 auto;
+}
+
+.rutina-info-select {
+  background: #2a2a2a;
+  border: 1px solid #ff6a00;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  min-width: 120px;
+}
+
+.rutina-info-select-cliente {
+  min-width: 250px;
+}
+
+.rutina-info-warning {
+  margin-top: 15px;
+  padding: 8px 12px;
+  background: rgba(255, 106, 0, 0.2);
+  border: 1px solid #ff6a00;
+  border-radius: 4px;
+  color: #ff6a00;
+  font-size: 0.85rem;
+}
+

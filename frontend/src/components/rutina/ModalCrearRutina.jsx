@@ -190,7 +190,7 @@ const ModalCrearRutina = ({ isOpen, onClose, onRutinaCreada, initialUsuarioId = 
         nombre: ejercicio.nombre,
         series: 3,
         repeticiones: 10,
-        peso: 0
+        peso: 1
       });
       setSemanas(nuevasSemanas);
     }

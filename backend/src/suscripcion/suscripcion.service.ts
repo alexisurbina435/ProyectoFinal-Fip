@@ -26,14 +26,12 @@ export class SuscripcionService {
     const plan = await this.planRepo.findOne({ where: { id_plan: dto.id_plan } });
     if (!plan) throw new NotFoundException('Plan no encontrado');
 
-    // Crear suscripción en MercadoPago
     const mp = await this.mpService.crearSuscripcion(usuario.email, plan.precio, plan.nombre);
 
     const fechaInicio = new Date();
     const fechaFin = new Date();
     fechaFin.setMonth(fechaFin.getMonth() + dto.mesesContratados);
 
-    // Guardamos la suscripción en estado "Pendiente"
     const suscripcion = this.suscripcionRepository.create({
       usuario,
       plan,
@@ -47,22 +45,20 @@ export class SuscripcionService {
 
     await this.suscripcionRepository.save(suscripcion);
 
-    return mp; // Devuelve init_point y id para pagar
+    return mp;
   }
-
 
   async cancelar(preapprovalId: string) {
     await this.mpService.cancelarSuscripcion(preapprovalId);
     await this.suscripcionRepository.update({ preapprovalId }, { estado: 'CANCELADA' });
   }
 
-   async actualizarEstado(preapprovalId: string, estado: string) {
 
+  async actualizarEstado(preapprovalId: string, estado: string) {
     const suscripcion = await this.suscripcionRepository.findOne({
       where: { preapprovalId },
-      relations: ['usuario'],
+      relations: ['usuario', 'plan'],
     });
-
 
     if (!suscripcion) {
       console.log('No se encontró la suscripción con preapprovalId:', preapprovalId);
@@ -72,21 +68,28 @@ export class SuscripcionService {
     suscripcion.estado = estado.toUpperCase();
     await this.suscripcionRepository.save(suscripcion);
 
-
     const estadoActivo = ['authorized', 'approved', 'active'];
     if (estadoActivo.includes(estado)) {
       suscripcion.usuario.estado_pago = true;
+      suscripcion.estado = 'ACTIVA';
+
       await this.usuarioRepo.save(suscripcion.usuario);
+      await this.suscripcionRepository.save(suscripcion);
     }
 
-    console.log('Suscripcion encontrada:', suscripcion);
-    console.log('Usuario relacionado:', suscripcion?.usuario);
-    console.log('Estado recibido:', estado);
     if (estado === 'cancelled') {
       suscripcion.usuario.estado_pago = false;
+      suscripcion.estado = 'CANCELADA';
       await this.usuarioRepo.save(suscripcion.usuario);
+      await this.suscripcionRepository.save(suscripcion);
     }
+
+    console.log('Suscripción actualizada:', suscripcion);
+    console.log('Usuario actualizado:', suscripcion.usuario);
+    console.log('Plan activo:', suscripcion.plan);
   }
+
+
 
 
 
@@ -97,24 +100,20 @@ export class SuscripcionService {
 
 
     const suscripcionActual = await this.suscripcionRepository.findOne({
-      where: { usuario: { id_usuario }, estado: 'ACTIVA' },
+      where: { usuario: { id_usuario }, estado: 'Activa' },
       relations: ['plan', 'usuario'],
     });
     if (!suscripcionActual) throw new NotFoundException('No se encontró suscripción activa');
 
-    //Cancela suscripcion en mercado pago
     await this.mpService.cancelarSuscripcion(suscripcionActual.preapprovalId);
     suscripcionActual.estado = 'CANCELADA';
     await this.suscripcionRepository.save(suscripcionActual);
 
-    //Buscar nuevo plan
     const planNuevo = await this.planRepo.findOne({ where: { id_plan: id_plan_nuevo } });
     if (!planNuevo) throw new NotFoundException('Plan nuevo no encontrado');
 
-    //Crear nueva suscripción en MP
     const mp = await this.mpService.crearSuscripcion(usuario.email, planNuevo.precio, planNuevo.nombre);
 
-    //Crear registro en DB
     const fechaInicio = new Date();
     const fechaFin = new Date();
     fechaFin.setMonth(fechaFin.getMonth() + mesesContratados);

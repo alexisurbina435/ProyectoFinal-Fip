@@ -5,6 +5,7 @@ import AdminBar from "../../components/AdminBar/AdminBar"
 import ejercicioService from "../../services/ejercicio.service";
 import PopUpEdit from "../../components/popUpEdit/PopUpEdit";
 import { getEjercicioFields } from "../../components/popUpEdit/fields/ejercicioFields";
+import Swal from 'sweetalert2';
 import "./admin.css";
 
 const AdminEjercicios = () => {
@@ -122,7 +123,14 @@ const AdminEjercicios = () => {
         console.log('Datos a enviar al backend (create):', datosLimpios);
         await ejercicioService.createEjercicio(datosLimpios);
         await cargarEjercicios();
-        alert('Ejercicio creado exitosamente');
+        Swal.fire({
+          title: 'Éxito',
+          text: 'Ejercicio creado exitosamente',
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#ff6a00'
+        });
+        setIsModalOpen(false);
       } else {
         await handleUpdateEjercicio(selectedEjercicio.id_ejercicio || selectedEjercicio.id, ejercicioData);
       }
@@ -140,7 +148,13 @@ const AdminEjercicios = () => {
       setIsViewModalOpen(true);
     } catch (err) {
       console.error("Error al obtener detalles:", err);
-      alert('Error al cargar los detalles del ejercicio.');
+      Swal.fire({
+        title: 'Error',
+        text: 'Error al cargar los detalles del ejercicio.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#ff6a00'
+      });
     }
   };
 
@@ -153,7 +167,13 @@ const AdminEjercicios = () => {
       setIsModalOpen(true);
     } catch (err) {
       console.error("Error al obtener datos para editar:", err);
-      alert('Error al cargar los datos del ejercicio.');
+      Swal.fire({
+        title: 'Error',
+        text: 'Error al cargar los datos del ejercicio.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#ff6a00'
+      });
     }
   };
 
@@ -164,17 +184,41 @@ const AdminEjercicios = () => {
       console.log('Datos a enviar al backend:', datosLimpios);
       await ejercicioService.updateEjercicio(id, datosLimpios);
       await cargarEjercicios();
-      alert('Ejercicio actualizado exitosamente');
+      Swal.fire({
+        title: 'Éxito',
+        text: 'Ejercicio actualizado exitosamente',
+        icon: 'success',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#ff6a00'
+      });
+      setIsModalOpen(false);
     } catch (err) {
       console.error("Error al actualizar ejercicio:", err);
-      alert('Error al actualizar el ejercicio. Por favor, intenta nuevamente.');
+      Swal.fire({
+        title: 'Error',
+        text: err.response?.data?.message || 'Error al actualizar el ejercicio. Por favor, intenta nuevamente.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#ff6a00'
+      });
       throw err;
     }
   };
 
   // Funcion para eliminar un ejercicio
   const handleEliminar = async (id) => {
-    if (!window.confirm(`¿Estás seguro de que deseas eliminar el ejercicio con ID ${id}?`)) {
+    const confirmacion = await Swal.fire({
+      title: '¿Eliminar ejercicio?',
+      text: `¿Estás seguro de que deseas eliminar el ejercicio con ID ${id}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    });
+
+    if (!confirmacion.isConfirmed) {
       return;
     }
 
@@ -191,10 +235,22 @@ const AdminEjercicios = () => {
       // Recargar desde el servidor para asegurar consistencia
       await cargarEjercicios();
       
-      alert('Ejercicio eliminado exitosamente');
+      Swal.fire({
+        title: 'Éxito',
+        text: 'Ejercicio eliminado exitosamente',
+        icon: 'success',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#ff6a00'
+      });
     } catch (err) {
       console.error("Error al eliminar ejercicio:", err);
-      alert('Error al eliminar el ejercicio. Por favor, intenta nuevamente.');
+      Swal.fire({
+        title: 'Error',
+        text: err.response?.data?.message || 'Error al eliminar el ejercicio. Por favor, intenta nuevamente.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#ff6a00'
+      });
       // Si falla, recargar para asegurar que el estado este sincronizado
       await cargarEjercicios();
     }
@@ -248,6 +304,8 @@ const AdminEjercicios = () => {
         onSubmit={() => {}} // No se usa en modo view
         entityName="ejercicio"
         title="Detalles del Ejercicio"
+        onEditar={handleEditar}
+        onEliminar={handleEliminar}
       />
     </>
   );

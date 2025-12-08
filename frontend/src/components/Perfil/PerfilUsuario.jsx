@@ -43,6 +43,7 @@ const PerfilUsuario = () => {
             if (result.isConfirmed) {
                 try {
                     await suscripcionService.cancelar(preapprovalId);
+                    console.log("Recibí preapprovalId:", preapprovalId);
                     Swal.fire(
                         'Cancelado!',
                         'La suscripcion ha sido canceladad.',
@@ -61,6 +62,17 @@ const PerfilUsuario = () => {
             }
         });
     };
+    const suscripcionActiva = data?.suscripciones?.find(s => s.estado === 'ACTIVA');
+    const canceladas = data?.suscripciones?.filter(s => s.estado === 'CANCELADA');
+
+    const ultimaCancelada = canceladas?.reduce((ultima, actual) => {
+        if (!ultima) return actual;
+        return new Date(actual.fechaInicio) > new Date(ultima.fechaInicio) ? actual : ultima;
+    }, null);
+
+
+
+
     console.log(data);
     return (
 
@@ -323,47 +335,80 @@ const PerfilUsuario = () => {
                     <div className="plan-info">
                         <div className="plan-card">
                             <div className="plan-header">
-                                {data.estado_pago === true && data?.suscripciones && data.suscripciones.length > 0 && data.suscripciones[0]?.plan ? (
+                                {suscripcionActiva ? (
                                     <>
-                                        <h3 id="planNombre">Plan {data.suscripciones[0].plan?.nombre || 'N/A'}</h3>
-                                        <span className="plan-status" id="planStatus">Activo</span>
+                                        <h3 id="planNombre">Plan {suscripcionActiva.plan?.nombre}</h3>
+                                        <span className="plan-status">Activo</span>
+                                    </>
+                                ) : ultimaCancelada ? (
+                                    <>
+                                        <h3 id="planNombre">Plan {ultimaCancelada.plan?.nombre}</h3>
+                                        <span className="plan-status">Cancelado</span>
                                     </>
                                 ) : (
                                     <>
                                         <h3 id="planNombre">Plan Gratis</h3>
-                                        <span className="plan-status" id="planStatus">Gratis</span>
+                                        <span className="plan-status">Gratis</span>
                                     </>
                                 )}
                             </div>
+
                             <div className="plan-details">
-                                {data.estado_pago === true && data?.suscripciones && data.suscripciones.length > 0 && data.suscripciones[0]?.plan ? (
+                                {suscripcionActiva ? (
                                     <>
-                                        <p><strong>Precio:</strong> <span id="planPrecio">${data.suscripciones[0].plan?.precio || 'N/A'}</span></p>
-                                        <p><strong>Fecha de inicio:</strong> <span id="planFechaInicio">{data.suscripciones[0].fechaInicio ? new Date(data.suscripciones[0].fechaInicio).toLocaleDateString() : 'N/A'}</span></p>
-                                        <p><strong>Próximo pago:</strong> <span id="planProximoPago">{data.suscripciones[0].fechaFin ? new Date(data.suscripciones[0].fechaFin).toLocaleDateString() : 'N/A'}</span></p>
-                                        <p><strong>Estado:</strong> <span id="planEstado">{data.suscripciones[0].estado || 'N/A'}</span></p>
-                                        <p><strong>Total pagado:</strong> <span id="planPrecio">${data.suscripciones[0].montoPagado || '0'}</span></p>
+                                        <p><strong>Precio:</strong> <span id="planPrecio">${suscripcionActiva.plan?.precio || 'Sin datos'}</span></p>
+                                        <p><strong>Fecha de inicio:</strong> <span id="planFechaInicio">{suscripcionActiva.fechaInicio ? new Date(suscripcionActiva.fechaInicio).toLocaleDateString() : 'Sin datos'}</span></p>
+                                        <p><strong>Próximo pago:</strong> <span id="planProximoPago">{suscripcionActiva.fechaFin ? new Date(suscripcionActiva.fechaFin).toLocaleDateString() : 'Sin datos'}</span></p>
+                                        <p><strong>Estado:</strong> <span id="planEstado">{suscripcionActiva.estado || 'Sin datos'}</span></p>
+                                        <p><strong>Total pagado:</strong> <span id="planPrecio">${suscripcionActiva.montoPagado || '0'}</span></p>
                                     </>
-                                ) : (<p><strong>Plan:</strong> <span id="planPrecio">Gratis</span></p>)}
+                                ) : ultimaCancelada ? (
+                                    <>
+                                        <p><strong>Precio:</strong> <span id="planPrecio">${ultimaCancelada.plan?.precio || 'Sin datos'}</span></p>
+                                        <p><strong>Fecha de inicio:</strong> <span id="planFechaInicio">{ultimaCancelada.fechaInicio ? new Date(ultimaCancelada.fechaInicio).toLocaleDateString() : 'Sin datos'}</span></p>
+                                        <p><strong>Fecha fin:</strong> <span id="planFechaFin">{ultimaCancelada.fechaFin ? new Date(ultimaCancelada.fechaFin).toLocaleDateString() : 'Sin datos'}</span></p>
+                                        <p><strong>Estado:</strong> <span id="planEstado">{ultimaCancelada.estado || 'Cancelado'}</span></p>
+                                        <p><strong>Total pagado:</strong> <span id="planPrecio">${ultimaCancelada.montoPagado || '0'}</span></p>
+                                    </>
+                                ) : (
+                                    <p><strong>Plan:</strong> <span id="planPrecio">Gratis</span></p>
+                                )}
                             </div>
+
+
                             <div className="plan-benefits">
                                 <h4>Beneficios de tu plan:</h4>
                                 <ul className="lista-beneficios">
-                                    {data.estado_pago === true && data?.suscripciones && data.suscripciones.length > 0 && data.suscripciones[0]?.plan ? (
+                                    {suscripcionActiva ? (
                                         <>
                                             {beneficios
-                                                .find((bene) => bene.id === data.suscripciones[0].plan?.nombre)
+                                                .find((bene) => bene.id === suscripcionActiva.plan?.nombre)
                                                 ?.beneficios.map((item, index) => (
                                                     <li key={index}>{item}</li>
                                                 ))}
                                         </>
-                                    ) : (<p><strong>Plan:</strong> <span id="planPrecio">Gratis</span></p>)}
+                                    ) : ultimaCancelada ? (
+                                        <>
+                                            {beneficios
+                                                .find((bene) => bene.id === ultimaCancelada.plan?.nombre)
+                                                ?.beneficios.map((item, index) => (
+                                                    <li key={index}>{item}</li>
+                                                ))}
+                                        </>
+                                    ) : (
+                                        <p><strong>Plan:</strong> <span id="planPrecio">Gratis</span></p>
+                                    )}
                                 </ul>
+
 
                             </div>
                             <div className="plan-actions">
                                 <Link className="btn-save" to="/inscribite">Cambiar plan</Link>
-                                <button className="btn-cancel" onClick={() => cancelarSuscripcion(data?.suscripciones?.[0].preapprovalId)}>Cancelar Suscripción</button>
+                                {suscripcionActiva ? <button
+                                    className="btn-cancel"
+                                    onClick={() => cancelarSuscripcion(suscripcionActiva.preapprovalId)}>Cancelar Suscripción</button> :
+                                    <button className="btn-cancel">Cancelar Suscripción</button>}
+                                {/* <button className="btn-cancel" onClick={() => cancelarSuscripcion(data?.suscripciones?.[0].preapprovalId)}>Cancelar Suscripción</button> */}
                             </div>
                         </div>
                     </div>

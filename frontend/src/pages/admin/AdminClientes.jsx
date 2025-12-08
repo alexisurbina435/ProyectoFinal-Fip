@@ -643,6 +643,8 @@ const AdminClientes = () => {
         onSubmit={() => { }} // No se usa en modo view
         entityName="cliente"
         title="Detalles del Cliente"
+        onEditar={handleEditar}
+        onEliminar={handleEliminar}
         customContent={
           viewUsuario ? (
             <div className="rutina-gestion-container rutina-gestion-container-view">

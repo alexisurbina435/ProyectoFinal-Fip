@@ -16,18 +16,32 @@ export class MercadoPagoController {
   // esto lo usa mercadopago cuando tengamos el dominio de la pag 
   @Post('webhook')
   @HttpCode(200)
-  async webhook(@Body() body: any) {
+  async webhook(@Body() body: any, @Headers() headers: any) {
     console.log('Webhook recibido:', JSON.stringify(body, null, 2));
+    console.log('Headers:', JSON.stringify(headers, null, 2));
 
-    if (body.type === 'preapproval' || body.type === 'subscription_preapproval') {
-      const preapprovalId = body.data.id;
-      const status = body.data.status;
-      await this.suscripcionService.actualizarEstado(preapprovalId, status);
+    const type = body.type || body.topic;
+    const preapprovalId = body.data?.id || body.id;
+
+    if (!preapprovalId) {
+      console.log('No se pudo obtener preapprovalId del webhook');
+      return { ok: false, message: 'preapprovalId no encontrado' };
     }
 
-    return { received: true };
-  }
+    if (type === 'preapproval' || type === 'subscription_preapproval') {
+      try {
+        const detalle = await this.mpService.obtenerPreapproval(preapprovalId);
+        const status = detalle.status;
+        console.log("Estado real:", status);
 
+        await this.suscripcionService.actualizarEstado(preapprovalId, status);
+      } catch (err) {
+        console.error('Error procesando preapproval:', err);
+      }
+    }
+
+    return { ok: true };
+  }
 
 }
 

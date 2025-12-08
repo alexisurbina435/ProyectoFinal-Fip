@@ -2,8 +2,8 @@
 
 class ApiClient {
   constructor() {
-    // Usar variable de entorno o localhost por defecto para desarrollo local
-    this.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+    // this.baseURL = 'https://proyectofinal-backend-7797.onrender.com';
+    this.baseURL = 'http://localhost:3000';
   }
 
   // Maneja la respuesta de la API

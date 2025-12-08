@@ -16,7 +16,7 @@ export class AuthService {
     ) { }
   
 
-  async login(email: string, passwordd: string): Promise<{ usuario: Omit<Usuario, 'password'>; access_token: string }> {
+  async login(email: string, passwordd: string): Promise<Usuario | any> {
       const usuario = await this.usuarioRepository.findOne({ where: { email } });
       console.log('Usuario encontrado:', usuario);
       if (!usuario) {
@@ -28,7 +28,6 @@ export class AuthService {
         throw new BadRequestException('La contraseña es incorrecta');
       }
       // quito la contraseña al logear 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password: _, ...publicUser } = usuario;
       console.log('Usuario público:', publicUser);
       const payload = {
@@ -44,9 +43,13 @@ export class AuthService {
         // estadoPago: usuario.estado_pago,
       };
   
-      // El secret y expiresIn ya están configurados en el JwtModule
-      // Solo necesitamos pasar el payload
-      const access_token = this.jwtService.sign(payload);
+      const secret = this.configService.get<string>('JWT_SECRET');
+      const expiresIn = this.configService.get<number>('JWT_EXPIRES_IN');
+  
+      const access_token = this.jwtService.sign(payload, {
+        secret: secret,
+        expiresIn: expiresIn,
+      });
   
   
       return {

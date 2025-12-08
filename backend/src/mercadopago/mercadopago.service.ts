@@ -52,6 +52,16 @@ export class MercadoPagoService {
         }
     }
 
+    async obtenerPreapproval(id: string) {
+        try {
+            const result = await this.preapproval.get({ id });
+            return result;
+        } catch (error) {
+            console.error("Error obteniendo preapproval:", error);
+            throw error;
+        }
+    }
+
     // Crear suscripción (sandbox)
     async crearSuscripcion(email: string, monto: number, descripcion: string) {
         try {
@@ -66,8 +76,10 @@ export class MercadoPagoService {
                     currency_id: 'ARS',
                     start_date: startDate,
                     end_date: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString()
-
                 },
+
+                notification_url: "https://proyectofinal-backend-7797.onrender.com/mercadopago/webhook",
+
                 back_url: 'https://gymsuperarse.web.app/planillaSalud',
                 payer_email: email,
             };
@@ -75,8 +87,8 @@ export class MercadoPagoService {
             const result = await this.preapproval.create({ body: payload });
 
             return {
-                id: result.id,        
-                init_point: result.init_point, 
+                id: result.id,
+                init_point: result.init_point,
             };
         } catch (err) {
             console.error("== MERCADOPAGO ERROR ==", err);

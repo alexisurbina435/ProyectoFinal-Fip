@@ -1,0 +1,77 @@
+.rutina-action-buttons {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.rutina-btn {
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.rutina-btn-edit {
+  background: #ff6a00;
+  color: #fff;
+}
+
+.rutina-btn-edit:hover {
+  background: #ff8533;
+  transform: translateY(-1px);
+}
+
+.rutina-btn-save {
+  background: #28a745;
+  color: #fff;
+}
+
+.rutina-btn-save:hover:not(.rutina-btn-disabled) {
+  background: #218838;
+  transform: translateY(-1px);
+}
+
+.rutina-btn-save-new {
+  background: #ff6a00;
+  color: #fff;
+}
+
+.rutina-btn-save-new:hover:not(.rutina-btn-disabled) {
+  background: #ff8533;
+  transform: translateY(-1px);
+}
+
+.rutina-btn-cancel {
+  background: #6c757d;
+  color: #fff;
+}
+
+.rutina-btn-cancel:hover {
+  background: #5a6268;
+  transform: translateY(-1px);
+}
+
+.rutina-btn-disabled {
+  background: #666 !important;
+  cursor: not-allowed !important;
+  opacity: 0.6;
+}
+
+.rutina-btn-disabled:hover {
+  transform: none !important;
+}
+
+.rutina-btn-delete {
+  background: #dc3545;
+  color: #fff;
+}
+
+.rutina-btn-delete:hover {
+  background: #c82333;
+  transform: translateY(-1px);
+}
+

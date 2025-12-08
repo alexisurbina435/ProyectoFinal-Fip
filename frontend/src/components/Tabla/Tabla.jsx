@@ -85,14 +85,13 @@ const Tabla = ({
                       </span>
                     </th>
                   ))}
-                  <th>Acciones</th>
                 </tr>
               </thead>
 
               <tbody className="table-body">
                 {loading ? (
                   <tr>
-                    <td colSpan={columns.length + 1} className="loading-cell">
+                    <td colSpan={columns.length} className="loading-cell">
                       <div className="loading-spinner">
                         <div className="spinner"></div>
                         <span>Cargando...</span>
@@ -103,37 +102,25 @@ const Tabla = ({
                   paginatedData.map((row, index) => (
                     <tr 
                       key={index} 
-                      className={`table-row ${index % 2 === 0 ? 'even' : 'odd'}`}
+                      className={`table-row ${index % 2 === 0 ? 'even' : 'odd'} ${onVer ? 'table-row-clickable' : ''}`}
+                      onClick={() => onVer && onVer(row.id)}
+                      style={{ cursor: onVer ? 'pointer' : 'default' }}
                     >
                       {columns.map((column) => (
                         <td 
                           key={column.key} 
                           className={column.clickable ? 'table-cell table-link' : 'table-cell'}
                           data-column={column.key}
+                          onClick={(e) => {
+                            // Prevenir que el click en celdas clickables abra el popup
+                            if (column.clickable) {
+                              e.stopPropagation();
+                            }
+                          }}
                         >
                           {renderCell(column, row)}
                         </td>
                       ))}
-                      {/* Acciones */}
-                      <td>
-                        <div className="action-buttons-table">
-                            {onVer && (
-                              <button className="btn-view" onClick={() => onVer(row.id)} title="Ver detalles">
-                                  <i className="fas fa-eye"></i> Ver
-                              </button>
-                            )}
-                            {onEditar && (
-                              <button className="btn-edit" onClick={() => onEditar(row.id)} title="Editar">
-                                  <i className="fas fa-edit"></i> Editar
-                              </button>
-                            )}
-                            {onEliminar && (
-                              <button className="btn-delete" onClick={() => onEliminar(row.id)} title="Eliminar">
-                                  <i className="fas fa-trash"></i> Eliminar
-                              </button>
-                            )}
-                        </div>
-                      </td>
                     </tr>
                   ))
                 )}

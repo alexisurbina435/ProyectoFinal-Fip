@@ -7,7 +7,7 @@ export const getEjercicioFields = ({ mode = 'create' } = {}) => {
       name: 'nombre',
       label: 'Nombre',
       type: 'text',
-      placeholder: 'Ingrese el nombre del ejercicio',
+      placeholder: 'Nombre del ejercicio',
       required: true,
       icon: 'fa-solid fa-dumbbell',
       validation: {
@@ -26,14 +26,9 @@ export const getEjercicioFields = ({ mode = 'create' } = {}) => {
       name: 'detalle',
       label: 'Descripción',
       type: 'textarea',
-      placeholder: 'Ingrese la descripción del ejercicio',
-      required: true,
+      placeholder: 'Descripción del ejercicio',
+      required: false,
       validation: {
-        required: 'La descripción es requerida',
-        minLength: {
-          value: 10,
-          message: 'La descripción debe tener al menos 10 caracteres'
-        },
         maxLength: {
           value: 500,
           message: 'La descripción debe tener menos de 500 caracteres'
@@ -41,17 +36,44 @@ export const getEjercicioFields = ({ mode = 'create' } = {}) => {
       }
     },
     {
+      name: 'tipo',
+      label: 'Tipo',
+      type: 'text',
+      placeholder: 'Tipo de ejercicio (ej: fuerza, cardio, flexibilidad)',
+      required: false,
+      icon: 'fa-solid fa-tag',
+      validation: {
+        maxLength: {
+          value: 50,
+          message: 'El tipo debe tener menos de 50 caracteres'
+        }
+      }
+    },
+    {
+      name: 'grupo_muscular',
+      label: 'Grupo Muscular',
+      type: 'text',
+      placeholder: 'Grupo muscular (ej: pecho, espalda, piernas)',
+      required: false,
+      icon: 'fa-solid fa-dumbbell',
+      validation: {
+        maxLength: {
+          value: 50,
+          message: 'El grupo muscular debe tener menos de 50 caracteres'
+        }
+      }
+    },
+    {
       name: 'img_url',
       label: 'URL de Imagen',
       type: 'text',
-      placeholder: 'ejemplo: flexiones.jpg o /images/flexiones.jpg',
-      required: true,
+      placeholder: 'https://... o /images/flexiones.jpg',
+      required: false,
       icon: 'fa-regular fa-image',
       validation: {
-        required: 'La URL de la imagen es requerida',
-        pattern: {
-          value: /^[a-zA-Z0-9._/-]+\.(jpg|jpeg|png|gif|webp)$/i,
-          message: 'La URL debe ser un archivo de imagen válido'
+        maxLength: {
+          value: 500,
+          message: 'La URL debe tener menos de 500 caracteres'
         }
       }
     },
@@ -59,14 +81,13 @@ export const getEjercicioFields = ({ mode = 'create' } = {}) => {
       name: 'video_url',
       label: 'URL de Video',
       type: 'text',
-      placeholder: 'ejemplo: flexiones.mp4 o /videos/flexiones.mp4',
-      required: true,
+      placeholder: 'https://... o /videos/flexiones.mp4',
+      required: false,
       icon: 'fa-solid fa-video',
       validation: {
-        required: 'La URL del video es requerida',
-        pattern: {
-          value: /^[a-zA-Z0-9._/-]+\.(mp4|webm|ogg)$/i,
-          message: 'La URL debe ser un archivo de video válido (mp4, webm, ogg)'
+        maxLength: {
+          value: 500,
+          message: 'La URL debe tener menos de 500 caracteres'
         }
       }
     }

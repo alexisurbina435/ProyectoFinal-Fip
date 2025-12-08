@@ -1,0 +1,73 @@
+.selector-group {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.selector-select {
+  background-color: #ff6a00;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  outline: none;
+  box-shadow: 0 0 8px rgba(255, 106, 0, 0.3);
+}
+
+.selector-select:hover:not(:disabled) {
+  background-color: #ff8533;
+  transform: scale(1.05);
+}
+
+.selector-select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.selector-btn {
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: bold;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.selector-btn-add {
+  background: #28a745;
+  color: #fff;
+}
+
+.selector-btn-add:hover {
+  background: #218838;
+  transform: translateY(-1px);
+}
+
+.selector-btn-delete {
+  background: #dc3545;
+  color: #fff;
+}
+
+.selector-btn-delete:hover {
+  background: #c82333;
+  transform: translateY(-1px);
+}
+
+.selector-btn-add-ejercicio {
+  background: #28a745;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.selector-btn-add-ejercicio:hover {
+  background: #218838;
+  transform: translateY(-1px);
+}
+
