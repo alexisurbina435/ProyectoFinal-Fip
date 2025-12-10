@@ -17,7 +17,7 @@ function CardBlog({ id, img, category, titulo, glosario, contenido }) {
           </div>
           <h1 className="titulo-card">{titulo}</h1>
           <p className="glosario-card">{glosario}</p>
-          <p className='"contenido-card'>{contenido}</p>
+          {/* <p className='"contenido-card'>{contenido}</p> */}
         </div>
       </div>
         </NavLink>

@@ -28,8 +28,8 @@ export class CreateBlogDto {
   @MinLength(1)
   contenido: string;
 
-  @Type(() => Number)
-  @IsInt()
-  @IsPositive()
-  id_usuario: number;
+  // @Type(() => Number)
+  // @IsInt()
+  // @IsPositive()
+  // id_usuario: number;
 }

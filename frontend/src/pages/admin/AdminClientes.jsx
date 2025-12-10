@@ -122,6 +122,14 @@ const AdminClientes = () => {
     });
   };
 
+  // Calcular contadores de clientes
+  const contadoresClientes = useMemo(() => {
+    const total = usuarios.length;
+    const activos = usuarios.filter(usuario => usuario.estado_pago === true).length;
+    const inactivos = total - activos;
+    return { total, activos, inactivos };
+  }, [usuarios]);
+
   // Filtrar datos segun el termino de busqueda
   const datosFiltrados = useMemo(() => {
     const datosTransformados = transformarDatos(usuarios);
@@ -198,9 +206,12 @@ const AdminClientes = () => {
       datosLimpios.rol = datosLimpios.rol.toLowerCase();
     }
 
-    // En modo edit, eliminar password si esta vacio
-    if (mode === 'edit' && (!datosLimpios.password || datosLimpios.password.trim() === '')) {
+    // En modo edit, SIEMPRE eliminar password (no se debe modificar desde AdminClientes)
+    // El password solo se cambia desde el perfil del usuario o al crear un nuevo usuario
+    // Esto previene que el hash del password se envíe y se hashee de nuevo en el backend
+    if (mode === 'edit') {
       delete datosLimpios.password;
+      delete datosLimpios.confirmPassword; // También eliminar confirmPassword si existe
     }
 
     // Asegurar que los booleanos sean realmente booleanos
@@ -520,6 +531,7 @@ const AdminClientes = () => {
             showAddButton={false}
             onSearch={setSearchTerm}
             searchValue={searchTerm}
+            contadores={contadoresClientes}
           />
           {error && (
             <div className="admin-error-message">
@@ -621,7 +633,7 @@ const AdminClientes = () => {
                           .filter(rutina => rutina.id_rutina !== selectedUsuario?.rutina_activa?.id_rutina)
                           .map(rutina => (
                             <option key={rutina.id_rutina} value={rutina.id_rutina}>
-                              {rutina.nombre} {rutina.usuario ? `(${rutina.usuario.nombre} ${rutina.usuario.apellido})` : ''}
+                              {rutina.nombre} {rutina.tipo_rutina === 'cliente' ? '(Cliente específico)' : rutina.tipo_rutina === 'plan' ? `(${rutina.categoria})` : '(General)'}
                             </option>
                           ))}
                       </select>

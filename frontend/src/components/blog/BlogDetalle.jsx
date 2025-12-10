@@ -19,14 +19,14 @@ export default function BlogDetalle() {
 
       <div className="contenedor">
         <div className="card-glosario">
-          <h3>{glosario}</h3>
+          <h3 className="glosario-blog">{glosario}</h3>
         </div>
         <div className="cards-grande">
-          <p>{contenido}</p>
+          <p className="contenido-blog">{contenido}</p>
         </div>
-        <div className="cards">
+        {/* <div className="cards">
           <h4>{category}</h4>
-        </div>
+        </div> */}
         </div>
         </div>
     

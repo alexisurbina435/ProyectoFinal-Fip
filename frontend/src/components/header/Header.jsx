@@ -36,7 +36,7 @@ export default function Header() {
     if (user && user.rol === "admin") {
         userOptions = ["Panel administrador", "Perfil", "Blog", "Cerrar sesión"];
     } else if (user && user.estado_pago === true) {
-        userOptions = ["Perfil", "Blog", "Rutina", "Consulta", "Cerrar sesión"];
+        userOptions = ["Perfil", "Blog", "Rutina", "Cerrar sesión"];
     } else if (user && user.rol === "usuario" && user.estado_pago === false) {
         userOptions = ["Perfil", "Blog", "Cerrar sesión"];
     } else {

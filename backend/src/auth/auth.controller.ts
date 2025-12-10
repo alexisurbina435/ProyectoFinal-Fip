@@ -14,8 +14,8 @@ export class AuthController {
     response.cookie('token', access_token, {
       httpOnly: true,
       secure: true, // solo por HTTPS
-      // sameSite: 'none',//para el deploy
-      sameSite: 'lax',// para el localhost
+      sameSite: 'none',//para el deploy
+      // sameSite: 'lax',// para el localhost
       maxAge: 5 * 60 * 60 * 1000, // 5 horas
       path:'/' 
     });
@@ -28,8 +28,8 @@ export class AuthController {
     response.clearCookie('token',{
       httpOnly: true,
       secure: true, // solo por HTTPS
-      // sameSite: 'none',//para el deploy
-      sameSite: 'lax',// para el localhost
+      sameSite: 'none',//para el deploy
+      // sameSite: 'lax',// para el localhost
       maxAge: 5 * 60 * 60 * 1000, // 5 horas
       path:'/' 
     });

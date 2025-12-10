@@ -3,10 +3,11 @@ import { SemanaController } from './semana.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Semana } from './entities/semana.entity';
 import { Rutina } from '../rutina/entities/rutina.entity';
+import { Dia } from '../dia/entities/dia.entity';
 import { SemanaService } from './semana.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Semana, Rutina])],
+  imports: [TypeOrmModule.forFeature([Semana, Rutina, Dia])],
   providers: [SemanaService],
   controllers: [SemanaController],
   exports: [SemanaService], // Exportar para usar en RutinaService

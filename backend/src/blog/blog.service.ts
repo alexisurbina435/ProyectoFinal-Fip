@@ -21,7 +21,7 @@ export class BlogService {
 
   async getAllBlogs(): Promise<Blog[]> {
     return this.blogRepository.find({
-      relations: ['usuario'],
+      // relations: ['usuario'],
       order: { fecha_publicacion: 'DESC' },
     });
   }
@@ -38,7 +38,7 @@ export class BlogService {
   }
 
   async createBlog(createBlogDto: CreateBlogDto): Promise<Blog> {
-    const usuario = await this.findUsuario(createBlogDto.id_usuario);
+    // const usuario = await this.findUsuario(createBlogDto.id_usuario);
 
     const blog = this.blogRepository.create({
       imagen: createBlogDto.imagen,
@@ -46,7 +46,7 @@ export class BlogService {
       titulo: createBlogDto.titulo,
       glosario: createBlogDto.glosario,
       contenido: createBlogDto.contenido,
-      usuario,
+      // usuario,
     });
 
     try {
@@ -59,9 +59,9 @@ export class BlogService {
   async updateBlog(id: number, updateBlogDto: UpdateBlogDto): Promise<Blog> {
     const blog = await this.getBlogById(id);
 
-    if (updateBlogDto.id_usuario !== undefined) {
-      blog.usuario = await this.findUsuario(updateBlogDto.id_usuario);
-    }
+    // if (updateBlogDto.id_usuario !== undefined) {
+    //   blog.usuario = await this.findUsuario(updateBlogDto.id_usuario);
+    // }
 
     if (updateBlogDto.imagen !== undefined) {
       blog.imagen = updateBlogDto.imagen;

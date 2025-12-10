@@ -6,6 +6,7 @@ import { SemanaDto } from './dto/semana.dto';
 import { CreateSemanaDto } from './dto/create.semana.dto';
 import { UpdateSemanaDto } from './dto/update.semana.dto';
 import { Rutina } from '../rutina/entities/rutina.entity';
+import { Dia } from '../dia/entities/dia.entity';
 
 @Injectable()
 export class SemanaService {
@@ -15,6 +16,9 @@ export class SemanaService {
 
     @InjectRepository(Rutina)
     private readonly rutinaRepository: Repository<Rutina>,
+
+    @InjectRepository(Dia)
+    private readonly diaRepository: Repository<Dia>,
   ) {}
 
   async getAllSemana(): Promise<SemanaDto[]> {
@@ -47,6 +51,14 @@ export class SemanaService {
     });
 
     const semana = await this.SemanaRepository.save(newSemana);
+
+    // Crear automáticamente el día 1 para la nueva semana
+    const nuevoDia = this.diaRepository.create({
+      numero_dia: 1,
+      semana: semana,
+    });
+    await this.diaRepository.save(nuevoDia);
+
     return semana;
   }
 
@@ -66,7 +78,40 @@ export class SemanaService {
   }
 
   async deleteSemana(id_semana: number): Promise<boolean> {
+    // Obtener la semana a eliminar para conocer su rutina
+    const semanaAEliminar = await this.SemanaRepository.findOne({
+      where: { id_semana },
+      relations: ['rutina'],
+    });
+
+    if (!semanaAEliminar) {
+      return false;
+    }
+
+    const id_rutina = semanaAEliminar.rutina.id_rutina;
+
+    // Eliminar la semana
     const result = await this.SemanaRepository.delete({ id_semana });
+    
+    if ((result.affected ?? 0) > 0) {
+      // Reordenar las semanas restantes de la rutina
+      const semanasRestantes = await this.SemanaRepository.find({
+        where: { rutina: { id_rutina } },
+        order: { numero_semana: 'ASC' },
+      });
+
+      // Reasignar números de semana secuencialmente empezando desde 1
+      for (let i = 0; i < semanasRestantes.length; i++) {
+        const nuevoNumero = i + 1;
+        if (semanasRestantes[i].numero_semana !== nuevoNumero) {
+          await this.SemanaRepository.update(
+            { id_semana: semanasRestantes[i].id_semana },
+            { numero_semana: nuevoNumero }
+          );
+        }
+      }
+    }
+
     return (result.affected ?? 0) > 0;
   }
 }

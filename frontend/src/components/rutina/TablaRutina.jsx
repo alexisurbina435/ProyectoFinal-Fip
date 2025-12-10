@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import "./tablaRutina.css";
 import usuarioService from "../../services/usuario.service";
 import rutinaService from "../../services/rutina.service";
@@ -29,6 +29,7 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
   const [loading, setLoading] = useState(!rutinaProp);
   const [error, setError] = useState(null);
   const [ejerciciosFiltrados, setEjerciciosFiltrados] = useState([]);
+  const rutinaOriginalIdRef = useRef(null); // Para rastrear qué rutina tiene guardada en rutinaOriginal
   
   // Estados para agregar ejercicios
   const [mostrarModalAgregarEjercicio, setMostrarModalAgregarEjercicio] = useState(false);
@@ -48,6 +49,11 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
   
   // Estado para rastrear cambios en dificultades (series, repeticiones, peso)
   const [dificultadesEditadas, setDificultadesEditadas] = useState(new Map()); // Map<dificultadId, {series, repeticiones, peso}>
+  
+  // Estados para rastrear elementos agregados durante la edición (para poder revertirlos al cancelar)
+  const [semanasAgregadas, setSemanasAgregadas] = useState(new Set()); // Set<id_semana>
+  const [diasAgregados, setDiasAgregados] = useState(new Set()); // Set<id_dia>
+  const [ejerciciosAgregados, setEjerciciosAgregados] = useState(new Set()); // Set<id_dificultad>
 
   // Hooks personalizados
   const {
@@ -62,8 +68,120 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
     resetEdit
   } = useRutinaEdit(rutina, rutinaOriginal);
   
-  // Calcular si hay cambios incluyendo dificultades editadas
-  const tieneCambios = tieneCambiosBase || dificultadesEditadas.size > 0;
+  // Comparar estructuras de rutinas y detectar cambios en semanas/días/ejercicios
+  const tieneCambiosEstructurales = useMemo(() => {
+    if (!rutina || !rutinaOriginal) {
+      return false;
+    }
+    
+    // Comparar número de semanas
+    const semanasOriginales = rutinaOriginal.semanas || [];
+    const semanasActuales = rutina.semanas || [];
+    
+    if (semanasOriginales.length !== semanasActuales.length) {
+      return true;
+    }
+    
+    // Comparar IDs de semanas (para detectar agregaciones y eliminaciones)
+    const idsSemanasOriginales = new Set(semanasOriginales.map(s => s.id_semana));
+    const idsSemanasActuales = new Set(semanasActuales.map(s => s.id_semana));
+    
+    // Detectar semanas nuevas (agregadas)
+    for (const id of idsSemanasActuales) {
+      if (!idsSemanasOriginales.has(id)) {
+        return true; // Nueva semana agregada
+      }
+    }
+    // Detectar semanas eliminadas
+    for (const id of idsSemanasOriginales) {
+      if (!idsSemanasActuales.has(id)) {
+        return true; // Semana eliminada
+      }
+    }
+    
+    // Comparar días y ejercicios en cada semana
+    for (const semanaActual of semanasActuales) {
+      const semanaOriginal = semanasOriginales.find(s => s.id_semana === semanaActual.id_semana);
+      if (!semanaOriginal) {
+        // Nueva semana, ya detectada arriba, pero también puede tener días/ejercicios nuevos
+        if (semanaActual.dias && semanaActual.dias.length > 0) {
+          return true; // Nueva semana con contenido
+        }
+        continue;
+      }
+      
+      const diasOriginales = semanaOriginal.dias || [];
+      const diasActuales = semanaActual.dias || [];
+      
+      // Comparar número de días
+      if (diasOriginales.length !== diasActuales.length) {
+        return true;
+      }
+      
+      // Comparar IDs de días (para detectar agregaciones y eliminaciones)
+      const idsDiasOriginales = new Set(diasOriginales.map(d => d.id_dia));
+      const idsDiasActuales = new Set(diasActuales.map(d => d.id_dia));
+      
+      // Detectar días nuevos (agregados)
+      for (const id of idsDiasActuales) {
+        if (!idsDiasOriginales.has(id)) {
+          return true; // Nuevo día agregado
+        }
+      }
+      // Detectar días eliminados
+      for (const id of idsDiasOriginales) {
+        if (!idsDiasActuales.has(id)) {
+          return true; // Día eliminado
+        }
+      }
+      
+      // Comparar ejercicios (dificultades) en cada día
+      for (const diaActual of diasActuales) {
+        const diaOriginal = diasOriginales.find(d => d.id_dia === diaActual.id_dia);
+        if (!diaOriginal) {
+          // Nuevo día, ya detectado arriba, pero también puede tener ejercicios nuevos
+          if (diaActual.dificultades && diaActual.dificultades.length > 0) {
+            return true; // Nuevo día con ejercicios
+          }
+          continue;
+        }
+        
+        const dificultadesOriginales = diaOriginal.dificultades || [];
+        const dificultadesActuales = diaActual.dificultades || [];
+        
+        // Comparar número de ejercicios (excluyendo los marcados para eliminar)
+        const dificultadesOriginalesFiltradas = dificultadesOriginales.filter(
+          d => !ejerciciosEliminados.has(d.id_dificultad)
+        );
+        
+        if (dificultadesOriginalesFiltradas.length !== dificultadesActuales.length) {
+          return true;
+        }
+        
+        // Comparar IDs de dificultades (para detectar agregaciones y eliminaciones)
+        const idsDificultadesOriginales = new Set(dificultadesOriginalesFiltradas.map(d => d.id_dificultad));
+        const idsDificultadesActuales = new Set(dificultadesActuales.map(d => d.id_dificultad));
+        
+        // Detectar ejercicios nuevos (agregados)
+        for (const id of idsDificultadesActuales) {
+          if (!idsDificultadesOriginales.has(id)) {
+            return true; // Nuevo ejercicio agregado
+          }
+        }
+        // Nota: Las eliminaciones ya se manejan con ejerciciosEliminados, pero verificamos por si acaso
+        for (const id of idsDificultadesOriginales) {
+          if (!idsDificultadesActuales.has(id) && !ejerciciosEliminados.has(id)) {
+            return true; // Ejercicio eliminado (no marcado)
+          }
+        }
+      }
+    }
+    
+    return false;
+  }, [rutina, rutinaOriginal, ejerciciosEliminados]);
+
+  // Calcular si hay cambios incluyendo dificultades editadas y cambios estructurales
+  const tieneCambios = tieneCambiosBase || dificultadesEditadas.size > 0 || tieneCambiosEstructurales;
 
   const {
     semanaSeleccionada,
@@ -79,10 +197,16 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
   const SwalToUse = getSwalInstance(isModal);
 
   // Si se pasa rutina como prop, actualizar estado
+  // IMPORTANTE: Solo actualizar rutinaOriginal en la carga inicial, no cuando rutinaProp cambia
+  // Esto permite detectar cambios estructurales (semanas/días/ejercicios agregados/eliminados)
   useEffect(() => {
     if (rutinaProp) {
       setRutina(rutinaProp);
-      setRutinaOriginal(JSON.parse(JSON.stringify(rutinaProp)));
+      // Solo actualizar rutinaOriginal si es la primera vez o si el ID cambió (nueva rutina seleccionada)
+      if (rutinaOriginalIdRef.current !== rutinaProp.id_rutina) {
+        setRutinaOriginal(JSON.parse(JSON.stringify(rutinaProp)));
+        rutinaOriginalIdRef.current = rutinaProp.id_rutina;
+      }
       setLoading(false);
     }
   }, [rutinaProp]);
@@ -215,15 +339,28 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
 
       const nuevaSemana = await semanaService.createSemana({
         numero_semana: maxNumeroSemana + 1,
-        rutina: { id_rutina: rutina.id_rutina }
+        id_rutina: rutina.id_rutina
       });
 
       const rutinaCompleta = await rutinaService.getRutinaById(rutina.id_rutina);
       setRutina(rutinaCompleta);
-      setRutinaOriginal(JSON.parse(JSON.stringify(rutinaCompleta)));
 
+      // Rastrear la semana agregada para poder revertirla al cancelar
       if (nuevaSemana.id_semana) {
+        setSemanasAgregadas(prev => new Set([...prev, nuevaSemana.id_semana]));
         setSemanaSeleccionada(nuevaSemana.id_semana);
+        
+        // Seleccionar automáticamente el día 1 de la nueva semana
+        const semanaCreada = rutinaCompleta.semanas?.find(s => s.id_semana === nuevaSemana.id_semana);
+        if (semanaCreada && semanaCreada.dias && semanaCreada.dias.length > 0) {
+          // El día 1 debería ser el primero
+          const dia1 = semanaCreada.dias.find(d => d.numero_dia === 1) || semanaCreada.dias[0];
+          if (dia1 && dia1.id_dia) {
+            setDiaSeleccionado(dia1.id_dia);
+            // Rastrear el día agregado también
+            setDiasAgregados(prev => new Set([...prev, dia1.id_dia]));
+          }
+        }
       }
 
       SwalToUse.fire({
@@ -281,7 +418,6 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
 
       const rutinaCompleta = await rutinaService.getRutinaById(rutina.id_rutina);
       setRutina(rutinaCompleta);
-      setRutinaOriginal(JSON.parse(JSON.stringify(rutinaCompleta)));
 
       if (rutinaCompleta.semanas && rutinaCompleta.semanas.length > 0) {
         setSemanaSeleccionada(rutinaCompleta.semanas[0].id_semana);
@@ -349,14 +485,15 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
 
       const nuevoDia = await diaService.createDia({
         numero_dia: maxNumeroDia + 1,
-        semana: { id_semana: semanaSeleccionada }
+        id_semana: semanaSeleccionada
       });
 
       const rutinaCompleta = await rutinaService.getRutinaById(rutina.id_rutina);
       setRutina(rutinaCompleta);
-      setRutinaOriginal(JSON.parse(JSON.stringify(rutinaCompleta)));
-
+      
+      // Rastrear el día agregado para poder revertirlo al cancelar
       if (nuevoDia.id_dia) {
+        setDiasAgregados(prev => new Set([...prev, nuevoDia.id_dia]));
         setDiaSeleccionado(nuevoDia.id_dia);
       }
 
@@ -418,7 +555,6 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
 
       const rutinaCompleta = await rutinaService.getRutinaById(rutina.id_rutina);
       setRutina(rutinaCompleta);
-      setRutinaOriginal(JSON.parse(JSON.stringify(rutinaCompleta)));
 
       const semanaActualizada = rutinaCompleta.semanas?.find(s => s.id_semana === semanaSeleccionada);
       if (semanaActualizada && semanaActualizada.dias && semanaActualizada.dias.length > 0) {
@@ -478,7 +614,8 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
   // Validar datos antes de guardar
   const validarDatos = () => {
     const tipoRutina = datosEditados.tipo_rutina !== undefined ? datosEditados.tipo_rutina : rutina.tipo_rutina;
-    const idUsuario = datosEditados.id_usuario !== undefined ? datosEditados.id_usuario : (rutina.usuario?.id_usuario || null);
+    // NOTA: usuarioActualId ahora solo viene de datosEditados (no hay rutina.usuario)
+    const idUsuario = datosEditados.id_usuario !== undefined ? datosEditados.id_usuario : null;
     const categoria = datosEditados.categoria !== undefined ? datosEditados.categoria : rutina.categoria;
 
     const validacion = validarDatosRutina(rutina, datosEditados, tipoRutina, idUsuario, categoria);
@@ -493,6 +630,98 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
       return false;
     }
     return true;
+  };
+
+  // Función para cancelar edición y revertir todos los cambios
+  const handleCancelar = async () => {
+    if (!rutinaOriginal) {
+      // Si no hay rutina original, simplemente resetear
+      setDificultadesEditadas(new Map());
+      setSemanasAgregadas(new Set());
+      setDiasAgregados(new Set());
+      setEjerciciosAgregados(new Set());
+      resetEdit();
+      return;
+    }
+
+    // Confirmar cancelación si hay cambios
+    if (tieneCambios || semanasAgregadas.size > 0 || diasAgregados.size > 0 || ejerciciosAgregados.size > 0) {
+      const confirmacion = await SwalToUse.fire({
+        title: '¿Cancelar cambios?',
+        text: 'Se perderán todos los cambios no guardados. ¿Estás seguro?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Sí, cancelar',
+        cancelButtonText: 'No, continuar editando',
+        zIndex: 10002
+      });
+
+      if (!confirmacion.isConfirmed) {
+        return;
+      }
+    }
+
+    try {
+      // Eliminar ejercicios agregados
+      for (const ejercicioId of ejerciciosAgregados) {
+        try {
+          await dificultadService.deleteDificultad(ejercicioId);
+        } catch (err) {
+          console.error(`Error al eliminar ejercicio agregado ${ejercicioId}:`, err);
+        }
+      }
+
+      // Eliminar días agregados (sus ejercicios se eliminarán en cascada)
+      for (const diaId of diasAgregados) {
+        try {
+          await diaService.deleteDia(diaId);
+        } catch (err) {
+          console.error(`Error al eliminar día agregado ${diaId}:`, err);
+        }
+      }
+
+      // Eliminar semanas agregadas (sus días y ejercicios se eliminarán en cascada)
+      for (const semanaId of semanasAgregadas) {
+        try {
+          await semanaService.deleteSemana(semanaId);
+        } catch (err) {
+          console.error(`Error al eliminar semana agregada ${semanaId}:`, err);
+        }
+      }
+
+      // Recargar la rutina original desde el backend
+      const rutinaRestaurada = await rutinaService.getRutinaById(rutinaOriginal.id_rutina);
+      setRutina(rutinaRestaurada);
+      setRutinaOriginal(JSON.parse(JSON.stringify(rutinaRestaurada)));
+      rutinaOriginalIdRef.current = rutinaRestaurada.id_rutina;
+
+      // Limpiar todos los estados de edición
+      setDificultadesEditadas(new Map());
+      setSemanasAgregadas(new Set());
+      setDiasAgregados(new Set());
+      setEjerciciosAgregados(new Set());
+      resetEdit();
+
+      SwalToUse.fire({
+        title: 'Cambios cancelados',
+        text: 'Todos los cambios han sido revertidos',
+        icon: 'info',
+        confirmButtonText: 'Aceptar',
+        timer: 2000,
+        zIndex: 10002
+      });
+    } catch (err) {
+      console.error("Error al cancelar cambios:", err);
+      SwalToUse.fire({
+        title: 'Error',
+        text: 'Error al revertir los cambios. Por favor, intenta nuevamente.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        zIndex: 10002
+      });
+    }
   };
 
   // Guardar cambios de la rutina (actualizar existente)
@@ -539,7 +768,11 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
       const rutinaCompleta = await rutinaService.getRutinaById(rutina.id_rutina);
       setRutina(rutinaCompleta);
       setRutinaOriginal(JSON.parse(JSON.stringify(rutinaCompleta)));
+      rutinaOriginalIdRef.current = rutinaCompleta.id_rutina; // Actualizar referencia
       setDificultadesEditadas(new Map());
+      setSemanasAgregadas(new Set());
+      setDiasAgregados(new Set());
+      setEjerciciosAgregados(new Set());
       resetEdit();
       
       if (onRutinaActualizada) {
@@ -572,7 +805,8 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
     if (!validarDatos()) return;
 
     const tipoRutina = datosEditados.tipo_rutina !== undefined ? datosEditados.tipo_rutina : rutina.tipo_rutina;
-    const idUsuario = datosEditados.id_usuario !== undefined ? datosEditados.id_usuario : (rutina.usuario?.id_usuario || null);
+    // NOTA: usuarioActualId ahora solo viene de datosEditados (no hay rutina.usuario)
+    const idUsuario = datosEditados.id_usuario !== undefined ? datosEditados.id_usuario : null;
 
     const confirmacion = await SwalToUse.fire({
       title: '¿Crear nueva rutina?',
@@ -702,13 +936,17 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
       const rutinaCompleta = await rutinaService.getRutinaById(rutina.id_rutina);
       setRutina(rutinaCompleta);
       setRutinaOriginal(JSON.parse(JSON.stringify(rutinaCompleta)));
+      rutinaOriginalIdRef.current = rutinaCompleta.id_rutina; // Actualizar referencia
       setDificultadesEditadas(new Map());
+      setSemanasAgregadas(new Set());
+      setDiasAgregados(new Set());
+      setEjerciciosAgregados(new Set());
       resetEdit();
       
       if (onRutinaActualizada) {
         onRutinaActualizada(rutinaCompleta);
       }
-
+      
       SwalToUse.fire({
         title: 'Éxito',
         text: 'Nueva rutina creada exitosamente',
@@ -809,35 +1047,10 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
       return;
     }
 
-    try {
-      await rutinaService.deleteRutina(rutina.id_rutina);
-      
-      SwalToUse.fire({
-        title: 'Éxito',
-        text: 'Rutina eliminada exitosamente',
-        icon: 'success',
-        confirmButtonText: 'Aceptar',
-        zIndex: 10002
-      });
-
-      // Cerrar el modal si está abierto
-      if (onClose) {
-        onClose();
-      }
-
-      // Notificar al componente padre para que actualice la lista
-      if (onEliminarRutina) {
-        onEliminarRutina(rutina.id_rutina);
-      }
-    } catch (err) {
-      console.error("Error al eliminar rutina:", err);
-      SwalToUse.fire({
-        title: 'Error',
-        text: err.response?.data?.message || 'Error al eliminar la rutina. Por favor, intenta nuevamente.',
-        icon: 'error',
-        confirmButtonText: 'Aceptar',
-        zIndex: 10002
-      });
+    // Delega eliminación al componente padre
+    // AdminRutinas maneja la eliminación y actualización de la lista
+    if (onEliminarRutina) {
+      onEliminarRutina(rutina.id_rutina);
     }
   };
 
@@ -938,13 +1151,18 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
     }
 
     try {
-      await dificultadService.createDificultad({
+      const dificultadCreada = await dificultadService.createDificultad({
         diaId: diaSeleccionado,
         ejercicioId: ejercicioId,
         series: 3,
         repeticiones: 10,
         peso: 1
       });
+
+      // Rastrear el ejercicio agregado para poder revertirlo al cancelar
+      if (dificultadCreada && dificultadCreada.id_dificultad) {
+        setEjerciciosAgregados(prev => new Set([...prev, dificultadCreada.id_dificultad]));
+      }
 
       // Recargar la rutina completa para obtener los cambios
       // Usamos un pequeño delay para asegurar que el backend haya procesado el cambio
@@ -954,7 +1172,6 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
       
       // Asegurar que mantenemos la selección actual de semana y día
         setRutina(rutinaActualizada);
-      setRutinaOriginal(JSON.parse(JSON.stringify(rutinaActualizada)));
       
       // Forzar actualización de ejercicios filtrados manualmente
       if (rutinaActualizada && semanaSeleccionada && diaSeleccionado) {
@@ -1044,13 +1261,18 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
     try {
       const ejercicioCreado = await ejercicioService.createEjercicio(datosEjercicio);
 
-      await dificultadService.createDificultad({
+      const dificultadCreada = await dificultadService.createDificultad({
         diaId: diaSeleccionado,
         ejercicioId: ejercicioCreado.id_ejercicio,
         series: 3,
         repeticiones: 10,
         peso: 1
       });
+
+      // Rastrear el ejercicio agregado para poder revertirlo al cancelar
+      if (dificultadCreada && dificultadCreada.id_dificultad) {
+        setEjerciciosAgregados(prev => new Set([...prev, dificultadCreada.id_dificultad]));
+      }
 
       const [ejerciciosData, rutinaActualizada] = await Promise.all([
         ejercicioService.getAllEjercicios(),
@@ -1059,7 +1281,6 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
       
       setEjerciciosDisponibles(ejerciciosData);
       setRutina(rutinaActualizada);
-      setRutinaOriginal(JSON.parse(JSON.stringify(rutinaActualizada)));
       
       if (onRutinaActualizada) {
         onRutinaActualizada(rutinaActualizada);
@@ -1159,10 +1380,7 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
         onEditar={() => setEditando(true)}
         onGuardarCambios={handleGuardarCambios}
         onGuardarComoNueva={handleGuardarComoNueva}
-        onCancelar={() => {
-          setDificultadesEditadas(new Map());
-          resetEdit();
-        }}
+        onCancelar={handleCancelar}
         onEliminar={handleEliminarRutina}
         isModal={isModal}
       />

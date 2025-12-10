@@ -14,7 +14,6 @@ import { Semana } from '../semana/entities/semana.entity';
 import { Dia } from '../dia/entities/dia.entity';
 import { Dificultad } from '../dificultad/entities/dificultad.entity';
 import { Ejercicio } from '../ejercicio/entities/ejercicio.entity';
-import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class RutinaService {
@@ -40,78 +39,29 @@ export class RutinaService {
     private readonly dataSource: DataSource,
   ) {}
 
-  /**
-   * Obtiene o crea el usuario sistema para rutinas generales
-   * Este usuario se usa como "propietario" de rutinas generales y de plan
-   */
-  private async obtenerUsuarioSistema(): Promise<Usuario> {
-    // Buscar usuario sistema por email
-    let usuarioSistema = await this.usuarioRepository.findOne({
-      where: { email: 'sistema@gym.com' },
-    });
-
-    if (!usuarioSistema) {
-      // Crear usuario sistema si no existe
-      const hashedPassword = await bcrypt.hash('sistema_interno_no_login', 10);
-      usuarioSistema = this.usuarioRepository.create({
-        nombre: 'Sistema',
-        apellido: 'Gym',
-        email: 'sistema@gym.com',
-        telefono: '0000000000',
-        password: hashedPassword,
-        rol: 'admin' as any,
-        estado_pago: false,
-        aceptarEmails: false,
-        aceptarWpp: false,
-        aceptarTerminos: true, // Requerido por la base de datos
-      });
-      usuarioSistema = await this.usuarioRepository.save(usuarioSistema);
-    }
-
-    return usuarioSistema;
-  }
-
   async getAllRutinas(): Promise<Rutina[]> {
-    const rutina: Rutina[] = await this.rutinaRepository.find({
-      relations: ['usuario'],
-    });
+    const rutina: Rutina[] = await this.rutinaRepository.find();
     return rutina;
   }
 
   async getRutinaById(id: number) {
     const rutina = await this.rutinaRepository.findOne({
       where: { id_rutina: id },
-      relations: ['usuario', 'semanas', 'semanas.dias', 'semanas.dias.dificultades', 'semanas.dias.dificultades.ejercicio'],
+      relations: ['semanas', 'semanas.dias', 'semanas.dias.dificultades', 'semanas.dias.dificultades.ejercicio'],
     });
 
     return rutina;
   }
 
   async postRutina(createRutinaDto: CreateRutinaDto) {
-    let usuario: Usuario | undefined = undefined;
-
-    // Validar y obtener usuario según el tipo de rutina
-    if (createRutinaDto.tipo_rutina === TipoRutina.CLIENTE) {
-      if (!createRutinaDto.id_usuario) {
-        throw new BadRequestException('id_usuario es requerido para rutinas de tipo cliente');
-      }
-      const usuarioEncontrado = await this.usuarioRepository.findOne({
-        where: { id_usuario: createRutinaDto.id_usuario },
-      });
-      if (!usuarioEncontrado) {
-        throw new NotFoundException('Usuario no encontrado');
-      }
-      usuario = usuarioEncontrado;
-    } else if (createRutinaDto.tipo_rutina === TipoRutina.PLAN) {
-      // Para rutinas de plan, no vincular a un usuario específico (pueden estar disponibles para múltiples clientes)
-      usuario = undefined;
+    // Validar según el tipo de rutina
+    if (createRutinaDto.tipo_rutina === TipoRutina.PLAN) {
       if (!createRutinaDto.categoria) {
         throw new BadRequestException('categoria es requerida para rutinas de tipo plan');
       }
-    } else if (createRutinaDto.tipo_rutina === TipoRutina.GENERAL) {
-      // Para rutinas generales, no vincular a un usuario específico (pueden estar disponibles para múltiples clientes)
-      usuario = undefined;
     }
+    // NOTA: Para rutinas de tipo CLIENTE, el id_usuario se usa solo para asignarla como rutina_activa
+    // pero la rutina en sí no tiene un propietario (puede ser compartida)
 
     const rutina = this.rutinaRepository.create({
       nombre: createRutinaDto.nombre,
@@ -119,9 +69,33 @@ export class RutinaService {
       nivel: createRutinaDto.nivel,
       categoria: createRutinaDto.categoria,
       tipo_rutina: createRutinaDto.tipo_rutina,
-      usuario: usuario,
     });
-    return await this.rutinaRepository.save(rutina);
+    
+    const rutinaGuardada = await this.rutinaRepository.save(rutina);
+    
+    // Si es de tipo CLIENTE y se proporcionó id_usuario, asignarla como rutina activa
+    if (createRutinaDto.tipo_rutina === TipoRutina.CLIENTE && createRutinaDto.id_usuario) {
+      const usuarioEncontrado = await this.usuarioRepository.findOne({
+        where: { id_usuario: createRutinaDto.id_usuario },
+      });
+      if (usuarioEncontrado) {
+        // Desvincular rutina anterior si existe
+        await this.dataSource
+          .createQueryBuilder()
+          .update(Usuario)
+          .set({ rutina_activa: null as any })
+          .where('id_usuario = :id_usuario', { id_usuario: createRutinaDto.id_usuario })
+          .execute();
+        
+        // Asignar nueva rutina activa
+        await this.usuarioRepository.update(
+          { id_usuario: createRutinaDto.id_usuario },
+          { rutina_activa: rutinaGuardada }
+        );
+      }
+    }
+    
+    return rutinaGuardada;
   }
 
   async putRutina(
@@ -130,59 +104,72 @@ export class RutinaService {
   ): Promise<Rutina | null> {
     const rutinaExistente = await this.rutinaRepository.findOne({
       where: { id_rutina: id },
-      relations: ['usuario'],
     });
 
     if (!rutinaExistente) {
       return null;
     }
 
-    // Si se actualiza el tipo_rutina o id_usuario, validar y obtener usuario
-    if (updateRutinaDto.tipo_rutina !== undefined || updateRutinaDto.id_usuario !== undefined) {
-      const tipoRutina = updateRutinaDto.tipo_rutina ?? rutinaExistente.tipo_rutina;
-      let usuario: Usuario | undefined = undefined;
-
-      if (tipoRutina === TipoRutina.CLIENTE) {
-        const idUsuario = updateRutinaDto.id_usuario ?? rutinaExistente.usuario?.id_usuario;
-        if (!idUsuario) {
-          throw new BadRequestException('id_usuario es requerido para rutinas de tipo cliente');
-        }
-        const usuarioEncontrado = await this.usuarioRepository.findOne({
-          where: { id_usuario: idUsuario },
-        });
-        if (!usuarioEncontrado) {
-          throw new NotFoundException('Usuario no encontrado');
-        }
-        usuario = usuarioEncontrado;
-      } else if (tipoRutina === TipoRutina.PLAN) {
-        // Para rutinas de plan, no vincular a un usuario específico
-        usuario = undefined;
-        if (!updateRutinaDto.categoria && !rutinaExistente.categoria) {
-          throw new BadRequestException('categoria es requerida para rutinas de tipo plan');
-        }
-      } else if (tipoRutina === TipoRutina.GENERAL) {
-        // Para rutinas generales, no vincular a un usuario específico
-        usuario = undefined;
+    // Validar según el tipo de rutina
+    const tipoRutina = updateRutinaDto.tipo_rutina ?? rutinaExistente.tipo_rutina;
+    if (tipoRutina === TipoRutina.PLAN) {
+      if (!updateRutinaDto.categoria && !rutinaExistente.categoria) {
+        throw new BadRequestException('categoria es requerida para rutinas de tipo plan');
       }
+    }
 
-      // Actualizar con el usuario correcto
-      const rutinaActualizada = this.rutinaRepository.merge(rutinaExistente, {
-        ...updateRutinaDto,
-        usuario: usuario,
+    // Actualizar rutina (sin campo usuario)
+    const { id_usuario, ...datosActualizacion } = updateRutinaDto;
+    this.rutinaRepository.merge(rutinaExistente, datosActualizacion);
+    await this.rutinaRepository.save(rutinaExistente);
+
+    // Si se proporcionó id_usuario y es tipo CLIENTE, asignar como rutina activa
+    if (id_usuario !== undefined && tipoRutina === TipoRutina.CLIENTE) {
+      const usuarioEncontrado = await this.usuarioRepository.findOne({
+        where: { id_usuario },
       });
-      await this.rutinaRepository.save(rutinaActualizada);
-    } else {
-      // Actualización normal sin cambio de tipo
-      this.rutinaRepository.merge(rutinaExistente, updateRutinaDto);
-      await this.rutinaRepository.save(rutinaExistente);
+      if (usuarioEncontrado) {
+        // Desvincular rutina anterior si existe
+        await this.dataSource
+          .createQueryBuilder()
+          .update(Usuario)
+          .set({ rutina_activa: null as any })
+          .where('id_usuario = :id_usuario', { id_usuario })
+          .execute();
+        
+        // Asignar nueva rutina activa
+        await this.usuarioRepository.update(
+          { id_usuario },
+          { rutina_activa: rutinaExistente }
+        );
+      }
     }
 
     return await this.getRutinaById(id);
   }
 
   async deleteRutina(id_rutina: number): Promise<boolean> {
-    const result = await this.rutinaRepository.delete({ id_rutina });
-    return (result.affected ?? 0) > 0;
+    // Verificar que la rutina existe
+    const rutina = await this.rutinaRepository.findOne({ where: { id_rutina } });
+    if (!rutina) {
+      return false;
+    }
+
+    // Desvincular la rutina de todos los usuarios que la tengan como activa
+    // Esto evita errores de foreign key constraint
+    await this.dataSource
+      .createQueryBuilder()
+      .update(Usuario)
+      .set({ rutina_activa: null as any })
+      .where('rutina_activa_id = :id_rutina', { id_rutina })
+      .execute();
+
+    // Eliminar la rutina (las semanas, días y dificultades se eliminan en CASCADE)
+    // Si la rutina existía antes y no hay excepciones, la eliminación fue exitosa
+    await this.rutinaRepository.delete({ id_rutina });
+    
+    // Si llegamos aquí sin excepciones y la rutina existía, la eliminación fue exitosa
+    return true;
   }
 
   /**
@@ -195,39 +182,20 @@ export class RutinaService {
     await queryRunner.startTransaction();
 
     try {
-      // 1. Validar y obtener usuario según tipo de rutina
-      let usuario: Usuario | undefined = undefined;
-
-      if (createRutinaCompletaDto.tipo_rutina === TipoRutina.CLIENTE) {
-        if (!createRutinaCompletaDto.id_usuario) {
-          throw new BadRequestException('id_usuario es requerido para rutinas de tipo cliente');
-        }
-        const usuarioEncontrado = await queryRunner.manager.findOne(Usuario, {
-          where: { id_usuario: createRutinaCompletaDto.id_usuario },
-        });
-        if (!usuarioEncontrado) {
-          throw new NotFoundException('Usuario no encontrado');
-        }
-        usuario = usuarioEncontrado;
-      } else if (createRutinaCompletaDto.tipo_rutina === TipoRutina.PLAN) {
-        // Para rutinas de plan, no vincular a un usuario específico
-        usuario = undefined;
+      // 1. Validar según tipo de rutina
+      if (createRutinaCompletaDto.tipo_rutina === TipoRutina.PLAN) {
         if (!createRutinaCompletaDto.categoria) {
           throw new BadRequestException('categoria es requerida para rutinas de tipo plan');
         }
-      } else if (createRutinaCompletaDto.tipo_rutina === TipoRutina.GENERAL) {
-        // Para rutinas generales, no vincular a un usuario específico
-        usuario = undefined;
       }
 
-      // 2. Crear la rutina base
+      // 2. Crear la rutina base (sin campo usuario)
       const rutina = queryRunner.manager.create(Rutina, {
         nombre: createRutinaCompletaDto.nombre,
         descripcion: createRutinaCompletaDto.descripcion,
         nivel: createRutinaCompletaDto.nivel,
         categoria: createRutinaCompletaDto.categoria,
         tipo_rutina: createRutinaCompletaDto.tipo_rutina,
-        usuario: usuario,
       });
       const rutinaGuardada = await queryRunner.manager.save(Rutina, rutina);
 
@@ -270,10 +238,28 @@ export class RutinaService {
         }
       }
 
-      // 4. Si es una rutina de tipo CLIENTE, asignarla como rutina activa del usuario
-      if (createRutinaCompletaDto.tipo_rutina === TipoRutina.CLIENTE && usuario) {
+      // 4. Si es una rutina de tipo CLIENTE y se proporcionó id_usuario, asignarla como rutina activa
+      // IMPORTANTE: Desvincular primero la rutina anterior (si existe) antes de asignar la nueva
+      if (createRutinaCompletaDto.tipo_rutina === TipoRutina.CLIENTE && createRutinaCompletaDto.id_usuario) {
+        const usuarioEncontrado = await queryRunner.manager.findOne(Usuario, {
+          where: { id_usuario: createRutinaCompletaDto.id_usuario },
+        });
+        
+        if (!usuarioEncontrado) {
+          throw new NotFoundException('Usuario no encontrado');
+        }
+        
+        // Primero desvincular cualquier rutina activa anterior
+        await queryRunner.manager
+          .createQueryBuilder()
+          .update(Usuario)
+          .set({ rutina_activa: null as any })
+          .where('id_usuario = :id_usuario', { id_usuario: createRutinaCompletaDto.id_usuario })
+          .execute();
+        
+        // Luego asignar la nueva rutina activa
         await queryRunner.manager.update(Usuario, 
-          { id_usuario: usuario.id_usuario },
+          { id_usuario: createRutinaCompletaDto.id_usuario },
           { rutina_activa: rutinaGuardada }
         );
       }

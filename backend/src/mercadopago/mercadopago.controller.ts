@@ -9,8 +9,8 @@ export class MercadoPagoController {
   ) { }
 
   @Post('crear-preferencia')
-  async crearPreferencia() {
-    return this.mpService.crearPreferencia();
+  async crearPreferencia(@Body() body: any) {
+    return this.mpService.crearPreferencia(body.items);
   }
 
   // esto lo usa mercadopago cuando tengamos el dominio de la pag 

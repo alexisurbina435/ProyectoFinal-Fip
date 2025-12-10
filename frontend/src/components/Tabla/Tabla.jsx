@@ -101,14 +101,14 @@ const Tabla = ({
                 ) : (
                   paginatedData.map((row, index) => (
                     <tr 
-                      key={index} 
+                      key={row.id || `row-${startIndex + index}`} 
                       className={`table-row ${index % 2 === 0 ? 'even' : 'odd'} ${onVer ? 'table-row-clickable' : ''}`}
                       onClick={() => onVer && onVer(row.id)}
                       style={{ cursor: onVer ? 'pointer' : 'default' }}
                     >
                       {columns.map((column) => (
                         <td 
-                          key={column.key} 
+                          key={`${row.id || `row-${startIndex + index}`}-${column.key}`} 
                           className={column.clickable ? 'table-cell table-link' : 'table-cell'}
                           data-column={column.key}
                           onClick={(e) => {

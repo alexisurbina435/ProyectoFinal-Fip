@@ -9,8 +9,22 @@ export default function ButtonMercadoPago() {
     if (lock.current) return;
     lock.current = true;
 
-    fetch("http://localhost:3000/api/mercadopago/crear-preferencia", {
+    // Leer carrito desde localStorage
+    const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+    // Convertir al formato de Mercado Pago
+    const items = carrito.map((p) => ({
+      title: p.nombre,
+      description: p.descripcion,
+      picture_url: p.img,
+      quantity: p.cantidad,
+      unit_price: Number(p.precio),
+    }));
+
+    fetch("https://proyectofinal-backend-7797.onrender.com/mercadopago/crear-preferencia", {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ items })
     })
       .then((res) => res.json())
       .then((data) => {

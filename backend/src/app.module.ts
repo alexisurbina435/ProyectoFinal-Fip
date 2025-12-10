@@ -38,8 +38,8 @@ import { SuscripcionModule } from './suscripcion/suscripcion.module';
         password: configService.get('MYSQL_ADDON_PASSWORD'),
         database: configService.get('MYSQL_ADDON_DB'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        //  synchronize:false, // la dejamos en false cuando tenemos las tablas creadas y no queremos que nos cambie o modifique las tablas.(solo consultas a la base de dato)
-        synchronize: configService.get('NODE_ENV') === 'development', // cuando queremos modificar o cargar tablas usamos este.
+        synchronize:true, // la dejamos en false cuando tenemos las tablas creadas y no queremos que nos cambie o modifique las tablas.(solo consultas a la base de dato)
+        // synchronize: configService.get('NODE_ENV') === 'development', // cuando queremos modificar o cargar tablas usamos este.
       }),
       inject: [ConfigService],
     }),

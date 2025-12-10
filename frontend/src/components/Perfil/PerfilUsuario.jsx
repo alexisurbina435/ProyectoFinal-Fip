@@ -1,12 +1,13 @@
 import "./perfilUsuario.css"
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import TablaRutina from "../rutina/TablaRutina";
 import Rutina from "../rutina/Rutina";
 import Planilla from "../planilla/Planilla";
 import Swal from "sweetalert2";
 import suscripcionService from "../../services/suscripcion.service";
 // hook personalizado para useForm 
+import { useEffect } from "react";
 import { UseFormPerfil } from "../../hooks/useFormPerfil";
 const sections = [
     { id: "nombre", title: "Modificar Nombre" },
@@ -28,6 +29,16 @@ const PerfilUsuario = () => {
     const {
         data, sectionActiva, setSectionActiva, formNombre, formEmail, formTelefono, formPassword,
         editarNombre, editarEmail, editarTelefono, onSubmitEmail, onSubmitNombre, onSubmitTelefono, onsubmitPassword } = UseFormPerfil();
+
+    const location = useLocation();
+
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        const sectionParam = params.get("section");
+        if (sectionParam) {
+            setSectionActiva(sectionParam);
+        }
+    }, [location.search, setSectionActiva]);
 
     const cancelarSuscripcion = async (preapprovalId) => {
         Swal.fire({

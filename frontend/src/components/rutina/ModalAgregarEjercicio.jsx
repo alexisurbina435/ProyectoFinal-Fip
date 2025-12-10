@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import './ModalAgregarEjercicio.css';
 import PopUpEdit from '../popUpEdit/PopUpEdit';
 import { getEjercicioFields } from '../popUpEdit/fields/ejercicioFields';
@@ -16,6 +16,7 @@ const ModalAgregarEjercicio = ({
   onResetForm
 }) => {
   const [showPopUpEdit, setShowPopUpEdit] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   // Sincronizar el estado de PopUpEdit con crearNuevoEjercicio
   useEffect(() => {
@@ -25,6 +26,33 @@ const ModalAgregarEjercicio = ({
       setShowPopUpEdit(false);
     }
   }, [isOpen, crearNuevoEjercicio]);
+
+  // Resetear búsqueda cuando se cierra el modal
+  useEffect(() => {
+    if (!isOpen) {
+      setSearchTerm('');
+    }
+  }, [isOpen]);
+
+  // Filtrar ejercicios según el término de búsqueda
+  const ejerciciosFiltrados = useMemo(() => {
+    if (!searchTerm.trim()) {
+      return ejerciciosDisponibles;
+    }
+    
+    const termino = searchTerm.toLowerCase().trim();
+    return ejerciciosDisponibles.filter(ejercicio => {
+      const nombre = ejercicio.nombre?.toLowerCase() || '';
+      const detalle = ejercicio.detalle?.toLowerCase() || '';
+      const tipo = ejercicio.tipo?.toLowerCase() || '';
+      const grupoMuscular = ejercicio.grupo_muscular?.toLowerCase() || '';
+      
+      return nombre.includes(termino) || 
+             detalle.includes(termino) || 
+             tipo.includes(termino) || 
+             grupoMuscular.includes(termino);
+    });
+  }, [ejerciciosDisponibles, searchTerm]);
 
   if (!isOpen) return null;
 
@@ -82,11 +110,27 @@ const ModalAgregarEjercicio = ({
 
         <div className="modal-agregar-ejercicio-list">
           <h3>Ejercicios Disponibles</h3>
+          
+          {/* Search bar */}
+          <div className="modal-agregar-ejercicio-search">
+            <input
+              type="text"
+              placeholder="Buscar ejercicios..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="modal-agregar-ejercicio-search-input"
+            />
+          </div>
+
           <div className="modal-agregar-ejercicio-scroll">
-            {ejerciciosDisponibles.length === 0 ? (
-              <p className="modal-agregar-ejercicio-empty">No hay ejercicios disponibles</p>
+            {ejerciciosFiltrados.length === 0 ? (
+              <p className="modal-agregar-ejercicio-empty">
+                {searchTerm.trim() 
+                  ? `No se encontraron ejercicios que coincidan con "${searchTerm}"` 
+                  : 'No hay ejercicios disponibles'}
+              </p>
             ) : (
-              ejerciciosDisponibles.map(ejercicio => (
+              ejerciciosFiltrados.map(ejercicio => (
                 <div
                   key={ejercicio.id_ejercicio}
                   onClick={() => onAgregarEjercicioExistente(ejercicio.id_ejercicio)}

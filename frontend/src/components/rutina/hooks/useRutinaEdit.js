@@ -23,11 +23,11 @@ export const useRutinaEdit = (rutina, rutinaOriginal) => {
     const categoriaActual = datosEditados.categoria !== undefined ? datosEditados.categoria : rutina.categoria;
     if (categoriaOriginal !== categoriaActual) return true;
     
-    const usuarioOriginalId = rutinaOriginal.usuario?.id_usuario || null;
-    const usuarioActualId = datosEditados.id_usuario !== undefined 
-      ? datosEditados.id_usuario 
-      : (rutina.usuario?.id_usuario || null);
-    if (usuarioOriginalId !== usuarioActualId) return true;
+    // NOTA: Como ya no hay rutina.usuario, solo comparamos datosEditados
+    // Si se cambia id_usuario en datosEditados, requiere nueva rutina
+    const usuarioOriginalId = null; // Ya no hay rutina.usuario, siempre null
+    const usuarioActualId = datosEditados.id_usuario !== undefined ? datosEditados.id_usuario : null;
+    if (usuarioOriginalId !== usuarioActualId && usuarioActualId !== null) return true;
     
     const tipoOriginal = rutinaOriginal.tipo_rutina;
     const tipoActual = datosEditados.tipo_rutina !== undefined ? datosEditados.tipo_rutina : rutina.tipo_rutina;

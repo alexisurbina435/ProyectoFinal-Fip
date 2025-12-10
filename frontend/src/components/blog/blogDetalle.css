@@ -61,12 +61,13 @@ h3 {
 }
 .cards-grande {
   display: flex;
-  font-size: 1rem;
+  /* font-size: 1rem; */
   flex: 0.5;
   border: 1px solid rgba(255, 255, 255, 0.1);
   background-color: rgba(255, 255, 255, 0.05);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   white-space: normal;
+  padding: 1rem;
   border-radius: 12px;
   height: 100rem;
   width: 100%;
@@ -94,7 +95,16 @@ h3 {
   margin: 1 auto;
   border-radius: 150px;
 }
+.contenido-blog{
+  font-size: 1.3rem;
+  text-align: left;
+}
 
+.glosario-blog{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 @media(max-width: 680px ){
 
   .contenedor {

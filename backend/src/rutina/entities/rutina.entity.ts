@@ -2,11 +2,8 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToOne,
   OneToMany,
-  JoinColumn,
 } from 'typeorm';
-import { Usuario } from '../../usuario/entities/usuario.entity';
 import { Semana } from '../../semana/entities/semana.entity';
 
 export enum NivelRutina {
@@ -55,13 +52,9 @@ export class Rutina {
   })
   tipo_rutina: TipoRutina;
 
-  // RELACIÓN → Muchas Rutinas pertenecen a un Usuario (opcional para rutinas generales)
-  @ManyToOne(() => Usuario, (usuario) => usuario.rutinas, {
-    onDelete: 'CASCADE',
-    nullable: true, // Ahora es opcional para permitir rutinas generales
-  })
-  @JoinColumn({ name: 'usuarioIdUsuario' })
-  usuario?: Usuario;
+  // NOTA: La relación con Usuario se maneja solo desde Usuario.rutina_activa
+  // Esto permite que una rutina sea compartida por múltiples usuarios
+  // y que las rutinas sobrevivan si se elimina un usuario
 
   @OneToMany(() => Semana, (semana) => semana.rutina, { cascade: true })
   semanas: Semana[];

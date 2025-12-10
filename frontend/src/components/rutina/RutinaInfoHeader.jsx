@@ -15,9 +15,38 @@ const RutinaInfoHeader = ({
   const nivelActual = datosEditados.nivel !== undefined ? datosEditados.nivel : rutina.nivel;
   const categoriaActual = datosEditados.categoria !== undefined ? datosEditados.categoria : rutina.categoria;
   const tipoRutinaActual = datosEditados.tipo_rutina !== undefined ? datosEditados.tipo_rutina : rutina.tipo_rutina;
-  const usuarioActualId = datosEditados.id_usuario !== undefined ? datosEditados.id_usuario : (rutina.usuario?.id_usuario || null);
+  // NOTA: usuarioActualId ahora solo viene de datosEditados (no hay rutina.usuario)
+  // Si se necesita obtener el usuario que tiene esta rutina activa, se debe hacer una consulta inversa
+  const usuarioActualId = datosEditados.id_usuario !== undefined ? datosEditados.id_usuario : null;
   const nombreActual = datosEditados.nombre !== undefined ? datosEditados.nombre : rutina.nombre;
   const descripcionActual = datosEditados.descripcion !== undefined ? datosEditados.descripcion : rutina.descripcion;
+
+  // Función helper para obtener el plan de un usuario
+  const obtenerPlanUsuario = (usuario) => {
+    if (!usuario?.suscripciones || !Array.isArray(usuario.suscripciones) || usuario.suscripciones.length === 0) {
+      return 'Sin plan';
+    }
+    
+    // Buscar suscripción activa o tomar la primera
+    const suscripcionActiva = usuario.suscripciones.find(s => 
+      s && s.estado && String(s.estado).toUpperCase() === 'ACTIVA'
+    );
+    const suscripcion = suscripcionActiva || usuario.suscripciones[0];
+    
+    // Verificar si la suscripción tiene plan
+    if (suscripcion && suscripcion.plan && suscripcion.plan.nombre) {
+      // Mapear valores del backend al formato del frontend
+      const planNombre = String(suscripcion.plan.nombre).toLowerCase().trim();
+      const planMapping = {
+        'basic': 'Basic',
+        'standard': 'Standard',
+        'premium': 'Premium'
+      };
+      return planMapping[planNombre] || suscripcion.plan.nombre;
+    }
+    
+    return 'Sin plan';
+  };
 
   const handleTipoChange = (nuevoTipo) => {
     onEditarCampo('tipo_rutina', nuevoTipo);
@@ -154,15 +183,21 @@ const RutinaInfoHeader = ({
                 className="rutina-info-select rutina-info-select-cliente"
               >
                 <option value="">Seleccione un cliente...</option>
-                {usuarios.map(usuario => (
-                  <option key={usuario.id_usuario} value={usuario.id_usuario}>
-                    {usuario.nombre} {usuario.apellido} ({usuario.email})
-                  </option>
-                ))}
+                {usuarios.map(usuario => {
+                  const planUsuario = obtenerPlanUsuario(usuario);
+                  return (
+                    <option key={usuario.id_usuario} value={usuario.id_usuario}>
+                      {usuario.nombre} {usuario.apellido} - {planUsuario}
+                    </option>
+                  );
+                })}
               </select>
             ) : (
               <p className="rutina-info-text">
-                {rutina.usuario ? `${rutina.usuario.nombre} ${rutina.usuario.apellido}` : 'Sin cliente'}
+                {/* NOTA: Para mostrar el cliente, se necesitaría una consulta inversa
+                    para obtener usuarios que tienen esta rutina como activa.
+                    Por ahora mostramos un mensaje genérico. */}
+                {tipoRutinaActual === 'cliente' ? 'Cliente específico' : 'Sin cliente'}
               </p>
             )}
           </div>

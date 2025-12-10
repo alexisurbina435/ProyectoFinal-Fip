@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Usuario } from '../../usuario/entities/usuario.entity';
 
 @Entity('blog')
@@ -21,9 +21,9 @@ export class Blog {
   @Column({ type: 'text' })
   contenido: string;
 
-  @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
+  @CreateDateColumn({ type: 'datetime' })
   fecha_publicacion: Date;
 
-  @ManyToOne(() => Usuario, (usuario) => usuario.blogs, { nullable: false })
-  usuario: Usuario;
+  // @ManyToOne(() => Usuario, (usuario) => usuario.blogs, { nullable: false })
+  // usuario: Usuario;
 }

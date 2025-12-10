@@ -36,7 +36,10 @@ export class DiaService {
   }
 
   async findOne(id: number): Promise<Dia> {
-    const dia = await this.diaRepo.findOne({ where: { id_dia: id } });
+    const dia = await this.diaRepo.findOne({ 
+      where: { id_dia: id },
+      relations: ['semana']
+    });
     if (!dia) {
       throw new NotFoundException(`Dia con id ${id} no encontrado`);
     }
@@ -50,7 +53,33 @@ export class DiaService {
   }
 
   async remove(id: number): Promise<void> {
-    const dia = await this.findOne(id);
-    await this.diaRepo.remove(dia);
+    // Obtener el día a eliminar para conocer su semana
+    const diaAEliminar = await this.findOne(id);
+    
+    if (!diaAEliminar) {
+      throw new NotFoundException(`Día con id ${id} no encontrado`);
+    }
+
+    const id_semana = diaAEliminar.semana.id_semana;
+
+    // Eliminar el día
+    await this.diaRepo.remove(diaAEliminar);
+
+    // Reordenar los días restantes de la semana
+    const diasRestantes = await this.diaRepo.find({
+      where: { semana: { id_semana } },
+      order: { numero_dia: 'ASC' },
+    });
+
+    // Reasignar números de día secuencialmente empezando desde 1
+    for (let i = 0; i < diasRestantes.length; i++) {
+      const nuevoNumero = i + 1;
+      if (diasRestantes[i].numero_dia !== nuevoNumero) {
+        await this.diaRepo.update(
+          { id_dia: diasRestantes[i].id_dia },
+          { numero_dia: nuevoNumero }
+        );
+      }
+    }
   }
 }

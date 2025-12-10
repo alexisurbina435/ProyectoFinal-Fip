@@ -6,6 +6,7 @@ import rutinaService from "../../services/rutina.service.js";
 import TablaRutina from "../../components/rutina/TablaRutina";
 import ModalCrearRutina from "../../components/rutina/ModalCrearRutina";
 import Swal from 'sweetalert2';
+import { SwalWithHighZIndex } from '../../components/rutina/utils/swalConfig';
 import "./admin.css";
 
 const AdminRutinas = () => {
@@ -39,14 +40,8 @@ const AdminRutinas = () => {
   // Transformar datos del backend al formato de la tabla
   const transformarDatos = (rutinas) => {
     return rutinas.map(rutina => {
-      // El nombre puede ser el nombre de la rutina o el nombre del cliente
-      let nombreRutina = rutina.nombre;
-      if (!nombreRutina && rutina.usuario) {
-        nombreRutina = `${rutina.usuario.nombre || ''} ${rutina.usuario.apellido || ''}`.trim();
-      }
-      if (!nombreRutina) {
-        nombreRutina = 'Sin nombre';
-      }
+      // El nombre de la rutina
+      let nombreRutina = rutina.nombre || 'Sin nombre';
 
       // Determinar qué mostrar en la columna categoría según el tipo de rutina
       let categoriaDisplay = 'Sin plan';
@@ -56,11 +51,8 @@ const AdminRutinas = () => {
       } else if (rutina.tipo_rutina === 'plan' && rutina.categoria) {
         // Para rutinas de plan, mostrar la categoría (Basic, Medium, Premium)
         categoriaDisplay = rutina.categoria;
-      } else if (rutina.tipo_rutina === 'cliente' && rutina.usuario) {
-        // Para rutinas de cliente específico, mostrar el nombre del cliente
-        categoriaDisplay = `${rutina.usuario.nombre || ''} ${rutina.usuario.apellido || ''}`.trim() || 'Cliente sin nombre';
       } else if (rutina.tipo_rutina === 'cliente') {
-        // Si es para cliente pero no hay datos del usuario
+        // Para rutinas de cliente específico, mostrar tipo (el usuario se asigna a través de rutina_activa)
         categoriaDisplay = 'Cliente específico';
       }
 
@@ -195,6 +187,9 @@ const AdminRutinas = () => {
 
   // Función para manejar la eliminación desde el modal de TablaRutina
   const handleEliminarDesdeModal = async (id) => {
+    // Usar SwalWithHighZIndex cuando el modal está abierto para que las alertas aparezcan por encima
+    const SwalToUse = isViewOpen ? SwalWithHighZIndex : Swal;
+    
     try {
       await rutinaService.deleteRutina(id);
       
@@ -202,10 +197,10 @@ const AdminRutinas = () => {
       setIsViewOpen(false);
       setSelectedRutina(null);
       
-      // Recargar lista de rutinas
+      // Recargar lista de rutinas (siempre, incluso si hay error parcial)
       await cargarRutinas();
       
-      Swal.fire({
+      SwalToUse.fire({
         title: 'Éxito',
         text: 'Rutina eliminada exitosamente',
         icon: 'success',
@@ -214,9 +209,15 @@ const AdminRutinas = () => {
       });
     } catch (err) {
       console.error("Error al eliminar rutina:", err);
-      Swal.fire({
+      
+      // Cerrar el modal y recargar lista incluso si hay error
+      setIsViewOpen(false);
+      setSelectedRutina(null);
+      await cargarRutinas();
+      
+      SwalToUse.fire({
         title: 'Error',
-        text: err.response?.data?.message || 'Error al eliminar la rutina. Por favor, intenta nuevamente.',
+        text: err.response?.data?.message || err.message || 'Error al eliminar la rutina. Por favor, intenta nuevamente.',
         icon: 'error',
         confirmButtonText: 'Aceptar',
         confirmButtonColor: '#ff6a00'

@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import './AdminBar.css';
 
-const AdminBar = ({ onClick, placeholder, showAddButton = true, onSearch, searchValue: externalSearchValue }) => {
+const AdminBar = ({ onClick, placeholder, showAddButton = true, onSearch, searchValue: externalSearchValue, contadores }) => {
   const [internalSearchValue, setInternalSearchValue] = useState('');
   const searchValue = externalSearchValue !== undefined ? externalSearchValue : internalSearchValue;
   
-  const actionButtonsClass = showAddButton ? 'action-buttons' : 'action-buttons action-buttons--placeholder';
+  // Si hay contadores, no ocultar el contenedor aunque no haya botón de agregar
+  const actionButtonsClass = (showAddButton || contadores) ? 'action-buttons' : 'action-buttons action-buttons--placeholder';
 
   const handleSearchChange = (e) => {
     const value = e.target.value;
@@ -33,6 +34,18 @@ const AdminBar = ({ onClick, placeholder, showAddButton = true, onSearch, search
     <>
       <div className="action-bar">
         <div className={actionButtonsClass}>
+          {contadores && (
+            <div className="search-counter">
+              <span className="counter-item">
+                <span className="counter-label">Clientes Activos:</span>
+                <span className="counter-value counter-active">{contadores.activos}</span>
+              </span>
+              <span className="counter-item">
+                <span className="counter-label">Clientes Inactivos:</span>
+                <span className="counter-value counter-inactive">{contadores.inactivos}</span>
+              </span>
+            </div>
+          )}
           {showAddButton && (
             <button className="btn-add" onClick={onClick}>
               <i className="fas fa-plus"></i>

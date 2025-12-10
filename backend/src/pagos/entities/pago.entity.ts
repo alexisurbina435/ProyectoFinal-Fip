@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Column, Entity, PrimaryGeneratedColumn,ManyToOne } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn,ManyToOne, CreateDateColumn } from "typeorm";
 import { Venta } from "../../venta/entities/venta.entity";
 
 export enum MediosDePago {
@@ -39,7 +39,7 @@ export class Pago {
   })
   monto: number;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @CreateDateColumn({ type: 'timestamp'})
   fecha: Date;
 
   @Column({

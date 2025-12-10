@@ -42,7 +42,7 @@ export function CarritoProvider({ children }) {
     const usuario = JSON.parse(localStorage.getItem("usuario"));
 
     if (usuario) {
-      await carritoService.agregarItem(usuario.id_usuario, producto.id);
+      await carritoService.addItem(usuario.id_usuario, producto.id);
     }
   };
   const cambiarCantidad = async (id, delta) => {

@@ -18,6 +18,11 @@
   visibility: hidden;
 }
 
+/* Asegurar que el contador sea visible incluso si el contenedor tiene visibility: hidden */
+.search-counter {
+  visibility: visible !important;
+}
+
 .btn-add {
   background-color: var(--naranja);
   color: var(--blanco);
@@ -52,6 +57,44 @@
   border-radius: 8px;
   overflow: hidden;
   transition: all 0.3s ease;
+  gap: 0;
+}
+
+.search-counter {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.8rem 1rem;
+  background-color: rgba(238, 95, 13, 0.1);
+  border: 2px solid var(--gris);
+  border-radius: 8px;
+  white-space: nowrap;
+  margin-right: 1rem;
+}
+
+.counter-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.counter-label {
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+}
+
+.counter-value {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.counter-active {
+  color: #28a745;
+}
+
+.counter-inactive {
+  color: #dc3545;
 }
 
 .search-container:focus-within {
