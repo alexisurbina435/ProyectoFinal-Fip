@@ -19,6 +19,7 @@ export default function FormLogin() {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const [data, setData] = useState([]);
+    const [showPassword, setShowPassword] = useState(false);
 
 
     const { cargarCarrito } = useCarrito();
@@ -142,13 +143,21 @@ export default function FormLogin() {
                         <div className="input-wrapper">
                             <i className="fa-solid fa-lock form-icon"></i>
                             <Input
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 id="password"
                                 placeholder="Ingrese su contraseña"
                                 {...register("password", {
                                     required: "La contraseña es requerida",
                                 })}
                             />
+                            <button
+                                type="button"
+                                className="password-toggle-btn"
+                                onClick={() => setShowPassword(!showPassword)}
+                                aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                            >
+                                <i className={showPassword ? "fa-solid fa-eye-slash" : "fa-solid fa-eye"}></i>
+                            </button>
                         </div>
                         {errors.password && <span className="error">{errors.password.message}</span>}
                     </div>

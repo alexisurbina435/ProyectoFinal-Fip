@@ -1,9 +1,11 @@
 import "./CompraDirecta.css";
 import ButtonMercadoPago from "../botonMercadoPago/ButtonMercadoPago";
 import { useCarrito } from "../carrito/CarritoContext";
-
+import FormCarrito from "../formCarrito/FormCarrito";
+import { useState } from "react";
 const CompraDirectaComp = () => {
   const { carrito, totalCarrito } = useCarrito();
+  const [metodoEnvio, setMetodoEnvio] = useState("");
 
   if (!carrito.length) {
     return (
@@ -40,7 +42,7 @@ const CompraDirectaComp = () => {
       </div>
 
       <div className="pago-content">
-        <h3>Elegí método de pago:</h3>
+        <h3 className="metodo-carrito">Elegí método de pago:</h3>
         <select className="form-select mb-3">
           <option value="">Seleccioná una opción</option>
           <option value="efectivo">Efectivo</option>
@@ -48,12 +50,18 @@ const CompraDirectaComp = () => {
           <option value="transferencia">Transferencia bancaria</option>
         </select>
 
-        <h3>Elegí método de envío:</h3>
-        <select className="form-select mb-3">
+        <h3 className="metodo-carrito">Elegí método de envío:</h3>
+        <select
+          className="form-select mb-3"
+          value={metodoEnvio}
+          onChange={(e) => setMetodoEnvio(e.target.value)}
+        >
           <option value="">Seleccioná una opción</option>
           <option value="retiro">Retiro en tienda</option>
           <option value="domicilio">Envío a domicilio</option>
         </select>
+
+        {metodoEnvio === "domicilio" && <FormCarrito />}
 
         <ButtonMercadoPago />
       </div>

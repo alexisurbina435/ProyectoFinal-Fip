@@ -23,6 +23,7 @@ export default function ButtonMercadoPago() {
 
     fetch("https://proyectofinal-backend-7797.onrender.com/mercadopago/crear-preferencia", {
       method: "POST",
+      credentials: 'include',
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ items })
     })

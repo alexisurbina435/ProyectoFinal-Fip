@@ -41,16 +41,29 @@ function SuscripcionButton({ clase, plan }) {
         }
       });
     } else {
-      const suscripcion = await suscripcionService.create({
-        id_usuario: usuario.id_usuario,
-        id_plan: planData.id_plan,
-        mesesContratados: 1
+      Swal.fire({
+        title: "Confirmar Suscripcion",
+        text: "¿Deseas continuar con el plan seleccionado?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, Continuar",
+        cancelButtonText: "Cancelar"
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const suscripcion = await suscripcionService.create({
+            id_usuario: usuario.id_usuario,
+            id_plan: planData.id_plan,
+            mesesContratados: 1
+          });
+          console.log("suscripción creada");
+          window.location.href = suscripcion.init_point;
+        }
       });
-      console.log("suscripción creada");
-      window.location.href = suscripcion.init_point;
     }
   };
-  
+
 
 
   return (

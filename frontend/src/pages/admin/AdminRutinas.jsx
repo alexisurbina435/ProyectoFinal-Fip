@@ -3,6 +3,7 @@ import Header from "../../components/header/Header"
 import Tabla from "../../components/Tabla/Tabla"
 import AdminBar from "../../components/AdminBar/AdminBar"
 import rutinaService from "../../services/rutina.service.js";
+import usuarioService from "../../services/usuario.service.js";
 import TablaRutina from "../../components/rutina/TablaRutina";
 import ModalCrearRutina from "../../components/rutina/ModalCrearRutina";
 import Swal from 'sweetalert2';
@@ -17,11 +18,23 @@ const AdminRutinas = () => {
   const [isViewOpen, setIsViewOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [usuarios, setUsuarios] = useState([]);
 
-  // Cargar rutinas al montar el componente
+  // Cargar rutinas y usuarios al montar el componente
   useEffect(() => {
     cargarRutinas();
+    cargarUsuarios();
   }, []);
+
+  // Cargar usuarios
+  const cargarUsuarios = async () => {
+    try {
+      const response = await usuarioService.getAllUsuarios();
+      setUsuarios(response);
+    } catch (err) {
+      console.error("Error al cargar usuarios:", err);
+    }
+  };
 
   const cargarRutinas = async () => {
     try {
@@ -263,6 +276,7 @@ const AdminRutinas = () => {
               rutinaProp={selectedRutina}
               modoEdicion={true}
               isModal={true}
+              usuarios={usuarios}
               onClose={() => {
                 setIsViewOpen(false);
                 setSelectedRutina(null);

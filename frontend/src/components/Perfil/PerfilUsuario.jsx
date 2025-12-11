@@ -19,9 +19,9 @@ const sections = [
     { id: "rutina", title: "Mis Rutinas" },
 ]
 const beneficios = [
-    { id: "premium", beneficios: ["Entrenadores Online libre", "Entrenamiento Progresivo", "Clase consulta ilimitadas", "Subscripción mensual", "Descuento en tienda 15%", "Entrenos one-one"] },
-    { id: "standard", beneficios: ["Entrenadores Online libre", "Entrenamiento Progresivo", "Clase consulta limitadas", "Subscripcion mensual", "Descuento en tienda 10%", "3 entrenos diferentes"] },
-    { id: "basic", beneficios: ["Entrenamiento online", "Entrenamiento progresivo", "Clase consulta limitadas", "Subscripcion mensual", "Descuento en tienda 5%", "Entrenos 2 veces"] }
+    { id: "premium", beneficios: ["Entrenadores Online libre", "Entrenamiento Progresivo", "Clase consulta ilimitadas", "Subscripción mensual", "Entrenos one-one"] },
+    { id: "standard", beneficios: ["Entrenadores Online libre", "Entrenamiento Progresivo", "Clase consulta limitadas", "Subscripcion mensual", "3 entrenos diferentes"] },
+    { id: "basic", beneficios: ["Entrenamiento online", "Entrenamiento progresivo", "Clase consulta limitadas", "Subscripcion mensual", "Entrenos 2 veces"] }
 ];
 
 const PerfilUsuario = () => {
@@ -419,7 +419,6 @@ const PerfilUsuario = () => {
                                     className="btn-cancel"
                                     onClick={() => cancelarSuscripcion(suscripcionActiva.preapprovalId)}>Cancelar Suscripción</button> :
                                     <button className="btn-cancel">Cancelar Suscripción</button>}
-                                {/* <button className="btn-cancel" onClick={() => cancelarSuscripcion(data?.suscripciones?.[0].preapprovalId)}>Cancelar Suscripción</button> */}
                             </div>
                         </div>
                     </div>

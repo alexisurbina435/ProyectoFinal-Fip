@@ -23,7 +23,7 @@ import { useSemanasDias } from "./hooks/useSemanasDias";
 import { getSwalInstance } from "./utils/swalConfig";
 import { validarDatosRutina } from "./utils/rutinaHelpers";
 
-export default function TablaRutina({ rutinaProp = null, modoEdicion = false, onRutinaActualizada = null, isModal = false, onClose = null, onEliminarRutina = null }) {
+export default function TablaRutina({ rutinaProp = null, modoEdicion = false, onRutinaActualizada = null, isModal = false, onClose = null, onEliminarRutina = null, usuarios: usuariosProp = null }) {
   const [rutina, setRutina] = useState(rutinaProp);
   const [rutinaOriginal, setRutinaOriginal] = useState(null);
   const [loading, setLoading] = useState(!rutinaProp);
@@ -46,6 +46,13 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
   
   // Estados para usuarios
   const [usuarios, setUsuarios] = useState([]);
+  
+  // Si se pasan usuarios como prop, usarlos; sino cargarlos
+  useEffect(() => {
+    if (usuariosProp && Array.isArray(usuariosProp)) {
+      setUsuarios(usuariosProp);
+    }
+  }, [usuariosProp]);
   
   // Estado para rastrear cambios en dificultades (series, repeticiones, peso)
   const [dificultadesEditadas, setDificultadesEditadas] = useState(new Map()); // Map<dificultadId, {series, repeticiones, peso}>
@@ -218,6 +225,24 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
     }
   }, [modoEdicion, editando]);
 
+  // Cargar usuarios cuando se abre en modo admin (para poder ver clientes)
+  // Solo si no se pasaron como prop y no están cargados
+  useEffect(() => {
+    if (modoEdicion && isModal && rutinaProp) {
+      if (usuariosProp && Array.isArray(usuariosProp) && usuariosProp.length > 0) {
+        // Ya se actualizó en el useEffect anterior
+        return;
+      }
+      // Si no hay usuarios cargados, cargarlos
+      if (usuarios.length === 0) {
+        usuarioService.getAllUsuarios()
+          .then(usuariosData => setUsuarios(usuariosData))
+          .catch(err => console.error("Error al cargar usuarios:", err));
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [modoEdicion, isModal, rutinaProp]);
+
   // Cargar rutina activa del usuario (solo si no se pasa como prop)
   useEffect(() => {
     if (rutinaProp) return;
@@ -261,10 +286,12 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
     try {
       const [ejerciciosData, usuariosData] = await Promise.all([
         ejercicioService.getAllEjercicios(),
-        usuarioService.getAllUsuarios()
+        usuariosProp && Array.isArray(usuariosProp) ? Promise.resolve(usuariosProp) : usuarioService.getAllUsuarios()
       ]);
       setEjerciciosDisponibles(ejerciciosData);
-      setUsuarios(usuariosData);
+      if (!usuariosProp || !Array.isArray(usuariosProp)) {
+        setUsuarios(usuariosData);
+      }
     } catch (err) {
       console.error("Error al cargar datos:", err);
       SwalToUse.fire({
@@ -813,7 +840,7 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
       html: `
         <p>Se creará una nueva rutina basada en la actual.</p>
         ${tipoRutina === 'cliente' && idUsuario ? 
-          `<p><strong>La nueva rutina se asignará como activa al cliente seleccionado.</strong></p>` : 
+          `<p><strong>⚠️ La nueva rutina se asignará automáticamente como activa al cliente seleccionado.</strong></p>` : 
           ''}
         <p>¿Deseas continuar?</p>
       `,
@@ -913,25 +940,8 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
 
       const nuevaRutina = await rutinaService.createRutinaCompleta(rutinaCompletaData);
 
-      if (tipoRutinaFinal === 'cliente' && idUsuario) {
-        const asignarActiva = await SwalToUse.fire({
-          title: '¿Asignar como rutina activa?',
-          text: `¿Deseas asignar esta rutina como activa para el cliente?`,
-          icon: 'question',
-          showCancelButton: true,
-          confirmButtonColor: '#ff6a00',
-          cancelButtonColor: '#6c757d',
-          confirmButtonText: 'Sí, asignar',
-          cancelButtonText: 'No asignar',
-          zIndex: 10002
-        });
-
-        if (asignarActiva.isConfirmed) {
-          await usuarioService.updateUsuario(idUsuario, {
-            rutina_activa_id: nuevaRutina.id_rutina
-          });
-        }
-      }
+      // NOTA: El backend automáticamente asigna la rutina como activa cuando es tipo CLIENTE y tiene id_usuario
+      // No es necesario hacer una llamada adicional aquí
 
       const rutinaCompleta = await rutinaService.getRutinaById(rutina.id_rutina);
       setRutina(rutinaCompleta);
@@ -1012,6 +1022,94 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
       }
       return ej;
     }));
+  };
+
+  // Función para mostrar usuarios que tienen esta rutina activa
+  const handleVerClientesConRutina = () => {
+    if (!rutina || !rutina.id_rutina) {
+      SwalToUse.fire({
+        title: 'Error',
+        text: 'No hay rutina seleccionada',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        zIndex: 10002
+      });
+      return;
+    }
+
+    // Filtrar usuarios que tienen esta rutina como activa
+    const usuariosConRutina = usuarios.filter(usuario => {
+      if (!usuario.rutina_activa) return false;
+      const rutinaActivaId = usuario.rutina_activa.id_rutina || usuario.rutina_activa;
+      return rutinaActivaId === rutina.id_rutina;
+    });
+
+    if (usuariosConRutina.length === 0) {
+      SwalToUse.fire({
+        title: 'Sin clientes',
+        html: `<p>No hay clientes que tengan la rutina "<strong>${rutina.nombre}</strong>" como activa.</p>`,
+        icon: 'info',
+        confirmButtonText: 'Aceptar',
+        zIndex: 10002
+      });
+      return;
+    }
+
+    // Función helper para obtener el plan de un usuario
+    const obtenerPlanUsuario = (usuario) => {
+      if (!usuario?.suscripciones || !Array.isArray(usuario.suscripciones) || usuario.suscripciones.length === 0) {
+        return 'Sin plan';
+      }
+      
+      const suscripcionActiva = usuario.suscripciones.find(s => 
+        s && s.estado && String(s.estado).toUpperCase() === 'ACTIVA'
+      );
+      const suscripcion = suscripcionActiva || usuario.suscripciones[0];
+      
+      if (suscripcion && suscripcion.plan && suscripcion.plan.nombre) {
+        const planNombre = String(suscripcion.plan.nombre).toLowerCase().trim();
+        const planMapping = {
+          'basic': 'Basic',
+          'standard': 'Standard',
+          'premium': 'Premium'
+        };
+        return planMapping[planNombre] || suscripcion.plan.nombre;
+      }
+      
+      return 'Sin plan';
+    };
+
+    // Crear HTML con la lista de usuarios
+    const usuariosHTML = usuariosConRutina.map(usuario => {
+      const plan = obtenerPlanUsuario(usuario);
+      return `
+        <div style="padding: 10px; border-bottom: 1px solid #eee;">
+          <strong>${usuario.nombre} ${usuario.apellido}</strong><br>
+          <span style="color: #666; font-size: 0.9em;">
+            Email: ${usuario.email} | Plan: ${plan}
+          </span>
+        </div>
+      `;
+    }).join('');
+
+    SwalToUse.fire({
+      title: `Clientes con la rutina "${rutina.nombre}"`,
+      html: `
+        <div style="text-align: left; max-height: 400px; overflow-y: auto;">
+          <p style="margin-bottom: 15px; font-weight: bold;">
+            Total: ${usuariosConRutina.length} cliente${usuariosConRutina.length !== 1 ? 's' : ''}
+          </p>
+          ${usuariosHTML}
+        </div>
+      `,
+      icon: 'info',
+      showConfirmButton: false,
+      showCancelButton: true,
+      cancelButtonColor: '#dc3545',
+      cancelButtonText: 'Cerrar',
+      width: '600px',
+      zIndex: 10002
+    });
   };
 
   // Eliminar rutina completa
@@ -1382,6 +1480,7 @@ export default function TablaRutina({ rutinaProp = null, modoEdicion = false, on
         onGuardarComoNueva={handleGuardarComoNueva}
         onCancelar={handleCancelar}
         onEliminar={handleEliminarRutina}
+        onVerClientes={handleVerClientesConRutina}
         isModal={isModal}
       />
 

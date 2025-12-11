@@ -11,6 +11,7 @@ const RutinaActionButtons = ({
   onGuardarComoNueva,
   onCancelar,
   onEliminar = null,
+  onVerClientes = null,
   isModal = false
 }) => {
   if (!modoEdicion) return null;
@@ -25,6 +26,15 @@ const RutinaActionButtons = ({
           >
             Editar Rutina
           </button>
+          {onVerClientes && (
+            <button
+              onClick={onVerClientes}
+              className="rutina-btn rutina-btn-view-clients"
+              style={{ backgroundColor: '#17a2b8', color: 'white' }}
+            >
+              Ver Clientes con esta Rutina
+            </button>
+          )}
           {isModal && onEliminar && (
             <button
               onClick={onEliminar}

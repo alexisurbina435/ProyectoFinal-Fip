@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './SemanaDiaSelectors.css';
 
 const SemanaDiaSelectors = ({
@@ -16,6 +16,18 @@ const SemanaDiaSelectors = ({
   onEliminarDia,
   onAgregarEjercicio
 }) => {
+  // Estados locales para manejar el valor del select temporalmente
+  const [semanaSelectValue, setSemanaSelectValue] = useState(semanaSeleccionada || '');
+  const [diaSelectValue, setDiaSelectValue] = useState(diaSeleccionado || '');
+
+  // Sincronizar los valores cuando cambian las props
+  useEffect(() => {
+    setSemanaSelectValue(semanaSeleccionada || '');
+  }, [semanaSeleccionada]);
+
+  useEffect(() => {
+    setDiaSelectValue(diaSeleccionado || '');
+  }, [diaSeleccionado]);
   return (
     <div className="tabla-header">
       <div style={{ flex: 1 }}></div>
@@ -23,9 +35,18 @@ const SemanaDiaSelectors = ({
         {/* Selector de Semana */}
         <div className="selector-group">
           <select
-            value={semanaSeleccionada || ''}
-            onChange={onSemanaChange}
-            disabled={semanasDisponibles.length === 0}
+            value={semanaSelectValue}
+            onChange={(e) => {
+              if (e.target.value === 'add_semana') {
+                const valorAnterior = semanaSeleccionada || '';
+                setSemanaSelectValue(valorAnterior); // Restaurar inmediatamente
+                onAgregarSemana();
+              } else {
+                setSemanaSelectValue(e.target.value);
+                onSemanaChange(e);
+              }
+            }}
+            disabled={semanasDisponibles.length === 0 && !(modoEdicion && editando)}
             className="selector-select"
           >
             {semanasDisponibles.length === 0 ? (
@@ -37,35 +58,38 @@ const SemanaDiaSelectors = ({
                 </option>
               ))
             )}
+            {modoEdicion && editando && (
+              <option value="add_semana" style={{ backgroundColor: '#28a745', color: '#fff', fontWeight: 'bold' }}>
+                + Agregar Semana
+              </option>
+            )}
           </select>
-          {modoEdicion && editando && (
-            <>
-              <button
-                onClick={onAgregarSemana}
-                className="selector-btn selector-btn-add"
-                title="Agregar semana"
-              >
-                + Semana
-              </button>
-              {semanaSeleccionada && semanasDisponibles.length > 1 && (
-                <button
-                  onClick={() => onEliminarSemana(semanaSeleccionada)}
-                  className="selector-btn selector-btn-delete"
-                  title="Eliminar semana"
-                >
-                  ×
-                </button>
-              )}
-            </>
+          {modoEdicion && editando && semanaSeleccionada && semanasDisponibles.length > 1 && (
+            <button
+              onClick={() => onEliminarSemana(semanaSeleccionada)}
+              className="selector-btn selector-btn-delete"
+              title="Eliminar semana"
+            >
+              ×
+            </button>
           )}
         </div>
 
         {/* Selector de Día */}
         <div className="selector-group">
           <select
-            value={diaSeleccionado || ''}
-            onChange={onDiaChange}
-            disabled={diasDisponibles.length === 0}
+            value={diaSelectValue}
+            onChange={(e) => {
+              if (e.target.value === 'add_dia') {
+                const valorAnterior = diaSeleccionado || '';
+                setDiaSelectValue(valorAnterior); // Restaurar inmediatamente
+                onAgregarDia();
+              } else {
+                setDiaSelectValue(e.target.value);
+                onDiaChange(e);
+              }
+            }}
+            disabled={diasDisponibles.length === 0 && !(modoEdicion && editando && semanaSeleccionada)}
             className="selector-select"
           >
             {diasDisponibles.length === 0 ? (
@@ -77,26 +101,20 @@ const SemanaDiaSelectors = ({
                 </option>
               ))
             )}
+            {modoEdicion && editando && semanaSeleccionada && (
+              <option value="add_dia" style={{ backgroundColor: '#28a745', color: '#fff', fontWeight: 'bold' }}>
+                + Agregar Día
+              </option>
+            )}
           </select>
-          {modoEdicion && editando && semanaSeleccionada && (
-            <>
-              <button
-                onClick={onAgregarDia}
-                className="selector-btn selector-btn-add"
-                title="Agregar día"
-              >
-                + Día
-              </button>
-              {diaSeleccionado && diasDisponibles.length > 1 && (
-                <button
-                  onClick={() => onEliminarDia(diaSeleccionado)}
-                  className="selector-btn selector-btn-delete"
-                  title="Eliminar día"
-                >
-                  ×
-                </button>
-              )}
-            </>
+          {modoEdicion && editando && semanaSeleccionada && diaSeleccionado && diasDisponibles.length > 1 && (
+            <button
+              onClick={() => onEliminarDia(diaSeleccionado)}
+              className="selector-btn selector-btn-delete"
+              title="Eliminar día"
+            >
+              ×
+            </button>
           )}
         </div>
 
