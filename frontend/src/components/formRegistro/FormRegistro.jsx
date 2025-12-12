@@ -10,16 +10,16 @@ import { Link } from "react-router-dom";
 import usuarioService from "../../services/usuario.service";
 import { useState } from "react";
 import Swal from 'sweetalert2';
-import { useNavigate  } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function FormRegistro() {
 
-    const navigate = useNavigate ();
-    
+    const navigate = useNavigate();
+
     const { register, handleSubmit, formState: { errors }, watch, reset } = useForm();
 
     const [data, setData] = useState([]);
-
+    const [showPassword, setShowPassword] = useState(false);
     const registro = async (usuarioData) => {
         try {
             const crearUsuario = await usuarioService.register(usuarioData);
@@ -145,7 +145,7 @@ export default function FormRegistro() {
                         <Label htmlFor="password" children="Contraseña" />
                         <div className="input-wrapper">
                             <i className="fa-solid fa-lock form-icon"></i>
-                            <Input type="password" id="password" placeholder="Ingrese su contraseña" {...register("password",
+                            <Input type={showPassword ? "text" : "password"} id="password" placeholder="Ingrese su contraseña" {...register("password",
                                 {
                                     required: {
                                         value: true,
@@ -161,6 +161,14 @@ export default function FormRegistro() {
                                     }
 
                                 })} />
+                            <button
+                                type="button"
+                                className="password-toggle-btn"
+                                onClick={() => setShowPassword(!showPassword)}
+                                aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                            >
+                                <i className={showPassword ? "fa-solid fa-eye-slash" : "fa-solid fa-eye"}></i>
+                            </button>
                         </div>
                         {errors.password && <span className="error">{errors.password.message}</span>}
                     </div>
@@ -169,7 +177,7 @@ export default function FormRegistro() {
                         <Label htmlFor="confirmPassword" children="Repetir contraseña" />
                         <div className="input-wrapper">
                             <i className="fa-solid fa-lock form-icon"></i>
-                            <Input type="password" id="confirmPassword" placeholder="Repita su contraseña" {...register("confirmPassword",
+                            <Input type={showPassword ? "text" : "password"} id="confirmPassword" placeholder="Repita su contraseña" {...register("confirmPassword",
                                 {
                                     required: {
                                         value: true,
@@ -181,6 +189,14 @@ export default function FormRegistro() {
                                     }
 
                                 })} />
+                            <button
+                                type="button"
+                                className="password-toggle-btn"
+                                onClick={() => setShowPassword(!showPassword)}
+                                aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                            >
+                                <i className={showPassword ? "fa-solid fa-eye-slash" : "fa-solid fa-eye"}></i>
+                            </button>
                         </div>
                         {errors.confirmPassword && <span className="error">{errors.confirmPassword.message}</span>}
                     </div>
@@ -188,21 +204,21 @@ export default function FormRegistro() {
                     <div className="checkboxes">
                         <div className="checkbox-group">
                             <label>
-                                <input type="checkbox" id="accept-emails" {...register("aceptarEmails")}/>
+                                <input type="checkbox" id="accept-emails" {...register("aceptarEmails")} />
                                 Acepto recibir comunicaciones de Superarse Gym por email
                             </label>
                         </div>
 
                         <div className="checkbox-group">
                             <label>
-                                <input type="checkbox" id="accept-whatsapp"  {...register("aceptarWpp")}/>
+                                <input type="checkbox" id="accept-whatsapp"  {...register("aceptarWpp")} />
                                 Acepto recibir comunicaciones de Superarse Gym por WhatsApp
                             </label>
                         </div>
 
                         <div className="checkbox-group">
                             <label>
-                                <input type="checkbox" id="accept-terms" {...register("aceptarTerminos",{
+                                <input type="checkbox" id="accept-terms" {...register("aceptarTerminos", {
                                     required: {
                                         value: true,
                                         message: "Por favor acepte los terminos y condiciones"

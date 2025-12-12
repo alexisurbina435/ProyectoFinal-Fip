@@ -13,6 +13,7 @@ class CarritoService {
     }
 
     async addItem(carritoId, productoId, cantidad = 1) {
+        console.log(carritoId, productoId, cantidad);
         return apiClient.post(`/carrito/${carritoId}/item`, {
             productoId,
             cantidad
@@ -24,13 +25,13 @@ class CarritoService {
         return response;
     }
 
-    async updateCantidad(itemId, cantidad) {
-        const response = await apiClient.patch(`/carrito/item/${itemId}`, { cantidad });
+    async updateCantidad(carritoId,itemId, cantidad) {
+        const response = await apiClient.patch(`/carrito/${carritoId}/item/${itemId}`, { cantidad });
         return response;
     }
-
-    async deleteItem(itemId) {
-        const response = await apiClient.delete(`/carrito/item/${itemId}`);
+    
+    async deleteItem(carritoId,itemId) {
+        const response = await apiClient.delete(`/carrito/${carritoId}/item/${itemId}`);
         return response;
     }
 

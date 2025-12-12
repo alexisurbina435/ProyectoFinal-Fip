@@ -49,7 +49,7 @@ export default function Planilla() {
                 ...fichaSaludData,
                 id_usuario: usuario.id_usuario,
             }
-            console.log(ficha);
+            
 
             if (usuario && usuario.ficha) {
                 const postPlanilla = await FichaSaludService.updateFichaSalud(usuario.ficha.id_ficha, ficha);
@@ -86,7 +86,6 @@ export default function Planilla() {
 
     useEffect(() => {
         fetchPlanilla();
-        console.log(usuario);
     }, [])
 
     useEffect(() => {

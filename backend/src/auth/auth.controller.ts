@@ -15,7 +15,7 @@ export class AuthController {
       httpOnly: true,
       secure: true, // solo por HTTPS
       sameSite: 'none',//para el deploy
-      // sameSite: 'lax',// para el localhost
+      //sameSite: 'lax',// para el localhost
       maxAge: 5 * 60 * 60 * 1000, // 5 horas
       path:'/' 
     });

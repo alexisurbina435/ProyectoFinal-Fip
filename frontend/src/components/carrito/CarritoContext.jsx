@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import CarritoService from "../../services/carrito.service";
 
 const CarritoContext = createContext();
 
@@ -8,16 +9,13 @@ export function CarritoProvider({ children }) {
   const [firstLoad, setFirstLoad] = useState(true);
 
   useEffect(() => {
-    console.log(firstLoad);
     if (firstLoad) {
       const saved = JSON.parse(localStorage.getItem("carrito"));
       setCarrito(saved || []);
-      console.log(carrito);
+
       setFirstLoad(false);
       return;
     }
-    console.log(carrito);
-
 
     localStorage.setItem("carrito", JSON.stringify(carrito));
   }, [carrito, firstLoad]);
@@ -28,7 +26,9 @@ export function CarritoProvider({ children }) {
 
   const agregarAlCarrito = async (producto) => {
     setCarrito((prev) => {
-      const index = prev.findIndex((p) => (p.id_producto || p.id) === producto.id);
+      const index = prev.findIndex(
+        (p) => (p.id_producto || p.id) === producto.id
+      );
 
       if (index !== -1) {
         return prev.map((p, i) =>
@@ -41,8 +41,10 @@ export function CarritoProvider({ children }) {
 
     const usuario = JSON.parse(localStorage.getItem("usuario"));
 
+    const carritoId = JSON.parse(localStorage.getItem("carritoId"));
+
     if (usuario) {
-      await carritoService.addItem(usuario.id_usuario, producto.id);
+      await CarritoService.addItem(carritoId, producto.id);
     }
   };
   const cambiarCantidad = async (id, delta) => {
@@ -63,21 +65,25 @@ export function CarritoProvider({ children }) {
       })
     );
 
-    if (nuevaCantidad !== null) {
-      const usuario = JSON.parse(localStorage.getItem("usuario"));
+    const usuario = JSON.parse(localStorage.getItem("usuario"));
+    const carritoId = JSON.parse(localStorage.getItem("carritoId"));
 
+    setTimeout(async () => {
       if (usuario) {
-        await carritoService.actualizarCantidad(
-          usuario.id_usuario,
-          id,
-          nuevaCantidad
-        );
+        await CarritoService.updateCantidad(carritoId, id, nuevaCantidad);
       }
-    }
+    }, 300);
   };
 
   const eliminarProducto = (id) => {
     setCarrito((prev) => prev.filter((p) => (p.id_producto || p.id) !== id));
+
+    const usuario = JSON.parse(localStorage.getItem("usuario"));
+    const carritoId = JSON.parse(localStorage.getItem("carritoId"));
+
+    if (usuario) {
+      CarritoService.deleteItem(carritoId, id);
+    }
   };
 
   const totalCarrito = carrito.reduce(

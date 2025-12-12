@@ -11,17 +11,20 @@ export class CarritoService {
     @InjectRepository(Carrito) private carritoRepo: Repository<Carrito>,
     @InjectRepository(CarritoItem) private itemRepo: Repository<CarritoItem>,
     @InjectRepository(Producto) private productoRepo: Repository<Producto>,
-  ) { }
+  ) {}
 
   async createCarrito(id_usuario?: number) {
-    const carrito = this.carritoRepo.create({ usuario: id_usuario ? { id_usuario: id_usuario } as any : null, items: [] });
+    const carrito = this.carritoRepo.create({
+      usuario: id_usuario ? ({ id_usuario: id_usuario } as any) : null,
+      items: [],
+    });
     return this.carritoRepo.save(carrito);
   }
 
   async getCarritoById(carritoId: number) {
     const carrito = await this.carritoRepo.findOne({
       where: { id_carrito: carritoId },
-      relations: ['items', 'items.producto']
+      relations: ['items', 'items.producto'],
     });
 
     if (!carrito) throw new NotFoundException('Carrito no encontrado');
@@ -31,7 +34,7 @@ export class CarritoService {
   async getCarritoByUsuario(id_usuario: number) {
     const carrito = await this.carritoRepo.findOne({
       where: { usuario: { id_usuario } },
-      relations: ['items', 'items.producto']
+      relations: ['items', 'items.producto'],
     });
 
     return carrito;
@@ -39,11 +42,15 @@ export class CarritoService {
 
   async addItem(carritoId: number, productoId: number, cantidad = 1) {
     const carrito = await this.getCarritoById(carritoId);
-    const producto = await this.productoRepo.findOne({ where: { id_producto: productoId } });
+    const producto = await this.productoRepo.findOne({
+      where: { id_producto: productoId },
+    });
     if (!producto) throw new NotFoundException('Producto no encontrado');
 
     // verificar si ya existe el item
-    const existente = carrito.items?.find(i => i.producto.id_producto === productoId);
+    const existente = carrito.items?.find(
+      (i) => i.producto.id_producto === productoId,
+    );
     if (existente) {
       existente.cantidad += cantidad;
       return this.itemRepo.save(existente);
@@ -58,20 +65,28 @@ export class CarritoService {
     return this.itemRepo.save(item);
   }
 
-  async updateCantidad(itemId: number, cantidad: number) {
-    const item = await this.itemRepo.findOne({ where: { id_item: itemId } });
-    if (!item) throw new NotFoundException('Item no encontrado');
-
-    item.cantidad = cantidad;
-    return this.itemRepo.save(item);
+  async updateCantidad(carritoId: number, itemId: number, cantidad: number) {
+    const carrito = await this.getCarritoById(carritoId);
+    if (!carrito) throw new NotFoundException('Carrito no encontrado');
+    const existente = carrito.items?.find(
+      (i) => i.producto.id_producto === itemId,
+    );
+    if (existente) {
+      existente.cantidad = cantidad;
+      return this.itemRepo.save(existente);
+    } else throw new NotFoundException('Item no encontrado');
   }
 
-  async deleteItem(itemId: number) {
-    const item = await this.itemRepo.findOne({ where: { id_item: itemId } });
-    if (!item) throw new NotFoundException('Item no encontrado');
-
-    await this.itemRepo.delete(itemId);
-    return { message: 'Item eliminado' };
+  async deleteItem(carritoId: number, itemId: number) {
+    const carrito = await this.getCarritoById(carritoId);
+    if (!carrito) throw new NotFoundException('Carrito no encontrado');
+    const existente = carrito.items?.find(
+      (i) => i.producto.id_producto === itemId,
+    );
+    if (existente) {
+      await this.itemRepo.delete({ id_item: existente.id_item });
+      return { message: 'Item eliminado' };
+    } else throw new NotFoundException('Item no encontrado');
   }
 
   async deleteCarrito(carritoId: number) {
@@ -82,18 +97,25 @@ export class CarritoService {
   /**
    * Sincroniza: reemplaza items del carrito por los provistos
    */
-  async sincronizarCarrito(id_usuario: number, productos: { id: number; cantidad: number }[]) {
+  async sincronizarCarrito(
+    id_usuario: number,
+    productos: { id: number; cantidad: number }[],
+  ) {
     let carrito = await this.getCarritoByUsuario(id_usuario);
     if (!carrito) {
       carrito = await this.createCarrito(id_usuario);
     }
 
     // eliminar items previos
-    await this.itemRepo.delete({ carrito: { id_carrito: carrito.id_carrito } as any });
+    await this.itemRepo.delete({
+      carrito: { id_carrito: carrito.id_carrito } as any,
+    });
 
     const itemsToSave: CarritoItem[] = [];
     for (const p of productos) {
-      const producto = await this.productoRepo.findOne({ where: { id_producto: p.id } });
+      const producto = await this.productoRepo.findOne({
+        where: { id_producto: p.id },
+      });
       if (!producto) continue; // skip invalid product
       const item = this.itemRepo.create({
         carrito,

@@ -3,7 +3,7 @@ import { CarritoService } from './carrito.service';
 import { CreateCarritoDto } from './dto/create-carrito.dto';
 import { AddItemDto } from './dto/add-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
-import { tr } from 'date-fns/locale';
+import { id, tr } from 'date-fns/locale';
 
 @Controller('carrito')
 export class CarritoController {
@@ -45,19 +45,19 @@ export class CarritoController {
         }
     }
 
-    @Patch('item/:itemId')
-    async updateItem(@Param('itemId') itemId: string, @Body() dto: UpdateItemDto) {
+    @Patch(':id/item/:itemId')
+    async updateItem(@Param('id') id: string, @Param('itemId') itemId: string, @Body() dto: UpdateItemDto) {
         try {
-            return this.carritoService.updateCantidad(+itemId, dto.cantidad);
+            return this.carritoService.updateCantidad(+id,+itemId, dto.cantidad);
         } catch (error) {
             throw new InternalServerErrorException(error.message);
         }
     }
 
-    @Delete('item/:itemId')
-    async deleteItem(@Param('itemId') itemId: string) {
+    @Delete(':id/item/:itemId')
+    async deleteItem(@Param('id') id: string, @Param('itemId') itemId: string) {
         try {
-            return this.carritoService.deleteItem(+itemId);
+            return this.carritoService.deleteItem(+id,+itemId);
         } catch (error) {
             throw new InternalServerErrorException(error.message);
         }

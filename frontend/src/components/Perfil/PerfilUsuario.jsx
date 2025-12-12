@@ -84,7 +84,7 @@ const PerfilUsuario = () => {
 
 
 
-    console.log(data);
+    
     return (
 
         <div className="profile-container">

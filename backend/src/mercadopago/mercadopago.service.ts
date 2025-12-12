@@ -29,9 +29,9 @@ export class MercadoPagoService {
         body: {
           items: items, // acá usamos los productos reales enviados desde el front
           back_urls: {
-            success: 'https://google.com',
-            failure: 'https://google.com',
-            pending: 'https://google.com',
+            success: 'https://gymsuperarse.web.app/productos',
+            failure: 'https://gymsuperarse.web.app/productos',
+            pending: 'https://gymsuperarse.web.app/productos',
           },
           auto_return: 'approved',
           currency_id: 'ARS',
