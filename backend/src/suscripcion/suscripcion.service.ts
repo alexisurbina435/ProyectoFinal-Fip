@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { MercadoPagoService } from '../mercadopago/mercadopago.service';
 import { CreateSuscripcionDto } from './dto/create-suscripcion.dto';
+import { OtorgarPlanManualDto } from './dto/otorgar-plan-manual.dto';
 import { Suscripcion } from './entities/suscripcion.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -100,7 +101,7 @@ export class SuscripcionService {
 
 
     const suscripcionActual = await this.suscripcionRepository.findOne({
-      where: { usuario: { id_usuario }, estado: 'Activa' },
+      where: { usuario: { id_usuario }, estado: 'ACTIVA' },
       relations: ['plan', 'usuario'],
     });
     if (!suscripcionActual) throw new NotFoundException('No se encontró suscripción activa');
@@ -138,6 +139,100 @@ export class SuscripcionService {
       message: 'Plan cambiado correctamente',
       init_point: mp.init_point,
       preapprovalId: mp.id,
+    };
+  }
+
+  /**
+   * Otorga un plan manualmente a un usuario (para pagos en efectivo o administración)
+   * Este método NO requiere Mercado Pago y activa inmediatamente el plan
+   */
+  async otorgarPlanManual(dto: OtorgarPlanManualDto) {
+    const usuario = await this.usuarioRepo.findOne({ 
+      where: { id_usuario: dto.id_usuario }
+    });
+    if (!usuario) throw new NotFoundException('Usuario no encontrado');
+
+    const plan = await this.planRepo.findOne({ where: { id_plan: dto.id_plan } });
+    if (!plan) throw new NotFoundException('Plan no encontrado');
+
+    // Cancelar/desactivar todas las suscripciones activas del usuario usando QueryBuilder
+    await this.suscripcionRepository
+      .createQueryBuilder()
+      .update(Suscripcion)
+      .set({ estado: 'CANCELADA' })
+      .where('id_usuario = :id_usuario', { id_usuario: dto.id_usuario })
+      .andWhere('estado = :estado', { estado: 'ACTIVA' })
+      .execute();
+
+    // Obtener las suscripciones canceladas para intentar cancelarlas en MP
+    const suscripcionesCanceladas = await this.suscripcionRepository.find({
+      where: { 
+        usuario: { id_usuario: dto.id_usuario },
+        estado: 'CANCELADA'
+      }
+    });
+
+    // Intentar cancelar en MP las que no sean manuales (en segundo plano, no bloquea)
+    for (const suscripcion of suscripcionesCanceladas) {
+      if (suscripcion.preapprovalId && !suscripcion.preapprovalId.startsWith('MANUAL_ADMIN_')) {
+        try {
+          await this.mpService.cancelarSuscripcion(suscripcion.preapprovalId);
+        } catch (error: any) {
+          // Ignorar errores 404 (suscripciones de prueba que no existen en MP)
+          const status = error?.status || error?.response?.status;
+          if (status === 404) {
+            console.log(`Suscripción ${suscripcion.preapprovalId} no existe en MP (probablemente de prueba)`);
+          } else {
+            const errorMessage = error?.message || String(error);
+            console.log('Error al cancelar suscripción en MP:', errorMessage);
+          }
+        }
+      }
+    }
+
+    // Calcular meses contratados (por defecto 1 mes)
+    const mesesContratados = dto.mesesContratados || 1;
+
+    // Crear nueva suscripción con estado ACTIVA
+    const fechaInicio = new Date();
+    const fechaFin = new Date();
+    fechaFin.setMonth(fechaFin.getMonth() + mesesContratados);
+
+    // Generar un preapprovalId único para identificar suscripciones manuales
+    const preapprovalId = `MANUAL_ADMIN_${Date.now()}_${dto.id_usuario}`;
+
+    // Crear la suscripción usando el método create y save (igual que en el método crear)
+    const nuevaSuscripcion = this.suscripcionRepository.create({
+      usuario: usuario, // Asignar el objeto usuario completo
+      plan: plan, // Asignar el objeto plan completo
+      fechaInicio: fechaInicio,
+      fechaFin: fechaFin,
+      mesesContratados: mesesContratados,
+      montoPagado: plan.precio * mesesContratados,
+      estado: 'ACTIVA',
+      preapprovalId: preapprovalId,
+    });
+
+    // Guardar la suscripción (TypeORM establecerá automáticamente las FKs)
+    const suscripcionGuardada = await this.suscripcionRepository.save(nuevaSuscripcion);
+    
+    // Recargar la suscripción con las relaciones para asegurar que todo esté correcto
+    const nuevaSuscripcionCompleta = await this.suscripcionRepository.findOne({
+      where: { id: suscripcionGuardada.id },
+      relations: ['usuario', 'plan']
+    });
+
+    // Activar el estado de pago del usuario
+    usuario.estado_pago = true;
+    await this.usuarioRepo.save(usuario);
+
+    return {
+      message: 'Plan otorgado manualmente y activado correctamente',
+      suscripcion: nuevaSuscripcionCompleta,
+      usuario: {
+        id_usuario: usuario.id_usuario,
+        estado_pago: usuario.estado_pago
+      }
     };
   }
 

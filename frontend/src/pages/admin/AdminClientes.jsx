@@ -4,6 +4,8 @@ import Tabla from "../../components/Tabla/Tabla"
 import AdminBar from "../../components/AdminBar/AdminBar"
 import usuarioService from "../../services/usuario.service";
 import rutinaService from "../../services/rutina.service";
+import suscripcionService from "../../services/suscripcion.service";
+import planService from "../../services/plan.service";
 import PopUpEdit from "../../components/popUpEdit/PopUpEdit";
 import { getUsuarioFields, getPlanLabel } from "../../components/popUpEdit/fields/usuarioFields";
 import PlanillaPdf from "../../components/convertidorPdf/PlanillaPdf";
@@ -24,12 +26,24 @@ const AdminClientes = () => {
   const [isRutinaModalOpen, setIsRutinaModalOpen] = useState(false);
   const [rutinaAction, setRutinaAction] = useState(null); // 'eliminar', 'cambiar', 'crear'
   const [rutinaPendiente, setRutinaPendiente] = useState(null); // null = desvincular, number = id de rutina, undefined = sin cambios
+  const [planes, setPlanes] = useState([]);
+  const [planOriginal, setPlanOriginal] = useState(null); // Plan original antes de editar
 
   // Cargar usuarios al montar el componente
   useEffect(() => {
     cargarUsuarios();
     cargarRutinas();
+    cargarPlanes();
   }, []);
+
+  const cargarPlanes = async () => {
+    try {
+      const response = await planService.getAllPlans();
+      setPlanes(response);
+    } catch (err) {
+      console.error("Error al cargar planes:", err);
+    }
+  };
 
   const cargarRutinas = async () => {
     try {
@@ -349,6 +363,7 @@ const AdminClientes = () => {
       };
       setModalMode('edit');
       setSelectedUsuario(usuarioFormateado);
+      setPlanOriginal(tipoPlan); // Guardar el plan original para comparar cambios
       setRutinaPendiente(undefined); // Resetear cambios pendientes al abrir
       setIsModalOpen(true);
     } catch (err) {
@@ -436,10 +451,30 @@ const AdminClientes = () => {
     });
   };
 
+  // Función auxiliar para obtener el id_plan desde el nombre del plan
+  const obtenerIdPlanPorNombre = (nombrePlan) => {
+    if (!nombrePlan || !planes || planes.length === 0) return null;
+    
+    // Mapear nombres del frontend a nombres del backend
+    const planMapping = {
+      'Basic': 'basic',
+      'Standard': 'standard',
+      'Premium': 'premium'
+    };
+    
+    const nombreBackend = planMapping[nombrePlan] || nombrePlan.toLowerCase();
+    const plan = planes.find(p => p.nombre && p.nombre.toLowerCase() === nombreBackend);
+    return plan ? plan.id_plan : null;
+  };
+
   // Funcion para actualizar un usuario
   const handleUpdateUsuario = async (id, usuarioData) => {
     try {
       const datosLimpios = limpiarDatosUsuario(usuarioData, 'edit');
+      
+      // Verificar si el plan cambió
+      const planNuevo = usuarioData.tipoPlan;
+      const planCambio = planNuevo && planNuevo !== planOriginal && planNuevo !== null;
       
       // Si hay cambios pendientes de rutina, incluirlos en los datos
       if (rutinaPendiente !== undefined) {
@@ -448,11 +483,71 @@ const AdminClientes = () => {
       
       console.log('Datos originales:', usuarioData);
       console.log('Datos limpios a enviar al backend:', datosLimpios);
+      console.log('Plan original:', planOriginal, 'Plan nuevo:', planNuevo, '¿Cambió?', planCambio);
+      
+      // Si el plan cambió, mostrar confirmación y otorgar el nuevo plan manualmente
+      if (planCambio) {
+        const id_plan = obtenerIdPlanPorNombre(planNuevo);
+        if (id_plan) {
+          // Obtener el nombre del plan para mostrar en la alerta
+          const planSeleccionado = planes.find(p => p.id_plan === id_plan);
+          const nombrePlan = planSeleccionado ? getPlanLabel(planNuevo) : planNuevo;
+          
+          // Mostrar confirmación antes de otorgar el plan
+          const confirmacion = await Swal.fire({
+            title: '¿Otorgar suscripción?',
+            html: `Se le otorgará una suscripción al plan <strong>${nombrePlan}</strong> al cliente.<br><br>
+                   Esto cancelará cualquier suscripción activa anterior y activará el nuevo plan inmediatamente.`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, otorgar suscripción',
+            cancelButtonText: 'Cancelar'
+          });
+
+          if (!confirmacion.isConfirmed) {
+            // Si el usuario cancela, no continuar con la actualización
+            return;
+          }
+
+          try {
+            const resultado = await suscripcionService.otorgarPlanManual({
+              id_usuario: id,
+              id_plan: id_plan,
+              mesesContratados: 1 // Por defecto 1 mes, se puede hacer configurable después
+            });
+            console.log('Plan otorgado manualmente:', resultado);
+            // Recargar usuarios después de otorgar el plan para actualizar la tabla
+            await cargarUsuarios();
+          } catch (planError) {
+            console.error("Error al otorgar plan:", planError);
+            Swal.fire({
+              title: 'Error al otorgar plan',
+              text: planError?.response?.data?.message || planError?.message || 'Error al otorgar el plan al cliente',
+              icon: 'error',
+              confirmButtonText: 'Aceptar'
+            });
+            throw planError;
+          }
+        } else {
+          Swal.fire({
+            title: 'Error',
+            text: 'No se pudo encontrar el plan seleccionado',
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+          });
+          throw new Error('Plan no encontrado');
+        }
+      }
+      
+      // Actualizar los demás datos del usuario
       await usuarioService.updateUsuario(id, datosLimpios);
       await cargarUsuarios();
       
-      // Resetear el estado de rutina pendiente
+      // Resetear el estado de rutina pendiente y plan original
       setRutinaPendiente(undefined);
+      setPlanOriginal(null);
       
       Swal.fire({
         title: 'Cliente actualizado exitosamente',
@@ -555,6 +650,7 @@ const AdminClientes = () => {
           setIsModalOpen(false);
           setRutinaAction(null);
           setRutinaPendiente(undefined); // Resetear cambios pendientes al cerrar
+          setPlanOriginal(null); // Resetear plan original al cerrar
         }}
         mode={modalMode}
         initialData={selectedUsuario || {}}

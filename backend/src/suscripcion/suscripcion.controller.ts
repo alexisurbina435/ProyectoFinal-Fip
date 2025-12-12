@@ -1,6 +1,7 @@
 import { Controller, Post, Body, Delete, Param, Put } from '@nestjs/common';
 import { SuscripcionService } from './suscripcion.service';
 import { CreateSuscripcionDto } from './dto/create-suscripcion.dto';
+import { OtorgarPlanManualDto } from './dto/otorgar-plan-manual.dto';
 
 @Controller('suscripciones')
 export class SuscripcionController {
@@ -24,6 +25,11 @@ export class SuscripcionController {
   @Delete(':id')
   async cancelar(@Param('id') preapprovalId: string) {
     return this.service.cancelar(preapprovalId);
+  }
+
+  @Post('otorgar-plan-manual')
+  async otorgarPlanManual(@Body() dto: OtorgarPlanManualDto) {
+    return this.service.otorgarPlanManual(dto);
   }
 }
 

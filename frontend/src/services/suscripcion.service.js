@@ -14,6 +14,10 @@ class SuscripcionService {
         return apiClient.delete(`/suscripciones/${id}`);
     }
 
+    async otorgarPlanManual(usuarioData) {
+        return apiClient.post('/suscripciones/otorgar-plan-manual', usuarioData);
+    }
+
 }
 
 export default new SuscripcionService();
