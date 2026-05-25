@@ -36,12 +36,35 @@ const AdminClientes = () => {
     cargarPlanes();
   }, []);
 
-  const cargarPlanes = async () => {
+  const cargarPlanes = async (retryCount = 0) => {
+    const maxRetries = 3;
     try {
       const response = await planService.getAllPlans();
-      setPlanes(response);
+      if (response && Array.isArray(response) && response.length > 0) {
+        setPlanes(response);
+        console.log('Planes cargados exitosamente:', response);
+        // Limpiar error si se cargaron correctamente
+        if (error && error.includes('planes')) {
+          setError(null);
+        }
+      } else {
+        console.warn('No se encontraron planes o la respuesta está vacía', response);
+        if (retryCount < maxRetries) {
+          console.log(`Reintentando cargar planes... (${retryCount + 1}/${maxRetries})`);
+          setTimeout(() => cargarPlanes(retryCount + 1), 2000);
+        } else {
+          setError('Error al cargar los planes. Por favor, recarga la página.');
+        }
+      }
     } catch (err) {
       console.error("Error al cargar planes:", err);
+      if (retryCount < maxRetries) {
+        console.log(`Reintentando cargar planes después de error... (${retryCount + 1}/${maxRetries})`);
+        setTimeout(() => cargarPlanes(retryCount + 1), 2000);
+      } else {
+        setError('Error al cargar los planes. Por favor, recarga la página.');
+        console.error('Error final al cargar planes después de', maxRetries, 'intentos:', err);
+      }
     }
   };
 
@@ -453,7 +476,16 @@ const AdminClientes = () => {
 
   // Función auxiliar para obtener el id_plan desde el nombre del plan
   const obtenerIdPlanPorNombre = (nombrePlan) => {
-    if (!nombrePlan || !planes || planes.length === 0) return null;
+    if (!nombrePlan) {
+      console.error('obtenerIdPlanPorNombre: nombrePlan es null o undefined');
+      return null;
+    }
+    
+    if (!planes || planes.length === 0) {
+      console.error('obtenerIdPlanPorNombre: No hay planes cargados. Intentando recargar...');
+      cargarPlanes(); // Intentar recargar planes
+      return null;
+    }
     
     // Mapear nombres del frontend a nombres del backend
     const planMapping = {
@@ -464,6 +496,15 @@ const AdminClientes = () => {
     
     const nombreBackend = planMapping[nombrePlan] || nombrePlan.toLowerCase();
     const plan = planes.find(p => p.nombre && p.nombre.toLowerCase() === nombreBackend);
+    
+    if (!plan) {
+      console.error('obtenerIdPlanPorNombre: Plan no encontrado', {
+        nombrePlan,
+        nombreBackend,
+        planesDisponibles: planes.map(p => ({ id: p.id_plan, nombre: p.nombre }))
+      });
+    }
+    
     return plan ? plan.id_plan : null;
   };
 
@@ -487,7 +528,27 @@ const AdminClientes = () => {
       
       // Si el plan cambió, mostrar confirmación y otorgar el nuevo plan manualmente
       if (planCambio) {
+        // Verificar que los planes estén cargados antes de continuar
+        if (!planes || planes.length === 0) {
+          Swal.fire({
+            title: 'Error',
+            text: 'Los planes no se han cargado correctamente. Por favor, espera un momento y vuelve a intentar.',
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+          });
+          // Intentar recargar planes
+          await cargarPlanes();
+          throw new Error('Planes no cargados');
+        }
+        
         const id_plan = obtenerIdPlanPorNombre(planNuevo);
+        console.log('Buscando plan:', {
+          planNuevo,
+          id_plan,
+          planesCargados: planes.length,
+          planes: planes.map(p => ({ id: p.id_plan, nombre: p.nombre }))
+        });
+        
         if (id_plan) {
           // Obtener el nombre del plan para mostrar en la alerta
           const planSeleccionado = planes.find(p => p.id_plan === id_plan);
@@ -531,13 +592,24 @@ const AdminClientes = () => {
             throw planError;
           }
         } else {
+          console.error('Error: Plan no encontrado', {
+            planNuevo,
+            planesDisponibles: planes.map(p => ({ id: p.id_plan, nombre: p.nombre })),
+            planesLength: planes.length
+          });
+          
           Swal.fire({
             title: 'Error',
-            text: 'No se pudo encontrar el plan seleccionado',
+            html: `No se pudo encontrar el plan seleccionado: <strong>${planNuevo}</strong><br><br>
+                   Planes disponibles: ${planes.length > 0 ? planes.map(p => p.nombre).join(', ') : 'Ninguno cargado'}<br><br>
+                   Por favor, recarga la página e intenta nuevamente.`,
             icon: 'error',
             confirmButtonText: 'Aceptar'
           });
-          throw new Error('Plan no encontrado');
+          
+          // Intentar recargar planes antes de lanzar el error
+          await cargarPlanes();
+          throw new Error(`Plan no encontrado: ${planNuevo}`);
         }
       }
       
